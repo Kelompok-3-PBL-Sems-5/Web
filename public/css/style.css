@@ -1,0 +1,275 @@
+:root {
+    /* Variabel warna */
+    --navy: #031A42; /* Warna biru navy */
+    --white: #fff; /* Warna putih */
+    --blue: #0111FF; /* Warna biru terang */
+    --softgray: #F3F5F7; /* Warna abu-abu terang */
+    --softgray2: #CCD8E1; /* Warna abu-abu terang kedua */
+    --gray: #727379; /* Warna abu-abu sedang */
+    
+    /* Variabel bobot font */
+    --fwbold: 700; /* Font tebal */
+    --fwextrabold: 800; /* Font sangat tebal */
+    --fwsemibold: 600; /* Font semi tebal */
+    --fwmedium: 500; /* Font sedang */
+    --fwregular: 400; /* Font normal */
+    --fwlight: 300; /* Font ringan */
+}
+
+body {
+    font-family: 'Poppins', sans-serif; /* Menggunakan font Poppins */
+    padding-top: 160px;
+}
+
+a {
+    text-decoration: none; /* Menghilangkan garis bawah pada link */
+}
+
+/* Utility untuk margin bottom */
+.mb-10 {
+    margin-bottom: 10px; /* Margin bawah 10px */
+}
+
+.mb-16 {
+    margin-bottom: 16px; /* Margin bawah 16px */
+}
+
+.mb-30 {
+    margin-bottom: 30px; /* Margin bawah 30px */
+}
+
+.mb-50 {
+    margin-bottom: 50px; /* Margin bawah 50px */
+}
+
+.mb-70 {
+    margin-bottom: 70px; /* Margin bawah 70px */
+}
+
+/* Pengaturan header */
+.jumbo-header {
+    font-weight: var(--fwextrabold); /* Menggunakan font sangat tebal */
+    color: var(--navy); /* Warna teks navy */
+    font-size: 48px; /* Ukuran font 48px */
+}
+
+.big-header {
+    font-weight: var(--fwbold); /* Menggunakan font tebal */
+    color: var(--navy); /* Warna teks navy */
+    font-size: 28px; /* Ukuran font 28px */
+}
+
+.small-header {
+    font-weight: var(--fwbold); /* Menggunakan font tebal */
+    color: var(--navy); /* Warna teks navy */
+    font-size: 18px; /* Ukuran font 18px */
+}
+
+/* Pengaturan paragraf */
+.paragraph {
+    line-height: 36px; /* Jarak antar baris 36px */
+    color: var(--gray); /* Warna teks abu-abu */
+    font-size: 18px; /* Ukuran font 18px */
+}
+
+.paragraph2 {
+    color: var(--navy); /* Warna teks navy */
+    font-weight: var(--fwregular); /* Font normal */
+    font-size: 16px; /* Ukuran font 16px */
+}
+
+/* Pengaturan input form */
+input.form-control {
+    padding: 14px 24px 14px 24px; /* Padding untuk input */
+    border-radius: 50px; /* Membuat sudut input melengkung */
+    border: 1px solid var(--softgray2); /* Warna border abu-abu terang */
+}
+
+/* Pengaturan header medium */
+.medium-header {
+    color: var(--navy); /* Warna teks navy */
+    font-size: 16px; /* Ukuran font 16px */
+    font-weight: var(--fwbold); /* Font tebal */
+}
+
+/* Pengaturan paragraf kecil */
+.small-paragraph {
+    color: var(--gray); /* Warna teks abu-abu */
+    font-size: 14px; /* Ukuran font 14px */
+    font-weight: var(--fwsemibold); /* Font semi tebal */
+}
+
+/* Pengaturan paragraf sangat kecil */
+.extra-small-paragraph {
+    color: var(--gray); /* Warna teks abu-abu */
+    font-size: 10px; /* Ukuran font 10px */
+    font-weight: var(--fwregular); /* Font normal */
+}
+
+/* Tombol sekunder */
+.btn-secondary {
+    padding: 14px 24px 14px 24px; /* Padding untuk tombol */
+    border-radius: 50px; /* Membuat sudut tombol melengkung */
+    border: 0; /* Tanpa border */
+    background: var(--softgray); /* Latar belakang abu-abu terang */
+    color: var(--navy); /* Warna teks navy */
+    font-weight: var(--fwbold); /* Font tebal */
+}
+
+/* Tombol primer */
+.btn-primary {
+    padding: 14px 24px 14px 24px; /* Padding untuk tombol */
+    border-radius: 50px; /* Membuat sudut tombol melengkung */
+    border: 0; /* Tanpa border */
+    background: var(--blue); /* Latar belakang biru terang */
+    color: var(--white); /* Warna teks putih */
+    font-weight: var(--fwbold); /* Font tebal */
+}
+
+/* Pengaturan navbar */
+.navbar {
+    position: fixed; /* Tetap stay di atas */
+    top: 0; /* Pastikan berada di bagian atas */
+    left: 0; /* Mulai dari tepi kiri */
+    width: 100%; /* Memenuhi lebar layar */
+    background-color: #fff; /* Tambahkan warna background agar jelas */
+    z-index: 1000; /* Prioritaskan agar di atas elemen lain */
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1); /* Tambahkan bayangan untuk efek */
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+.navbar-nav .nav-item {
+    padding: 0 20px 0 20px;
+    
+}
+
+.navbar-nav .nav-link {
+    color: var(--navy); /* Warna default */
+    transition: color 0.3s ease; /* Animasi saat perubahan warna */
+}
+.navbar-nav .nav-link.active,
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link:focus {
+    color: var(--blue); /* Warna biru saat aktif, hover, atau fokus */
+    font-weight: bold; /* Membuat teks tebal saat aktif */
+}
+
+.navbar-nav .nav-item .active {
+    color: var(--blue); /* Warna untuk link aktif */
+    font-weight: var(--fwbold); /* Font tebal untuk link aktif */
+}
+section {
+    scroll-margin-top: 76px; /* Sesuaikan dengan tinggi navbar */
+}
+
+/* Pengaturan tampilan item terbaik */
+.best-items {
+    padding: 70px 0 50px 0; /* Padding atas dan bawah */
+    background: var(--softgray); /* Latar belakang abu-abu terang */
+    text-align: center; /* Menyusun tombol di tengah */
+}
+
+.best-items .btn {
+    padding: 10px 20px; /* Padding untuk tombol */
+}
+
+.best-items .item .info {
+    background: var(--white); /* Latar belakang putih */
+    border-bottom-left-radius: 16px; /* Membuat sudut bawah kiri melengkung */
+    border-bottom-right-radius: 16px; /* Membuat sudut bawah kanan melengkung */
+    padding: 16px; /* Padding untuk item */
+}
+
+/* Efek hover pada item */
+.best-items .item .info {
+    transition: all 0.3s ease; /* Efek transisi untuk hover */
+}
+
+.best-items .item:hover .info {
+    -webkit-box-shadow: 10px 10px 63px 0px rgba(199,205,227,0.65); /* Efek shadow untuk hover */
+    -moz-box-shadow: 10px 10px 63px 0px rgba(199,205,227,0.65); /* Efek shadow untuk hover (untuk Firefox) */
+    box-shadow: 10px 10px 63px 0px rgba(199,205,227,0.65); /* Efek shadow untuk hover */
+    transition: all 0.3s ease; /* Efek transisi untuk hover */
+}
+
+/* Pengaturan footer */
+.footer {
+    background-color: var(--white); /* Latar belakang putih */
+    color: var(--navy); /* Warna teks navy */
+}
+
+.footer-heading {
+    font-weight: var(--fwbold); /* Font tebal */
+    color: var(--navy); /* Warna teks navy */
+    margin-bottom: 20px; /* Margin bawah 20px */
+}
+
+.footer-text {
+    color: var(--navy); /* Warna teks navy */
+    font-size: 16px; /* Ukuran font 16px */
+    line-height: 1.6; /* Jarak antar baris */
+    font-weight: bold; /* Membuat teks menjadi bold */
+}
+
+/* Pengaturan daftar kontak di footer */
+.footer-contact-list {
+    list-style: none; /* Menghilangkan bullet pada daftar */
+    padding: 0; /* Menghapus padding */
+}
+
+.footer-contact-list li {
+    margin-bottom: 10px; /* Margin bawah 10px */
+}
+
+/* Pengaturan daftar sosial media di footer */
+.footer-social-list {
+    list-style: none; /* Menghilangkan bullet pada daftar */
+    padding: 0; /* Menghapus padding */
+}
+
+.footer-social-list li {
+    margin-bottom: 10px; /* Margin bawah 10px */
+}
+
+.footer-social-list a {
+    color: var(--navy); /* Warna teks navy */
+    text-decoration: none; /* Menghilangkan garis bawah pada link */
+    display: flex; /* Menggunakan flexbox untuk penataan */
+    align-items: center; /* Menyusun item secara vertikal */
+}
+
+.footer-social-list img {
+    width: 20px; /* Ukuran gambar 20px */
+    height: 20px; /* Ukuran gambar 20px */
+    margin-right: 10px; /* Jarak antara gambar dan teks */
+}
+
+/* Footer text center */
+.footer .text-center {
+    font-size: 12px; /* Ukuran font 12px */
+    background-color: var(--navy); /* Warna latar belakang navy */
+    color: var(--white); /* Warna teks putih */
+    padding: 10px; /* Padding 10px */
+    border-radius: 5px; /* Sudut melengkung */
+    margin: 0 auto; /* Membuat posisi rata tengah */
+
+}
+
+/* Pengaturan logo footer */
+.footer-logo {
+    display: flex; /* Menggunakan flexbox untuk penataan */
+    align-items: center; /* Mengatur penataan vertikal agar logo dan teks sejajar */
+}
+
+.footer-text {
+    margin-left: 14px; /* Menambahkan jarak antara logo dan teks */
+    font-size: 20px; /* Menyesuaikan ukuran font sesuai kebutuhan */
+}
+
+.button-container {
+    display: flex;
+    gap: 20px; /* Jarak antar tombol */
+}
