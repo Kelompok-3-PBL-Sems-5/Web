@@ -82,7 +82,7 @@
             <thead>
                 <tr>
                     <th class="text-center">No</th>
-                    <th>Nama User</th>
+                    {{-- <th>Nama User</th> --}}
                     <th>Kode Prodi</th>
                     <th>Nama Prodi</th>
                     <th>Jenjang</th>
@@ -92,7 +92,7 @@
                 @foreach ($prodi as $item)
                     <tr>
                         <td class="text-center">{{ $loop->iteration }}</td>
-                        <td>{{ $item->user->nama_user }}</td>
+                        {{-- <td>{{ $item->user->nama_user }}</td> --}}
                         <td>{{ $item->kode_prodi }}</td>
                         <td>{{ $item->nama_prodi }}</td>
                         <td>{{ $item->jenjang }}</td>

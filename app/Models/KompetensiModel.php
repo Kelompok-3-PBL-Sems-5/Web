@@ -13,10 +13,14 @@ class KompetensiModel extends Model
     protected $primaryKey = 'id_kompetensi'; // Mendefinisikan primary key dari tabel yang digunakan
 
     // Kolom yang dapat diisi
-    protected $fillable = ['nama_kompetensi','id_user'];
+    protected $fillable = ['nama_kompetensi','id_user', 'id_prodi'];
 
     public function user(): BelongsTo{
         return $this->belongsTo(UserModel::class, 'id_user', 'id_user');
+    }
+
+    public function prodi(): BelongsTo{
+        return $this->belongsTo(ProdiModel::class, 'id_prodi', 'id_prodi');
     }
 
 }

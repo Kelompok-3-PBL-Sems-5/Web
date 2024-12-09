@@ -76,7 +76,8 @@
                     maxlength: 20
                 },
                 foto: {
-                    accept: "png,jpg,jpeg"
+                    accept: "png,jpg,jpeg",
+                    required: false
                 }
             },
             submitHandler: function(form) {

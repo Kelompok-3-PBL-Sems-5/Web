@@ -72,13 +72,13 @@
         <li class="nav-item">
           <a href="{{ url('/bidang_minat') }}" class="nav-link {{ $activeMenu == 'bidang_minat' ? 'active' : '' }}">
             <i class="far fa-circle nav-icon"></i>
-            <p>Bidang Minat</p>
+            <p>Bidang Minat Dosen</p>
           </a>
         </li>
         <li class="nav-item">
           <a href="{{ url('/matkul') }}" class="nav-link {{ $activeMenu == 'matkul' ? 'active' : '' }}">
             <i class="far fa-circle nav-icon"></i>
-            <p>Mata Kuliah</p>
+            <p>Mata Kuliah Dosen</p>
           </a>
         </li>
         <li class="nav-item has-treeview {{ in_array($activeMenu, ['data_sertifikasi', 'data_pelatihan']) ? 'menu-open' : '' }}">
@@ -107,23 +107,29 @@
       </ul>
     </li>
 
-    <!-- Data Vendor -->
+    {{-- <!-- Data Vendor -->
     <li class="nav-header blue-header">Data Vendor</li>
     <li class="nav-item">
       <a href="{{ url('/vendor') }}" class="nav-link {{ ($activeMenu == 'vendor') ? 'active' : '' }}">
         <i class="nav-icon far fa-handshake"></i>
         <p>Data Vendor</p>
       </a>
-    </li>
+    </li> --}}
 
     <!-- Data Manage -->
     <li class="nav-header blue-header">Data Manage</li>
-    <li class="nav-item has-treeview {{ in_array($activeMenu, ['rekomendasi_program', 'periode']) ? 'menu-open' : '' }}">
+    <li class="nav-item has-treeview {{ in_array($activeMenu, ['vendor','jenis_pelatihan','rekomendasi', 'periode']) ? 'menu-open' : '' }}">
       <a href="#" class="nav-link">
         <i class="nav-icon fas fa-cogs"></i>
         <p>Data Manage<i class="right fas fa-angle-left"></i></p>
       </a>
       <ul class="nav nav-treeview">
+        <li class="nav-item">
+          <a href="{{ url('/vendor') }}" class="nav-link {{ ($activeMenu == 'vendor') ? 'active' : '' }}">
+            <i class="far fa-circle nav-icon"></i>
+            <p>Vendor</p>
+          </a>
+        </li>
         <li class="nav-item">
           <a href="{{ url('/jenis_pelatihan') }}" class="nav-link {{ ($activeMenu == 'jenis_pelatihan') ? 'active' : '' }}">
             <i class="far fa-circle nav-icon"></i>
@@ -131,7 +137,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="{{ url('/rekomendasi_program') }}" class="nav-link {{ ($activeMenu == 'rekomendasi_program') ? 'active' : '' }}">
+          <a href="{{ url('/rekomendasi') }}" class="nav-link {{ ($activeMenu == 'rekomendasi') ? 'active' : '' }}">
             <i class="far fa-circle nav-icon"></i>
             <p>Rekomendasi Dosen</p>
           </a>

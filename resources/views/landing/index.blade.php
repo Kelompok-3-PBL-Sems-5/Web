@@ -279,6 +279,17 @@
             font-size: 16px;
         }
 
+        .text-box {
+            background-color: #007bff; /* Biru profesional */
+            color: #ffffff; /* Teks putih */
+            padding: 10px 20px; /* Ruang di dalam kotak */
+            border-radius: 8px; /* Membuat sudut agak melengkung */
+            text-align: center; /* Teks berada di tengah */
+            font-weight: 600; /* Teks semi-bold */
+            display: inline-block; /* Memastikan ukuran mengikuti konten */
+            font-size: 1rem; /* Ukuran font yang nyaman */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Memberikan sedikit bayangan */
+        }
 
         /* Animation for Fade-In */
         @keyframes fadeIn {
@@ -314,9 +325,11 @@
                     <p class="paragraph mb-30">
                         Platform terintegrasi untuk meningkatkan efisiensi sertifikasi dan pelatihan dosen di JTI, serta memfasilitasi koordinasi dan pengelolaan yang lebih efektif
                     </p>
-                    <div class="mb-50 button-container">
-                        <a href="#" class="btn btn-primary">Daftar Sekarang</a>
-                    </div>
+                    <div class="mb-50 text-container">
+                        <div class="text-box">
+                            Sistem ini hanya dapat diakses oleh dosen yang telah terverifikasi.
+                        </div>
+                    </div>                    
                 </div>
                 <div class="col-lg-6">
                     <img src="images/banner.png" alt="" class="img-fluid">

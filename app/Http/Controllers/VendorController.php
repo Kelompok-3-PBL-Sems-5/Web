@@ -33,28 +33,24 @@ class VendorController extends Controller
     // Ambil data vendor dalam bentuk json untuk datatables
     public function list(Request $request)
     {
-        // Ambil data vendor
+        $filterVendor = $request->input('filter_vendor');
         $vendor = VendorModel::select('id_vendor', 'nama_vendor', 'alamat_vendor', 'jenis_vendor', 'telp_vendor', 'alamat_web');
+
+        // Tambahkan filter jika ada
+        if ($filterVendor) {
+            $vendor->where('jenis_vendor', $filterVendor);
+        }
 
         // Return data untuk DataTables
         return DataTables::of($vendor)
-            ->addIndexColumn() // menambahkan kolom index / nomor urut
+            ->addIndexColumn()
             ->addColumn('aksi', function ($vendor) {
-                // Menambahkan kolom aksi untuk edit, detail, dan hapus
-                // $btn = '<a href="' . url('/vendor/' . $vendor->id_vendor) . '" class="btn btn-info btn-sm">Detail</a> ';
-                // $btn .= '<a href="' . url('/vendor/' . $vendor->id_vendor . '/edit') . '" class="btn btn-warning btn-sm">Edit</a> ';
-                // $btn .= '<form class="d-inline-block" method="POST" action="' . url('/vendor/' . $vendor->id_vendor) . '">'
-                //     . csrf_field() . method_field('DELETE') .
-                //     '<button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Apakah Anda yakin menghapus data ini?\');">Hapus</button></form>';
-                // return $btn;
-
                 $btn = '<a href="' . url('/vendor/' . $vendor->id_vendor) . '" class="btn btn-info btn-sm">Detail</a> ';
                 $btn .= '<button onclick="modalAction(\'' . url('/vendor/' . $vendor->id_vendor . '/edit_ajax') . '\')" class="btn btn-warning btn-sm">Edit</button> ';
                 $btn .= '<button onclick="modalAction(\'' . url('/vendor/' . $vendor->id_vendor . '/delete_ajax') . '\')" class="btn btn-danger btn-sm">Hapus</button> ';
-
                 return $btn;
             })
-            ->rawColumns(['aksi']) // memberitahu bahwa kolom aksi berisi HTML
+            ->rawColumns(['aksi'])
             ->make(true);
     }
 

@@ -33,6 +33,10 @@
                         <th>Nama Jenis Pelatihan</th>
                         <td>{{ $jenis_pelatihan->nama_jenpel }}</td>
                     </tr>
+                    <tr>
+                        <th>Deskripsi</th>
+                        <td>{{ $jenis_pelatihan->deskripsi_jenpel }}</td>
+                    </tr>
                 </table>
             </div>
             <div class="modal-footer">

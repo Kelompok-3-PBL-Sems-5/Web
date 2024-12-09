@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\WelcomeController;
-use App\Http\Controllers\DosenController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\SertifikasiController;
 use App\Http\Controllers\PelatihanController;
@@ -15,6 +14,7 @@ use App\Http\Controllers\BidangMinatController;
 use App\Http\Controllers\MatKulController;
 use App\Http\Controllers\PengajuanSertifikasiController;
 use App\Http\Controllers\JenisPelatihanController;
+use App\Http\Controllers\RekomendasiController;
 // use App\Http\Controllers\AuthController;
 
 /*
@@ -271,5 +271,25 @@ Route::group(['prefix' => 'jenis_pelatihan'], function () {
     Route::get('/{id}/delete_ajax', [JenisPelatihanController::class, 'confirm_ajax']); // Untuk tampilkan form konfirmasi delete jenis pelatihan Ajax
     Route::delete('/{id}/delete_ajax', [JenisPelatihanController::class, 'delete_ajax']); // Untuk hapus data jenis pelatihan Ajax
     Route::delete('/{id}', [JenisPelatihanController::class, 'destroy']); // Menghapus data jenis pelatihan
+});
+Route::group(['prefix' => 'rekomendasi'], function () {
+    Route::get('/', [RekomendasiController::class, 'index']); // Menampilkan halaman awal Rekomendasi
+    Route::post('/list', [RekomendasiController::class, 'list']); // Menampilkan data Rekomendasi dalam bentuk json untuk datatables
+    Route::get('/create', [RekomendasiController::class, 'create']); // Menampilkan halaman form tambah Rekomendasi
+    Route::post('/', [RekomendasiController::class, 'store']); // Menyimpan data Rekomendasi baru
+    Route::get('/create_ajax', [RekomendasiController::class, 'create_ajax']); // Menampilkan halaman form tambah Rekomendasi Ajax
+    Route::post('/ajax', [RekomendasiController::class, 'store_ajax']); // Menyimpan data Rekomendasi baru Ajax
+    Route::get('/import', [RekomendasiController::class, 'import']); // Ajax form upload excel untuk Rekomendasi
+    Route::post('/import_ajax', [RekomendasiController::class, 'import_ajax']); // Ajax import excel Rekomendasi
+    Route::get('/export_excel', [RekomendasiController::class, 'export_excel']); // Export excel Rekomendasi
+    Route::get('/export_pdf', [RekomendasiController::class, 'export_pdf']); // Export pdf Rekomendasi
+    Route::get('/{id}', [RekomendasiController::class, 'show']); // Menampilkan detail Rekomendasi
+    Route::get('/{id}/edit', [RekomendasiController::class, 'edit']); // Menampilkan halaman form edit Rekomendasi
+    Route::put('/{id}', [RekomendasiController::class, 'update']); // Menyimpan perubahan data Rekomendasi
+    Route::get('/{id}/edit_ajax', [RekomendasiController::class, 'edit_ajax']); // Menampilkan halaman form edit Rekomendasi Ajax
+    Route::put('/{id}/update_ajax', [RekomendasiController::class, 'update_ajax']); // Menyimpan perubahan data Rekomendasi Ajax
+    Route::get('/{id}/delete_ajax', [RekomendasiController::class, 'confirm_ajax']); // Untuk tampilkan form confirm delete Rekomendasi Ajax
+    Route::delete('/{id}/delete_ajax', [RekomendasiController::class, 'delete_ajax']); // Untuk hapus data Rekomendasi Ajax
+    Route::delete('/{id}', [RekomendasiController::class, 'destroy']); // Menghapus data Rekomendasi
 });
 

@@ -20,8 +20,19 @@
                 </div>
                 <div class="form-group">
                     <label>Bidang Minat</label>
-                    <input value="" type="text" name="bidang_minat" id="bidang_minat" class="form-control"
-                        required>
+                    <select class="form-control" name="bidang_minat" id="bidang_minat" required>
+                        <option value="">- Pilih bidang minat -</option>
+                        <option value="Data Science">Data Science</option>
+                        <option value="Web Development">Web Development</option>
+                        <option value="Jaringan">Jaringan</option>
+                        <option value="Keamanan Siber">Keamanan (Keamanan Siber)</option>
+                        <option value="Mobile Development">Mobile Development</option>
+                        <option value="Cloud Computing">Cloud Computing</option>
+                        <option value="Internet of Things (IoT)">Internet of Things (IoT)</option>
+                        <option value="Blockchain">Blockchain</option>
+                        <option value="UI/UX Design">UI/UX Design</option>
+                        <option value="Manajemen TI">Manajemen TI</option>
+                    </select>                    
                     <small id="error-bidang_minat" class="error-text form-text text-danger"></small>
                 </div>
             </div>

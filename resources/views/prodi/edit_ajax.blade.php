@@ -25,7 +25,7 @@
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><spanaria-hidden="true">&times;</spanaria-hidden=></button>
                     </div>
                     <div class="modal-body">
-                        <div class="form-group row">
+                        {{-- <div class="form-group row">
                             <label class="col-2 control-label col-form-label">Nama User</label>
                             <div class="col-10">
                                 <select class="form-control" id="id_user" name="id_user" required>
@@ -37,7 +37,7 @@
                                 </select>
                                 <small id="error-id_user" class="error-text form-text text-danger"></small>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="form-group row">
                             <label class="col-2 control-label col-form-label">Kode Prodi</label>
                             <div class="col-10">
@@ -84,10 +84,10 @@
     $(document).ready(function() {
         $("#form-edit").validate({
             rules: {
-                id_user: {
-                    required: true,
-                    number: true
-                },
+                // id_user: {
+                //     required: true,
+                //     number: true
+                // },
                 kode_prodi: {
                     required: true,
                     maxlength: 100

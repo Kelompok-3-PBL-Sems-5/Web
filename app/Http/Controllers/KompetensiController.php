@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Models\KompetensiModel;
 use App\Models\UserModel;
+use App\Models\ProdiModel;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
@@ -24,15 +25,21 @@ class kompetensiController extends Controller
         ];
 
         $activeMenu = 'kompetensi'; // set menu yang sedang aktif
-
-        return view('kompetensi.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'activeMenu' => $activeMenu]);
+        $prodi = ProdiModel::all();
+        return view('kompetensi.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'prodi' => $prodi, 'activeMenu' => $activeMenu]);
     }
 
     // Ambil data kompetensi dalam bentuk json untuk datatables
     public function list(Request $request)
     {
         // Ambil data kompetensi
-        $kompetensi = kompetensiModel::select('id_kompetensi', 'nama_kompetensi', 'id_user');
+        $kompetensi = kompetensiModel::select('id_kompetensi', 'id_prodi','nama_kompetensi')
+            ->with('prodi');
+
+        // filter
+        if ($request->id_prodi) {
+            $kompetensi->where('id_prodi', $request->id_prodi);
+        }
 
         // Return data untuk DataTables
         return DataTables::of($kompetensi)
@@ -67,36 +74,21 @@ class kompetensiController extends Controller
         $page = (object) [
             'title' => 'Tambah kompetensi baru'
         ];
-
+        $prodi = ProdiModel::all();
         $activeMenu = 'kompetensi'; // set menu yang sedang aktif
 
         return view('kompetensi.create', [
             'breadcrumb' => $breadcrumb, 
             'page' => $page, 
+            'prodi' => $prodi,
             'activeMenu' => $activeMenu
         ]);
-    }
-
-    // Menyimpan data kompetensi baru
-    public function store(Request $request)
-    {
-        $request->validate([
-            'nama_kompetensi' => 'required|string|max:100', // Nama kompetensi harus diisi, berupa string, dan maksimal 100 karakter
-            'id_user' => 'nullable|integer'
-        ]);
-
-        kompetensiModel::create([
-            'nama_kompetensi' => $request->nama_kompetensi,
-            'id_user' => $request->id_user
-        ]);
-
-        return redirect('/kompetensi')->with('success', 'Data kompetensi berhasil disimpan');
     }
 
     // Menampilkan detail kompetensi
     public function show(string $id)
     {
-        $kompetensi = kompetensiModel::find($id);
+        $kompetensi = KompetensiModel::with('prodi')->find($id);
 
         $breadcrumb = (object) [
             'title' => 'Detail kompetensi',
@@ -116,7 +108,7 @@ class kompetensiController extends Controller
     public function edit(string $id)
     {
         $kompetensi = kompetensiModel::find($id);
-
+        $prodi = ProdiModel::all();
         $breadcrumb = (object) [
             'title' => 'Edit kompetensi',
             'list'  => ['Home', 'kompetensi', 'Edit']
@@ -128,23 +120,7 @@ class kompetensiController extends Controller
 
         $activeMenu = 'kompetensi'; // set menu yang sedang aktif
 
-        return view('kompetensi.edit', ['breadcrumb' => $breadcrumb, 'page' => $page, 'kompetensi' => $kompetensi, 'activeMenu' => $activeMenu]);
-    }
-
-    // Menyimpan perubahan data kompetensi
-    public function update(Request $request, string $id)
-    {
-        $request->validate([
-            'nama_kompetensi' => 'required|string|max:100', // Nama kompetensi harus diisi
-            'id_user' => 'nullable|integer'
-        ]);
-
-        kompetensiModel::find($id)->update([
-            'nama_kompetensi' => $request->nama_kompetensi,
-            'id_user' => $request->id_user
-        ]);
-
-        return redirect('/kompetensi')->with('success', 'Data kompetensi berhasil diubah');
+        return view('kompetensi.edit', ['breadcrumb' => $breadcrumb, 'page' => $page, 'kompetensi' => $kompetensi, 'prodi' => $prodi,'activeMenu' => $activeMenu]);
     }
 
     // Menghapus data kompetensi
@@ -167,7 +143,9 @@ class kompetensiController extends Controller
     // 1. public function create_ajax()
     public function create_ajax()
     {
-        return view('kompetensi.create_ajax');
+        $prodi = ProdiModel::select('id_prodi', 'nama_prodi')->get();
+        return view('kompetensi.create_ajax')
+        ->with('prodi', $prodi);
     }
 
     // 2. public function store_ajax(Request $request)
@@ -176,7 +154,8 @@ class kompetensiController extends Controller
         // cek apakah request berupa ajax
         if ($request->ajax() || $request->wantsJson()) {
             $rules = [
-                'nama_kompetensi' => 'required|string|max:100'
+                'id_prodi'        => 'required|integer',
+                'nama_kompetensi' => 'required|string|max:50'
             ];
             // use Illuminate\Support\Facades\Validator;
             $validator = Validator::make($request->all(), $rules);
@@ -201,7 +180,9 @@ class kompetensiController extends Controller
     public function edit_ajax(string $id)
     {
         $kompetensi = kompetensiModel::find($id);
-        return view('kompetensi.edit_ajax', ['kompetensi' => $kompetensi]);
+        $prodi = ProdiModel::select('id_prodi', 'nama_prodi')->get();
+
+        return view('kompetensi.edit_ajax', ['kompetensi' => $kompetensi, 'prodi' => $prodi]);
     }
 
     // 4. public function update_ajax(Request $request, $id)
@@ -210,6 +191,7 @@ class kompetensiController extends Controller
         // cek apakah request dari ajax
         if ($request->ajax() || $request->wantsJson()) {
             $rules = [
+                'id_prodi'        => 'required|integer',
                 'nama_kompetensi' => 'required|string|max:100'
             ];
             // use Illuminate\Support\Facades\Validator;

@@ -32,10 +32,10 @@
                         Apakah Anda ingin menghapus data seperti di bawah ini?
                     </div>
                     <table class="table table-sm table-bordered table-striped">
-                        <tr>
+                        {{-- <tr>
                             <th class="text-right col-3">Nama User :</th>
                             <td class="col-9">{{ $prodi->user->nama_user }}</td>
-                        </tr>
+                        </tr> --}}
                         <tr>
                             <th class="text-right col-3">Kode Prodi :</th>
                             <td class="col-9">{{ $prodi->kode_prodi }}</td>

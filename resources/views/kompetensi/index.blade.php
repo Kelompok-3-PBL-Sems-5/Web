@@ -18,20 +18,48 @@
         @if (session('error'))
             <div class="alert alert-danger">{{ session('error') }}</div>
         @endif
+
+        <div class="row">
+            <div class="col-md-10">
+                <div class="form-group row align-items-center">
+                    <label class="col-2 control-label col-form-label">Filter Prodi:</label>
+                    <div class="col-3">
+                        <select class="form-control" id="id_prodi" name="id_prodi" required style="padding-left: 10px;">
+                            <option value="" style="padding: 5px 10px;">- Semua -</option>
+                            @foreach ($prodi as $item)
+                                <option value="{{ $item->id_prodi }}">{{ $item->nama_prodi}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>                    
+            </div>
+        </div>
+
+        @if (session('success'))
+                <div class="alert alert-success">{{ session('success') }}</div>
+            @endif
+            @if (session('error'))
+                <div class="alert alert-danger">{{ session('error') }}</div>
+            @endif
+
         <table class="table table-bordered table-striped table-hover table-sm" id="table_kompetensi">
             <thead>
                 <tr>
                     <th>No</th>
+                    <th>Nama Prodi</th>
                     <th>Nama Kompetensi</th>
-                    <th>Id User</th>
+                    {{-- <th>Id User</th> --}}
                     <th>Aksi</th>
                 </tr>
             </thead>
         </table>
     </div>
 </div>
+
+<!-- Modal untuk Form Import -->
 <div id="myModal" class="modal fade animate shake" tabindex="-1" role="dialog" data-backdrop="static" 
 data-keyboard="false" data-width="75%" aria-hidden="true"></div>
+
 @endsection
 @push('js')
 <script>
@@ -53,7 +81,7 @@ data-keyboard="false" data-width="75%" aria-hidden="true"></div>
                 "dataType": "json",
                 "type": "POST",
                 "data": function(d) {
-                    d.filter_kompetensi = $('.filter_kompetensi').val();
+                    d.id_prodi = $('#id_prodi').val();
                 }
             },
             columns: [
@@ -66,18 +94,25 @@ data-keyboard="false" data-width="75%" aria-hidden="true"></div>
                     searchable: false
                 },
                 {
+                    // mengambil data level hasil dari ORM berelasi
+                    data: "prodi.nama_prodi",
+                    className: "",
+                    orderable: true,
+                    searchable: true
+                },
+                {
                     data: "nama_kompetensi", 
                     className: "",
                     width: "20%",
                     orderable: true, 
                     searchable: true
                 },
-                {
-                    data: "id_user",
-                    className: "",
-                    orderable: true,
-                    searchable: true,
-                },
+                // {
+                //     data: "id_user",
+                //     className: "",
+                //     orderable: true,
+                //     searchable: true,
+                // },
                 {
                     data: "aksi", 
                     className: "",
@@ -92,8 +127,8 @@ data-keyboard="false" data-width="75%" aria-hidden="true"></div>
                     tablekompetensi.search(this.value).draw();
                 }
         });
-            $('.filter_kompetensi').change(function() {
-                tablekompetensi.draw();
+            $('#id_prodi').on('change',function(){
+                tablekompetensi.ajax.reload();
         });
     });
 </script>

@@ -1,4 +1,4 @@
-@empty($kompetensi)
+@empty($rekomendasi)
     <div id="modal-master" class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -11,18 +11,18 @@
                     <h5><i class="icon fas fa-ban"></i> Kesalahan!!!</h5>
                     Data yang anda cari tidak ditemukan
                 </div>
-                <a href="{{ url('/kompetensi') }}" class="btn btn-warning">Kembali</a>
+                <a href="{{ url('/rekomendasi') }}" class="btn btn-warning">Kembali</a>
             </div>
         </div>
     </div>
 @else
-    <form action="{{ url('/kompetensi/' . $kompetensi->id_kompetensi . '/delete_ajax') }}" method="POST" id="form-delete">
+    <form action="{{ url('/rekomendasi/' . $rekomendasi->id_program . '/delete_ajax') }}" method="POST" id="form-delete">
         @csrf
         @method('DELETE')
         <div id="modal-master" class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Hapus Data kompetensi</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Hapus Data rekomendasi</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
                 </div>
@@ -33,14 +33,41 @@
                     </div>
                     <table class="table table-sm table-bordered table-striped">
                         <tr>
-                            <th class="text-right col-3">Nama prodi :</th>
-                            <td class="col-9">{{ $kompetensi->prodi->nama_prodi }}</td>
+                            <th class="text-right col-3">Nama Vendor:</th>
+                            <td class="col-9">{{ $rekomendasi->vendor->nama_vendor }}</td>
                         </tr>
                         <tr>
-                            <th class="text-right col-3">Nama kompetensi :</th>
-                            <td class="col-9">{{ $kompetensi->nama_kompetensi }}</td>
+                            <th class="text-right col-3">Jenis Program  :</th>
+                            <td class="col-9">{{ $rekomendasi->jenis_program }}</td>
                         </tr>
-                       
+                        <tr>
+                            <th class="text-right col-3">Nama Program  :</th>
+                            <td class="col-9">{{ $rekomendasi->nama_program  }}</td>
+                        </tr>
+                        <tr>
+                            <th class="text-right col-3">Nama Matkul :</th>
+                            <td class="col-9">{{ $rekomendasi->matkul->nama_matkul }}</td>
+                        </tr>
+                        <tr>
+                            <th class="text-right col-3">Nama Bidang Minat :</th>
+                            <td class="col-9">{{ $rekomendasi->bidang_minat->bidang_minat }}</td>
+                        </tr>
+                        <tr>
+                            <th class="text-right col-3">Level Program :</th>
+                            <td class="col-9">{{ $rekomendasi->level_program }}</td>
+                        </tr>
+                        <tr>
+                            <th class="text-right col-3">Kuota Program :</th>
+                            <td class="col-9">{{ $rekomendasi->kuota_program }}</td>
+                        </tr>
+                        <tr>
+                            <th class="text-right col-3">Tanggal Program :</th>
+                            <td class="col-9">{{ $rekomendasi->tanggal_program }}</td>
+                        </tr>
+                        <tr>
+                            <th class="text-right col-3">Status :</th>
+                            <td class="col-9">{{ $rekomendasi->status }}</td>
+                        </tr>
                     </table>
                 </div>
                 <div class="modal-footer">
@@ -67,7 +94,7 @@
                                     title: 'Berhasil',
                                     text: response.message
                                 });
-                                dataKompetensi.ajax.reload();
+                                datarekomendasi.ajax.reload();
                             } else {
                                 $('.error-text').text('');
                                 $.each(response.msgField, function(prefix, val) {

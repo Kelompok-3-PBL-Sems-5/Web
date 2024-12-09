@@ -54,7 +54,7 @@
                         </tr>
                         <tr>
                             <th class="text-right col-3">Jenis Pelatihan :</th>
-                            <td class="col-9">{{ $pelatihan->jenis_pelatihan }}</td>
+                            <td class="col-9">{{ $pelatihan->jenis_pelatihan->nama_jenpel }}</td>
                         </tr>
                         <tr>
                             <th class="text-right col-3">Tanggal Mulai :</th>

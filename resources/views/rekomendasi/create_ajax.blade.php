@@ -1,25 +1,13 @@
-<form action="{{ url('/data_pelatihan/ajax') }}" method="POST" id="form-tambah">
+<form action="{{ url('/rekomendasi/ajax') }}" method="POST" id="form-tambah">
     @csrf
     <div id="modal-master" class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Tambah Data pelatihan</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Tambah Data rekomendsai</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
-                
-                <div class="form-group">
-                    <label>Nama User</label>
-                    <select class="form-control" id="id_user" name="id_user" required>
-                        <option value="">- Pilih user -</option>
-                        @foreach ($user as $c)
-                            <option value="{{ $c->id_user }}">{{ $c->nama_user }}</option>
-                        @endforeach
-                    </select>
-                    <small id="error-id_user" class="error-text form-text text-danger"></small>
-                </div>
-
                 <div class="form-group">
                     <label>Nama Vendor</label>
                     <select class="form-control" id="id_vendor" name="id_vendor" required>
@@ -30,7 +18,18 @@
                     </select>
                     <small id="error-id_vendor" class="error-text form-text text-danger"></small>
                 </div>
-
+                <div class="form-group">
+                    <label>Jenis Program</label>
+                    <select class="form-control" id="jenis_program" name="jenis_program" required>
+                        <option value="">-- Pilih Jenis Program --</option>
+                        <option value="Sertifikasi">Sertifikasi</option>
+                        <option value="Pelatihan">Pelatihan</option>
+                    </select>
+                <div class="form-group">
+                    <label>Nama program</label>
+                    <input value="" type="text" name="nama_program" id="nama_program" class="form-control" required>
+                    <small id="error-nama_program" class="error-text form-text text-danger"></small>
+                </div>             
                 <div class="form-group">
                     <label>Nama Mata Kuliah</label>
                     <select class="form-control" id="id_matkul" name="id_matkul" required>
@@ -41,7 +40,6 @@
                     </select>
                     <small id="error-id_matkul" class="error-text form-text text-danger"></small>
                 </div>
-                
                 <div class="form-group">
                     <label>Nama Bidang Minat</label>
                     <select class="form-control" id="id_bidang_minat" name="id_bidang_minat" required>
@@ -53,53 +51,30 @@
                     <small id="error-id_bidang_minat" class="error-text form-text text-danger"></small>
                 </div>
                 <div class="form-group">
-                    <label>Nama Pelatihan</label>
-                    <input value="" type="text" name="nama_pelatihan" id="nama_pelatihan" class="form-control" required>
-                    <small id="error-nama_pelatihan" class="error-text form-text text-danger"></small>
+                    <label>Tanggal Program</label>
+                    <input value="" type="date" name="tanggal_program" id="tanggal_program" class="form-control" required>
+                    <small id="error-tanggal_program" class="error-text form-text text-danger"></small>
                 </div>
                 <div class="form-group">
-                    <label>Jenis Pelatihan</label>
-                    <select class="form-control" id="id_jenpel" name="id_jenpel" required>
-                        <option value="">- Pilih Jenis Pelatihan -</option>
-                        @foreach ($jenis_pelatihan as $a)
-                            <option value="{{ $a->id_jenpel }}">{{ $a->nama_jenpel }}</option>
-                        @endforeach
-                    </select>
-                    <small id="error-id_jenpel" class="error-text form-text text-danger"></small>
-                </div>  
-                <div class="form-group">
-                    <label>Tanggal Mulai Pelatihan</label>
-                    <input value="" type="date" name="tgl_mulai" id="tgl_mulai" class="form-control" required>
-                    <small id="error-tgl_mulai" class="error-text form-text text-danger"></small>
-                </div>
-                <div class="form-group">
-                    <label>Tanggal Akhir Pelatihan</label>
-                    <input value="" type="date" name="tgl_akhir" id="tgl_akhir" class="form-control" required>
-                    <small id="error-tgl_akhir" class="error-text form-text text-danger"></small>
-                </div>
-                <div class="form-group">
-                    <label>Level Pelatihan</label>
-                    <select class="form-control" id="level_pelatihan" name="level_pelatihan" required>
-                        <option value="">-- Pilih Level Pelatihan --</option>
+                    <label>Level Program</label>
+                    <select class="form-control" id="level_program" name="level_program" required>
+                        <option value="">-- Pilih Level Program --</option>
                         <option value="Nasional">Nasional</option>
                         <option value="Internasional">Internasional</option>
                     </select>
-                    <small id="error-level_pelatihan" class="error-text form-text text-danger"></small>
+                    <small id="error-level_program" class="error-text form-text text-danger"></small>
                 </div> 
                 <div class="form-group">
-                    <label>Jenis Pendanaan</label>
-                    <select class="form-control" id="jenis_pendanaan" name="jenis_pendanaan" required>
-                        <option value="">-- Pilih Jenis Pendanaan --</option>
-                        <option value="Mandiri">Mandiri</option>
-                        <option value="Eksternal">Eksternal</option>
-                    </select>
-                    <small id="error-jenis_pendanaan" class="error-text form-text text-danger"></small>
-                </div>                
-                <div class="form-group">
-                    <label>Tautan Bukti Pelatihan</label>
-                    <input value="" type="text" name="bukti_pelatihan" id="bukti_pelatihan" class="form-control" required>
-                    <small id="error-bukti_pelatihan" class="error-text form-text text-danger"></small>
+                    <label>Kuota Program</label>
+                    <input value="" type="text" name="kuota_program" id="kuota_program" class="form-control" required>
+                    <small id="error-kuota_program" class="error-text form-text text-danger"></small>
                 </div>
+                {{-- <div class="form-group">
+                    <label>Bukti rekomendsai</label>
+                    <input value="" type="file" name="bukti_sertif" id="bukti_sertif" class="form-control" accept=".pdf,.jpg,.png" required>
+                    <small class="form-text text-muted">Pilih file (PDF, JPG, PNG)</small>
+                    <small id="error-bukti_sertif" class="error-text form-text text-danger"></small>
+                </div> --}}
                 {{-- <div class="form-group">
                     <label>Status</label>
                     <select name="status" id="status" class="form-control" required>
@@ -122,49 +97,32 @@
     $(document).ready(function() {
         $("#form-tambah").validate({
             rules: {
-                id_user: {
-                    required: true,
-                    number: true
-                },
                 id_vendor: {
                     required: true,
                     number: true
                 },
+                jenis_program: {
+                    required: true,
+                },
+                nama_program: {
+                    required: true,
+                },
                 id_matkul: {
                     required: true,
-                    number: true
                 },
                 id_bidang_minat: {
                     required: true,
-                    number: true
                 },
-                nama_pelatihan: {
-                    required: true,
-                    minlength: 3
-                },
-                jenis_pelatihan: {
-                    required: true,
-                },
-                tgl_mulai: {
+                tanggal_program: {
                     required: true,
                     date: true
                 },
-                tgl_akhir: {
-                    required: true,
-                    date: true
-                },
-                level_pelatihan: {
+                level_program: {
                     required: true,
                 },
-                jenis_pendanaan: {
+                kuota_program: {
                     required: true,
                 },
-                bukti_pelatihan: {
-                    required: true
-                },
-                status: {
-                    required: true
-                }
             },
             submitHandler: function(form) {
                 $.ajax({
@@ -179,7 +137,7 @@
                                 title: 'Berhasil',
                                 text: response.message
                             });
-                            datapelatihan.ajax.reload();
+                            datarekomendsai.ajax.reload();
                         } else {
                             $('.error-text').text('');
                             $.each(response.msgField, function(prefix, val) {

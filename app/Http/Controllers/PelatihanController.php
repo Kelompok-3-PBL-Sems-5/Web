@@ -5,6 +5,7 @@ use App\Models\PelatihanModel;
 use App\Models\BidangMinatModel;
 use App\Models\MatKulModel;
 use App\Models\UserModel;
+use App\Models\JenisPelatihanModel;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
@@ -28,17 +29,19 @@ class PelatihanController extends Controller
         $user = UserModel::all(); // ambil data user untuk filter user
         $bidang_minat = BidangMinatModel::all();
         $matkul = MatKulModel::all();
-        return view('pelatihan.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'vendor' => $vendor, 'user' => $user, 'bidang_minat' => $bidang_minat, 'matkul' => $matkul, 'activeMenu' => $activeMenu]);
+        $jenis_pelatihan = JenisPelatihanModel::all();
+        return view('pelatihan.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'vendor' => $vendor, 'user' => $user, 'bidang_minat' => $bidang_minat, 'matkul' => $matkul,'jenis_pelatihan' => $jenis_pelatihan, 'activeMenu' => $activeMenu]);
     }
     
     // Ambil data pelatihan dalam bentuk json untuk datatables
     public function list(Request $request)
     {
-        $pelatihan = PelatihanModel::select('id_pelatihan', 'id_user','id_vendor','id_bidang_minat', 'id_matkul','nama_pelatihan', 'jenis_pelatihan', 'tgl_mulai', 'tgl_akhir', 'level_pelatihan', 'jenis_pendanaan', 'bukti_pelatihan', 'status')
+        $pelatihan = PelatihanModel::select('id_pelatihan', 'id_user','id_vendor','id_bidang_minat', 'id_matkul','nama_pelatihan', 'id_jenpel', 'tgl_mulai', 'tgl_akhir', 'level_pelatihan', 'jenis_pendanaan', 'bukti_pelatihan', 'status')
             ->with('vendor')
             ->with('bidang_minat')
             ->with('matkul')
-            ->with('user');
+            ->with('user')
+            ->with('jenis_pelatihan');
         // filter data pelatihan berdasarkan id_vendor dan id_user
         if ($request->id_vendor) {
             $pelatihan->where('id_vendor', $request->id_vendor);
@@ -51,6 +54,9 @@ class PelatihanController extends Controller
         }
         if ($request->id_matkul) {
             $pelatihan->where('id_matkul', $request->id_matkul);
+        }
+        if ($request->id_jenpel) {
+            $pelatihan->where('id_jenpel', $request->id_jenpel);
         }
         
         return DataTables::of($pelatihan)
@@ -81,8 +87,9 @@ class PelatihanController extends Controller
         $user = UserModel::all(); // ambil data user untuk filter user
         $bidang_minat = BidangMinatModel::all();
         $matkul = MatKulModel::all();
+        $jenis_pelatihan = JenisPelatihanModel::all();
         $activeMenu = 'pelatihan'; // set menu yang sedang aktif
-        return view('pelatihan.create', ['breadcrumb' => $breadcrumb, 'page' => $page, 'vendor' => $vendor, 'user' => $user,'bidang_minat' => $bidang_minat, 'matkul' => $matkul, 'activeMenu' => $activeMenu]);
+        return view('pelatihan.create', ['breadcrumb' => $breadcrumb, 'page' => $page, 'vendor' => $vendor, 'user' => $user,'bidang_minat' => $bidang_minat, 'matkul' => $matkul, 'jenis_pelatihan' => $jenis_pelatihan,'activeMenu' => $activeMenu]);
     }
 
     // Fungsi untuk menentukan status berdasarkan tanggal mulai dan akhir
@@ -123,6 +130,7 @@ class PelatihanController extends Controller
         $user = UserModel::all(); // Ambil data user
         $bidang_minat = BidangMinatModel::all();
         $matkul = MatKulModel::all();
+        $jenis_pelatihan = JenisPelatihanModel::all();
         $breadcrumb = (object) [
             'title' => 'Edit Pelatihan',
             'list' => ['Home', 'Pelatihan', 'Edit']
@@ -131,7 +139,7 @@ class PelatihanController extends Controller
             "title" => 'Edit Pelatihan'
         ];
         $activeMenu = 'pelatihan'; // set menu yang sedang aktif
-        return view('pelatihan.edit', ['breadcrumb' => $breadcrumb, 'page' => $page, 'pelatihan'=> $pelatihan, 'vendor' => $vendor, 'user' => $user,'bidang_minat' => $bidang_minat, 'matkul' => $matkul, 'activeMenu' => $activeMenu]);
+        return view('pelatihan.edit', ['breadcrumb' => $breadcrumb, 'page' => $page, 'pelatihan'=> $pelatihan, 'vendor' => $vendor, 'user' => $user,'bidang_minat' => $bidang_minat, 'matkul' => $matkul, 'jenis_pelatihan' => $jenis_pelatihan,'activeMenu' => $activeMenu]);
     }
 
     // Menghapus data pelatihan 
@@ -157,10 +165,12 @@ class PelatihanController extends Controller
         $user = UserModel::select('id_user', 'nama_user')->get();
         $bidang_minat = BidangMinatModel::select('id_bidang_minat', 'bidang_minat')->get();
         $matkul = MatKulModel::select('id_matkul', 'nama_matkul')->get();
+        $jenis_pelatihan = JenisPelatihanModel::select('id_jenpel', 'nama_jenpel')->get();
         return view('pelatihan.create_ajax')
             ->with('vendor', $vendor)
             ->with('user', $user)
             ->with('bidang_minat', $bidang_minat)
+            ->with('jenis_pelatihan', $jenis_pelatihan)
             ->with('matkul', $matkul);
     }
     
@@ -176,7 +186,7 @@ class PelatihanController extends Controller
                 'id_matkul'          => 'required|integer',
                 'id_bidang_minat'    => 'required|integer',
                 'nama_pelatihan'     => 'required|string|max:100',
-                'jenis_pelatihan'    => 'required|string|max:200',
+                'id_jenpel'    => 'required|integer',
                 'tgl_mulai'          => 'required|date',
                 'tgl_akhir'          => 'required|date',
                 'level_pelatihan'    => 'required|string|max:50',
@@ -211,8 +221,9 @@ class PelatihanController extends Controller
         $user = UserModel::select('id_user', 'nama_user')->get();
         $bidang_minat = BidangMinatModel::select('id_bidang_minat', 'bidang_minat')->get();
         $matkul = MatKulModel::select('id_matkul', 'nama_matkul')->get();
+        $jenis_pelatihan = JenisPelatihanModel::select('id_jenpel', 'nama_jenpel')->get();
 
-        return view('pelatihan.edit_ajax', ['pelatihan' => $pelatihan, 'vendor' => $vendor, 'user' => $user, 'bidang_minat' => $bidang_minat, 'matkul' => $matkul]);
+        return view('pelatihan.edit_ajax', ['pelatihan' => $pelatihan, 'vendor' => $vendor, 'user' => $user, 'bidang_minat' => $bidang_minat, 'matkul' => $matkul, 'jenis_pelatihan' => $jenis_pelatihan]);
     }
 
     // 4. public function update_ajax(Request $request, $id)
@@ -226,7 +237,7 @@ class PelatihanController extends Controller
                 'id_matkul'          => 'required|integer',
                 'id_bidang_minat'    => 'required|integer',
                 'nama_pelatihan'     => 'required|string|max:100',
-                'jenis_pelatihan'    => 'required|string|max:200',
+                'id_jenpel'    => 'required|integer',
                 'tgl_mulai'          => 'required|date',
                 'tgl_akhir'          => 'required|date',
                 'level_pelatihan'    => 'required|string|max:50',
@@ -300,8 +311,9 @@ class PelatihanController extends Controller
         $user = UserModel::find($pelatihan->id_user);
         $bidang_minat = BidangMinatModel::find($pelatihan->id_bidang_minat);
         $matkul = MatKulModel::find($pelatihan->id_matkul);
+        $jenis_pelatihan = JenisPelatihanModel::find($pelatihan->id_jenpel);
 
-        return view('pelatihan.show_ajax', ['pelatihan' => $pelatihan, 'vendor' => $vendor, 'user' => $user, 'bidang_minat' => $bidang_minat, 'matkul' => $matkul]);
+        return view('pelatihan.show_ajax', ['pelatihan' => $pelatihan, 'vendor' => $vendor, 'user' => $user, 'bidang_minat' => $bidang_minat, 'matkul' => $matkul, 'jenis_pelatihan' => $jenis_pelatihan]);
     }
 
     
@@ -340,7 +352,7 @@ class PelatihanController extends Controller
                             'id_matkul'          => $value['C'],
                             'id_bidang_minat'    => $value['D'],
                             'nama_pelatihan'     => $value['E'],
-                            'jenis_pelatihan'    => $value['F'],
+                            'id_jenpel'          => $value['F'],
                             'tgl_mulai'          => $value['G'],
                             'tgl_akhir'          => $value['H'],
                             'level_pelatihan'    => $value['I'],
@@ -371,12 +383,13 @@ class PelatihanController extends Controller
     public function export_excel()
     {
         // ambil data barang yang akan di export
-        $pelatihan = PelatihanModel::select('id_user','id_vendor','id_matkul','id_bidang_minat', 'nama_pelatihan', 'jenis_pelatihan', 'tgl_mulai', 'tgl_akhir', 'level_pelatihan', 'jenis_pendanaan', 'bukti_pelatihan', 'status')
+        $pelatihan = PelatihanModel::select('id_user','id_vendor','id_matkul','id_bidang_minat', 'nama_pelatihan', 'id_jenpel', 'tgl_mulai', 'tgl_akhir', 'level_pelatihan', 'jenis_pendanaan', 'bukti_pelatihan', 'status')
             ->orderBy('id_user')
             ->with('user')
             ->with('vendor')
             ->with('matkul')
             ->with('bidang_minat')
+            ->with('jenis_pelatihan')
             ->get();
         // load library excel
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
@@ -405,7 +418,7 @@ class PelatihanController extends Controller
             $sheet->setCellValue('D' . $baris, $value->matkul->nama_matkul);
             $sheet->setCellValue('E' . $baris, $value->bidang_minat->bidang_minat);
             $sheet->setCellValue('F' . $baris, $value->nama_pelatihan);
-            $sheet->setCellValue('G' . $baris, $value->jenis_pelatihan);
+            $sheet->setCellValue('G' . $baris, $value->jenis_pelatihan->nama_jenpel);
             $sheet->setCellValue('H' . $baris, $value->tgl_mulai);
             $sheet->setCellValue('I' . $baris, $value->tgl_akhir);
             $sheet->setCellValue('J' . $baris, $value->level_pelatihan);
@@ -434,7 +447,7 @@ class PelatihanController extends Controller
     } // end function export_excel
     public function export_pdf()
     {
-        $pelatihan = pelatihanModel::select('id_user','id_vendor','id_matkul','id_bidang_minat','nama_pelatihan', 'jenis_pelatihan', 'tgl_mulai', 'tgl_akhir', 'level_pelatihan', 'jenis_pendanaan', 'bukti_pelatihan', 'status')
+        $pelatihan = pelatihanModel::select('id_user','id_vendor','id_matkul','id_bidang_minat','nama_pelatihan', 'id_jenpel', 'tgl_mulai', 'tgl_akhir', 'level_pelatihan', 'jenis_pendanaan', 'bukti_pelatihan', 'status')
             ->orderBy('id_user')    
             ->orderBy('id_vendor')
             ->with('user')

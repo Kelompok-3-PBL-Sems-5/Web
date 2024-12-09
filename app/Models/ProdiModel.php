@@ -21,5 +21,10 @@ class ProdiModel extends Model
     public function user(): BelongsTo{
         return $this->belongsTo(UserModel::class, 'id_user', 'id_user');
     }
+
+    public function kompetensi():HasMany
+    {
+        return $this->hasMany(KompetensiModel::class, 'id_kompetensi', 'id_kompetensi');
+    }
     
 }

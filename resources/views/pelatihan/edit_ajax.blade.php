@@ -82,7 +82,6 @@
                                     <small id="error-id_bidang_minat" class="error-text form-text text-danger"></small>
                                 </div>
                             </div>
-
                             <div class="form-group row">
                                 <label class="col-2 control-label col-form-label">Nama Pelatihan</label>
                                 <div class="col-10">
@@ -94,11 +93,16 @@
                             <div class="form-group row">
                                 <label class="col-2 control-label col-form-label">Jenis Pelatihan</label>
                                 <div class="col-10">
-                                    <input type="text" class="form-control" id="jenis_pelatihan" name="jenis_pelatihan"
-                                        value="{{ $pelatihan->jenis_pelatihan }}" required>
-                                    <small id="error-jenis_pelatihan" class="error-text form-text text-danger"></small>
+                                    <select class="form-control" id="id_jenpel" name="id_jenpel" required>
+                                        <option value="">- Pilih Mata Kuliah -</option>
+                                        @foreach ($jenis_pelatihan as $item)
+                                            <option {{ $item->id_jenpel == $pelatihan->id_jenpel ? 'selected' : '' }}
+                                                value="{{ $item->id_jenpel }}">{{ $item->nama_jenpel }}</option>
+                                        @endforeach
+                                    </select>
+                                    <small id="error-id_jenpel" class="error-text form-text text-danger"></small>
                                 </div>
-                            </div>   
+                            </div>
                             <div class="form-group row">
                                 <label class="col-2 control-label col-form-label">Tanggal Mulai</label>
                                 <div class="col-10">
@@ -187,11 +191,11 @@
                             number: true
                         },
                         nama_pelatihan: {
-                        required: true,
-                        minlength: 3
+                            required: true,
+                            minlength: 3
                         },
                         jenis_pelatihan: {
-                        required: true,
+                            required: true,
                         },
                         tgl_mulai: {
                             required: true,

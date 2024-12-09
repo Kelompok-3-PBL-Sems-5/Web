@@ -53,7 +53,7 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Nama User</th>
+                        {{-- <th>Nama User</th> --}}
                         <th>Kode Prodi</th>
                         <th>Nama Prodi</th>
                         <th>Jenjang</th>
@@ -128,25 +128,25 @@
     }
 
     /* Table Styling */
-    #table_level {
+    #table_prodi {
         border-collapse: separate; 
         border-spacing: 0 10px; 
     }
 
-    #table_level thead {
+    #table_prodi thead {
         background: #007bff; 
         color: white; 
         border-radius: 10px; 
     }
 
-    #table_level tbody tr {
+    #table_prodi tbody tr {
         background: #f8f9fa; 
         border-radius: 10px; 
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
         transition: background 0.3s, transform 0.3s; 
     }
 
-    #table_level tbody tr:hover {
+    #table_prodi tbody tr:hover {
         background: #e2e6ea; 
         transform: scale(1.02); 
     }
@@ -166,7 +166,7 @@
     }
 
     /* Input Search Custom */
-    #table-level_filter input {
+    #table-prodi_filter input {
         border-radius: 20px; 
         padding: 8px 15px; 
         border: 1px solid #ddd; 
@@ -174,7 +174,7 @@
         transition: border-color 0.3s, box-shadow 0.3s; 
     }
 
-    #table-level_filter input:focus {
+    #table-prodi_filter input:focus {
         border-color: #007bff; 
         box-shadow: 0 0 8px rgba(0, 123, 255, 0.5); 
     }
@@ -209,12 +209,12 @@
                     orderable: false,
                     searchable: false
                 }, {
-                    // Menampilkan Nama User dari relasi user
-                    data: "user.nama_user",
-                    className: "",
-                    orderable: true,
-                    searchable: true
-                }, {
+                //     // Menampilkan Nama User dari relasi user
+                //     data: "user.nama_user",
+                //     className: "",
+                //     orderable: true,
+                //     searchable: true
+                // }, {
                     data: "kode_prodi",
                     className: "",
                     orderable: true,

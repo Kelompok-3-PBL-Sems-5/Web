@@ -88,6 +88,22 @@
                         </div>
                     </div>
                 </div> 
+
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="form-group row align-items-center">
+                            <label class="col-2 control-label col-form-label">Filter jenis pelatihan:</label>
+                            <div class="col-3">
+                                <select class="form-control" id="id_jenpel" name="id_jenpel" required>
+                                    <option value="" style="padding: 5px 10px;">- Semua -</option>
+                                    @foreach ($jenis_pelatihan as $item)
+                                        <option value="{{ $item->id_jenpel }}">{{ $item->nama_jenpel }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
                  
 
             @if (session('success'))
@@ -259,6 +275,7 @@
                         d.id_user = $('#id_user').val();
                         d.id_matkul = $('#id_matkul').val();
                         d.id_bidang_minat = $('#id_bidang_minat').val();
+                        d.id_jenpel = $('#id_jenpel').val();
                     }
                 },
                 columns: [{
@@ -297,7 +314,7 @@
                     searchable: true
                 }, {
                     // Menampilkan Jenis Pelatihan
-                    data: "jenis_pelatihan",
+                    data: "jenis_pelatihan.nama_jenpel",
                     className: "",
                     orderable: true,
                     searchable: true
@@ -361,10 +378,13 @@
                 datapelatihan.ajax.reload();
             });
             $('#id_matkul').on('change',function(){
-                datasertifikasi.ajax.reload();
+                datapelatihan.ajax.reload();
             });
             $('#id_bidang_minat').on('change',function(){
-                datasertifikasi.ajax.reload();
+                datapelatihan.ajax.reload();
+            });
+            $('#id_jenpel').on('change',function(){
+                datapelatihan.ajax.reload();
             });
         });
     </script>

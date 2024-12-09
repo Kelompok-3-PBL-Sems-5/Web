@@ -14,13 +14,17 @@
             @else
                 <table class="table table-bordered table-striped table-hover table-sm">
                     <tr>
+                        <th>Nama Prodi</th>
+                        <td>{{ $kompetensi->prodi->nama_prodi }}</td>
+                    </tr>
+                    <tr>
                         <th>Nama kompetensi</th>
                         <td>{{ $kompetensi->nama_kompetensi }}</td>
                     </tr>
-                    <tr>
+                    {{-- <tr>
                         <th>ID User</th>
                         <td>{{ $kompetensi->id_user }}</td>
-                    </tr>
+                    </tr> --}}
                 </table>
             @endempty
             <a href="{{ url('kompetensi') }}" class="btn btn-sm btn-default mt-2">Kembali</a>

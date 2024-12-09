@@ -147,7 +147,7 @@ class prodiController extends Controller
         // cek apakah request berupa ajax
         if ($request->ajax() || $request->wantsJson()) {
             $rules = [
-                'id_user'    => 'required|integer',
+                // 'id_user'    => 'required|integer',
                 'kode_prodi' => 'required|string|max:100',
                 'nama_prodi' => 'required|string|max:50',
                 'jenjang'    => 'required|string|max:50',
@@ -165,7 +165,7 @@ class prodiController extends Controller
                 ]);
             }
             prodiModel::create([
-                'id_user'        => $request->id_user,
+                // 'id_user'        => $request->id_user,
                 'kode_prodi'     => $request->kode_prodi,
                 'nama_prodi'     => $request->nama_prodi,
                 'jenjang'        => $request->jenjang
@@ -193,7 +193,7 @@ class prodiController extends Controller
         // cek apakah request dari ajax
         if ($request->ajax() || $request->wantsJson()) {
             $rules = [
-                'id_user'    => 'required|integer',
+                // 'id_user'    => 'required|integer',
                 'kode_prodi' => 'required|string|max:100',
                 'nama_prodi' => 'required|string|max:50',
                 'jenjang'    => 'required|string|max:50',

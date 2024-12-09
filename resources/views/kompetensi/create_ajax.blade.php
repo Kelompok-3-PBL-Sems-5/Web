@@ -9,9 +9,21 @@
                 </button>
             </div>
             <div class="modal-body">
+
+                <div class="form-group">
+                    <label>Nama Prodi</label>
+                    <select class="form-control" id="id_prodi" name="id_prodi" required>
+                        <option value="">- Pilih prodi -</option>
+                        @foreach ($prodi as $c)
+                            <option value="{{ $c->id_prodi }}">{{ $c->nama_prodi }}</option>
+                        @endforeach
+                    </select>
+                    <small id="error-id_prodi" class="error-text form-text text-danger"></small>
+                </div>
+
                 <div class="form-group">
                     <label>Nama Kompetensi</label>
-                    <input type="text" name="nama_kompetensi" id="nama_kmpetensi" class="form-control" placeholder="Masukkan nama kompetensi" required>
+                    <input type="text" name="nama_kompetensi" id="nama_kompetensi" class="form-control" placeholder="Masukkan nama kompetensi" required>
                     <small id="error-nama_kompetensi" class="error-text form-text text-danger"></small>
                 </div>
                 
@@ -32,7 +44,11 @@
     $(document).ready(function() {
         $("#form-tambah").validate({
             rules: {
-                Kompetensi: {
+                id_prodi: {
+                    required: true,
+                    number: true
+                },
+                nama_kompetensi: {
                     required: true, // Pastikan field kompetensi wajib diisi
                     minlength: 3, // Minimal panjang karakter yang diizinkan
                     maxlength: 100 // Maksimal panjang karakter

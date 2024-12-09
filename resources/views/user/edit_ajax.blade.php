@@ -38,31 +38,32 @@
                                         value="{{ $l->id_level }}">{{ $l->nama_level }}</option>
                             @endforeach
                         </select>
-                        <small id="error-id_level" class="error-text form-text text-danger"></small>
                     </div>
                     <div class="form-group">
                         <label>Username</label>
                         <input value="{{ $user->username }}" type="text" name="username" id="username" class="form-control" required>
-                        <small id="error-username" class="error-text form-text text-danger"></small>
                     </div>
                     <div class="form-group">
                         <label>Nama</label>
                         <input value="{{ $user->nama_user }}" type="text" name="nama_user" id="nama_user" class="form-control" required>
-                        <small id="error-nama_user" class="error-text form-text text-danger"></small>
                     </div>
                     <div class="form-group">
                         <label>Password</label>
                         <input value="" type="password" name="password" id="password" class="form-control">
                         <small class="form-text text-muted">Abaikan jika tidak ingin ubah password</small>
-                        <small id="error-password" class="error-text form-text text-danger"></small>
                     </div>
                     <div class="form-group">
                         <label>Foto</label>
-                        <input type="file" name="foto" id="foto" class="form-control"
-                            accept=".png,.jpg,.jpeg">
-                        <small class="form-text text-muted">Abaikan jika tidak ingin ubah
-                            foto</small>
-                        <small id="error-foto" class="error-text form-text text-danger"></small>
+                        <input type="file" name="foto" id="foto" class="form-control" accept=".png,.jpg,.jpeg">
+                        <small class="form-text text-muted">Abaikan jika tidak ingin ubah foto</small>
+
+                        @if($user->foto)
+                            <div class="mt-2">
+                                <label>Foto Saat Ini:</label><br>
+                                <img src="{{ asset($user->foto) }}" alt="Foto User" width="100">
+                                <input type="hidden" name="old_foto" value="{{ $user->foto }}">
+                            </div>
+                        @endif
                     </div>
                     <div class="modal-footer">
                         <button type="button" data-dismiss="modal" class="btn btn-warning">Batal</button>
@@ -72,6 +73,7 @@
             </div>
         </div>
     </form>
+
     <script>
         $(document).ready(function() {
             $("#form-edit").validate({
@@ -80,17 +82,16 @@
                     username: { required: true, minlength: 3, maxlength: 20 },
                     nama_user: { required: true, minlength: 3, maxlength: 100 },
                     password: { minlength: 6, maxlength: 20 },
-                    foto: { accept: "png,jpg,jpeg" }
+                    foto: { accept: "png,jpg,jpeg", required: false }
                 },
                 submitHandler: function(form) {
-                    var formData = new FormData(
-                            form);
+                    var formData = new FormData(form);
                     $.ajax({
                         url: form.action,
                         type: form.method,
                         data: formData,
-                            processData: false, // setting processData dan contentType ke false, untuk menghandle file 
-                            contentType: false,
+                        processData: false, // setting processData dan contentType ke false, untuk menghandle file 
+                        contentType: false,
                         success: function(response) {
                             if(response.status) {
                                 $('#myModal').modal('hide');

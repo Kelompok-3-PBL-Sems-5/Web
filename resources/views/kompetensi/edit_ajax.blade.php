@@ -25,8 +25,23 @@
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><spanaria-hidden="true">&times;</spanaria-hidden=></button>
                     </div>
                     <div class="modal-body">
+                    
+                        <div class="form-group row">
+                            <label class="col-2 control-label col-form-label">Nama Prodi</label>
+                            <div class="col-10">
+                                <select class="form-control" id="id_prodi" name="id_prodi" required>
+                                    <option value="">- Pilih prodi -</option>
+                                    @foreach ($prodi as $item)
+                                        <option {{ $item->id_prodi == $kompetensi->id_prodi ? 'selected' : '' }}
+                                            value="{{ $item->id_prodi }}">{{ $item->nama_prodi }}</option>
+                                    @endforeach
+                                </select>
+                                <small id="error-id_prodi" class="error-text form-text text-danger"></small>
+                            </div>
+                        </div>
+
                         <div class="form-group">
-                            <label>Nama kompetensi</label>
+                            <label>Nama Kompetensi</label>
                             <input value="{{ $kompetensi->nama_kompetensi }}" type="text" name="nama_kompetensi" id="nama_kompetensi"
                                 class="form-control" required>
                             <small id="error-nama_kompetensi" class="error-text form-text text-danger"></small>
@@ -43,6 +58,10 @@
     $(document).ready(function() {
         $("#form-edit").validate({
             rules: {
+                id_prodi: {
+                    required: true,
+                    number: true
+                },
                 nama_kompetensi: {
                     required: true,
                     minlength: 3,

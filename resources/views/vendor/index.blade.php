@@ -24,16 +24,17 @@
                 <div class="form-group row align-items-center">
                     <label class="col-2 control-label col-form-label">Filter jenis vendor:</label>
                     <div class="col-3">
-                        <select class="form-control" id="jenis_vendor" name="jenis_vendor" required style="padding-left: 10px;">
-                            <option value="" style="padding: 5px 10px;">- Semua -</option>
-                            @foreach ($vendor as $item)
-                                <option value="{{ $item->id_vendor }}">{{ $item->jenis_vendor}}</option>
+                        <select class="form-control filter_vendor" name="jenis_vendor" style="padding-left: 10px;">
+                            <option value="">- Semua -</option>
+                            @foreach ($vendor->unique('jenis_vendor') as $item)
+                                <option value="{{ $item->jenis_vendor }}">{{ $item->jenis_vendor }}</option>
                             @endforeach
                         </select>
                     </div>
                 </div>                    
             </div>
         </div>
+        
 
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
@@ -124,25 +125,25 @@ data-keyboard="false" data-width="75%" aria-hidden="true"></div>
     }
 
     /* Table Styling */
-    #table_level {
+    #table_vendor {
         border-collapse: separate; 
         border-spacing: 0 10px; 
     }
 
-    #table_level thead {
+    #table_vendor thead {
         background: #007bff; 
         color: white; 
         border-radius: 10px; 
     }
 
-    #table_level tbody tr {
+    #table_vendor tbody tr {
         background: #f8f9fa; 
         border-radius: 10px; 
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
         transition: background 0.3s, transform 0.3s; 
     }
 
-    #table_level tbody tr:hover {
+    #table_vendor tbody tr:hover {
         background: #e2e6ea; 
         transform: scale(1.02); 
     }
@@ -162,7 +163,7 @@ data-keyboard="false" data-width="75%" aria-hidden="true"></div>
     }
 
     /* Input Search Custom */
-    #table-level_filter input {
+    #table-vendor_filter input {
         border-radius: 20px; 
         padding: 8px 15px; 
         border: 1px solid #ddd; 
@@ -170,7 +171,7 @@ data-keyboard="false" data-width="75%" aria-hidden="true"></div>
         transition: border-color 0.3s, box-shadow 0.3s; 
     }
 
-    #table-level_filter input:focus {
+    #table-vendor_filter input:focus {
         border-color: #007bff; 
         box-shadow: 0 0 8px rgba(0, 123, 255, 0.5); 
     }
@@ -221,7 +222,7 @@ data-keyboard="false" data-width="75%" aria-hidden="true"></div>
                     className: "",
                     width: "20%",
                     orderable: true, 
-                    searchable: true
+                    searchable: false
                 },
                 {
                     data: "jenis_vendor", 
@@ -235,14 +236,14 @@ data-keyboard="false" data-width="75%" aria-hidden="true"></div>
                     className: "",
                     width: "14%",
                     orderable: true, 
-                    searchable: true
+                    searchable: false
                 },
                 {
                     data: "alamat_web",
                     className: "",
                     width: "14%",
                     orderable: true,
-                    searchable: true,
+                    searchable: false,
                     "render": function(data) {
                         // Cek jika data ada
                         if (data) {
@@ -267,9 +268,11 @@ data-keyboard="false" data-width="75%" aria-hidden="true"></div>
                     tableVendor.search(this.value).draw();
                 }
         });
-            $('.filter_vendor').change(function() {
-                tableVendor.draw();
+        $('.filter_vendor').change(function() {
+            console.log("Filter Changed:", $(this).val()); // Debugging
+            tableVendor.draw();
         });
+
     });
 </script>
 @endpush

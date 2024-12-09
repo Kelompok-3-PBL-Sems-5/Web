@@ -42,11 +42,22 @@
                         <div class="form-group row">
                             <label class="col-2 control-label col-form-label">Bidang Minat</label>
                             <div class="col-10">
-                                <input type="date" class="form-control" id="bidang_minat" name="bidang_minat"
-                                    value="{{ $bidang_minat->bidang_minat }}" required>
+                                <select class="form-control" name="bidang_minat" id="bidang_minat" required>
+                                    <option value="">- Pilih bidang minat -</option>
+                                    <option value="Data Science" {{ $bidang_minat->bidang_minat == 'Data Science' ? 'selected' : '' }}>Data Science</option>
+                                    <option value="Web Development" {{ $bidang_minat->bidang_minat == 'Web Development' ? 'selected' : '' }}>Web Development</option>
+                                    <option value="Jaringan" {{ $bidang_minat->bidang_minat == 'Jaringan' ? 'selected' : '' }}>Jaringan</option>
+                                    <option value="Keamanan (Keamanan Siber)" {{ $bidang_minat->bidang_minat == 'Keamanan (Keamanan Siber)' ? 'selected' : '' }}>Keamanan (Keamanan Siber)</option>
+                                    <option value="Mobile Development" {{ $bidang_minat->bidang_minat == 'Mobile Development' ? 'selected' : '' }}>Mobile Development</option>
+                                    <option value="Cloud Computing" {{ $bidang_minat->bidang_minat == 'Cloud Computing' ? 'selected' : '' }}>Cloud Computing</option>
+                                    <option value="Internet of Things (IoT)" {{ $bidang_minat->bidang_minat == 'Internet of Things (IoT)' ? 'selected' : '' }}>Internet of Things (IoT)</option>
+                                    <option value="Blockchain" {{ $bidang_minat->bidang_minat == 'Blockchain' ? 'selected' : '' }}>Blockchain</option>
+                                    <option value="UI/UX Design" {{ $bidang_minat->bidang_minat == 'UI/UX Design' ? 'selected' : '' }}>UI/UX Design</option>
+                                    <option value="Manajemen TI" {{ $bidang_minat->bidang_minat == 'Manajemen TI' ? 'selected' : '' }}>Manajemen TI</option>
+                                </select>
                                 <small id="error-bidang_minat" class="error-text form-text text-danger"></small>
                             </div>
-                        </div>
+                        </div>                        
                     </div>
                     
                     <div class="modal-footer">

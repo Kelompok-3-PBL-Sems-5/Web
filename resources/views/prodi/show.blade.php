@@ -29,10 +29,10 @@
                         <th>No</th>
                         <td>{{ $prodi->id_prodi }}</td>
                     </tr>
-                    <tr>
+                    {{-- <tr>
                         <th>Nama User</th>
                         <td>{{ $prodi->user->nama_user }}</td>
-                    </tr>
+                    </tr> --}}
                     <tr>
                         <th>Kode Prodi</th>
                         <td>{{ $prodi->kode_prodi }}</td>

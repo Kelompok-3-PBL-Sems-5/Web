@@ -19,4 +19,5 @@ class JenisPelatihanModel extends Model
     {
         return $this->hasMany(PelatihanModel::class, 'id_pelatihan', 'id_pelatihan');
     }
+    
 }

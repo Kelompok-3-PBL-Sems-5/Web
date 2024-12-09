@@ -9,7 +9,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="form-group">
+                {{-- <div class="form-group">
                     <label>Nama User</label>
                     <select class="form-control" id="id_user" name="id_user" required>
                         <option value="">- Pilih user -</option>
@@ -18,7 +18,7 @@
                         @endforeach
                     </select>
                     <small id="error-id_user" class="error-text form-text text-danger"></small>
-                </div>    
+                </div>     --}}
                 <div class="form-group">
                     <label>Kode Prodi</label>
                     <input type="text" name="kode_prodi" id="kode_prodi" class="form-control" required>
@@ -57,10 +57,10 @@
     $(document).ready(function() {
         $("#form-tambah").validate({
             rules: {
-                id_user: {
-                    required: true,
-                    number: true
-                },
+                // id_user: {
+                //     required: true,
+                //     number: true
+                // },
                 kode_prodi: {
                     required: true, // Pastikan field Prodi wajib diisi
                     maxlength: 100, // Maksimal panjang karakter
