@@ -27,17 +27,6 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <label>Level Pengguna</label>
-                            <select name="id_level" id="id_level" class="form-control" required>
-                                <option value="">- Pilih Level -</option>
-                                @foreach ($level as $l)
-                                    <option {{ $l->id_level == $user->id_level ? 'selected' : '' }}
-                                        value="{{ $l->id_level }}">{{ $l->nama_level }}</option>
-                                @endforeach
-                            </select>
-                            <small id="error-id_level" class="error-text form-text text-danger"></small>
-                        </div>
-                        <div class="form-group">
                             <label>Nama</label>
                             <input value="{{ $user->nama_user }}" type="text" name="nama_user" id="nama_user"
                                 class="form-control" required>
@@ -91,10 +80,6 @@
             $(document).ready(function() {
                 $("#form-edit").validate({
                     rules: {
-                        id_level: {
-                            required: true,
-                            number: true
-                        },
                         nama_user: {
                             required: true,
                             minlength: 3,
@@ -111,17 +96,17 @@
                         },
                         nidn_user: {
                             required: false,
-                            minlength: 5,
+                            minlength: 3,
                             maxlength: 255
                         },
                         gelar_akademik: {
                             required: false,
-                            minlength: 5,
+                            minlength: 3,
                             maxlength: 255
                         },
                         email_user: {
                             required: false,
-                            minlength: 5,
+                            minlength: 3,
                             maxlength: 255
                         }
                     },

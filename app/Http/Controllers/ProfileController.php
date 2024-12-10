@@ -48,7 +48,7 @@ class ProfileController extends Controller
         // cek apakah request dari ajax
         if ($request->ajax() || $request->wantsJson()) {
             $rules = [
-                'id_level' => 'nullable|integer',
+                // 'id_level' => 'nullable|integer',
                 'nama_user' => 'nullable|max:100',
                 'username' => 'nullable|max:20|unique:m_user,username,' . $id . ',id_user',
                 'password' => 'nullable|min:6|max:20',
@@ -69,13 +69,13 @@ class ProfileController extends Controller
             
             $check = UserModel::find($id);
             if ($check) {
-                if (!$request->filled('id_level')) { // jika password tidak diisi, maka hapus dari request
-                    $request->request->remove('id_level');
-                }
+                // if (!$request->filled('id_level')) { // jika password tidak diisi, maka hapus dari request
+                //     $request->request->remove('id_level');
+                // }
                 if (!$request->filled('username')) { // jika password tidak diisi, maka hapus dari request
                     $request->request->remove('username');
                 }
-                if (!$request->filled('nama')) { // jika password tidak diisi, maka hapus dari request
+                if (!$request->filled('nama_user')) { // jika password tidak diisi, maka hapus dari request
                     $request->request->remove('nama_user');
                 }
                 if (!$request->filled('password')) { // jika password tidak diisi, maka hapus dari request
@@ -91,7 +91,7 @@ class ProfileController extends Controller
                     $request->request->remove('email_user');
                 }
                 $check->update([
-                    'id_level'  => $request->id_level,
+                    // 'id_level'  => $request->id_level,
                     'nama_user'      => $request->nama_user,
                     'username'  => $request->username,
                     'password'  => $request->password ? bcrypt($request->password) : UserModel::find($id)->password,

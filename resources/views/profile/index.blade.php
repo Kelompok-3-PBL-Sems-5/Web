@@ -107,8 +107,11 @@
         }
 
         .rounded-circle {
+            width: 250px; /* Ukuran tetap untuk gambar */
+            height: 250px; /* Ukuran tetap untuk gambar */
+            object-fit: cover; /* Menjaga proporsi gambar*/
             border-radius: 50%; /* Mengubah foto menjadi lingkaran */
-            /* border: 5px solid #007bff; Garis tepi foto */
+            border: 5px solid #000000; /*Garis tepi foto */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Bayangan pada foto */
             transition: transform 0.3s; /* Transisi untuk efek hover pada foto */
         }
@@ -207,7 +210,7 @@
                     }
                 },
             });
-            $('#profile').on('change', function() {
+            $('#profile').change(function() {
                 profile.ajax.reload();
             });
         });
