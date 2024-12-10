@@ -14,7 +14,7 @@
   <nav class="mt-2">
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
       <li class="nav-item">
-        <a href="{{ url('/dashboard_statistik') }}" class="nav-link {{ ($activeMenu == 'dashboard_statistik') ? 'active' : '' }} ">
+        <a href="{{ url('/dashboard') }}" class="nav-link {{ ($activeMenu == 'dashboard') ? 'active' : '' }} ">
           <i class="nav-icon fas fa-tachometer-alt"></i>
           <p>Dashboard Statistik</p>
         </a>

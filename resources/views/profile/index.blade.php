@@ -1,6 +1,6 @@
 @extends('layouts.template')
 
-{{-- @section('content')
+@section('content')
     <div id="myModal" class="modal fade animate shake" tabindex="-1" role="dialog" data-backdrop="static"
         data-keyboard="false" data-width="75%" aria-hidden="true"></div>
     
@@ -39,7 +39,7 @@
                             </tr>
                             <tr>
                                 <th>Nama</th>
-                                <td>{{ $user->nama }}</td>
+                                <td>{{ $user->nama_user }}</td>
                             </tr>
                             <tr>
                                 <th>Password</th>
@@ -203,7 +203,7 @@
                     "dataType": "json",
                     "type": "POST",
                     "data": function(d) {
-                        d.user_id = $('#id_user').val();
+                        d.id_user = $('#id_user').val();
                     }
                 },
             });
@@ -212,9 +212,9 @@
             });
         });
     </script>
-@endpush --}}
+@endpush
 
-@extends('layouts.template')
+{{-- @extends('layouts.template')
 @section('content')
     <div id="myModal" class="modal fade animate shake" tabindex="-1" role="dialog" data-backdrop="static"
         data-keyboard="false" data-width="75%" aria-hidden="true"></div>
@@ -251,7 +251,7 @@
                             </tr>
                             <tr>
                                 <th>Nama</th>
-                                <td>{{ $user->nama }}</td>
+                                <td>{{ $user->nama_user }}</td>
                             </tr>
                             <tr>
                                 <th>Password</th>
@@ -290,7 +290,7 @@
                     "dataType": "json",
                     "type": "POST",
                     "data": function(d) {
-                        d.user_id = $('#id_user').val();
+                        d.id_user = $('#id_user').val();
                     }
                 },
             });
@@ -299,4 +299,4 @@
             });
         });
     </script>
-@endpush
+@endpush --}}

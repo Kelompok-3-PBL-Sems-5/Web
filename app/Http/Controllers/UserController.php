@@ -266,67 +266,74 @@ class UserController extends Controller
     }
 
     // Membuat fungsi update_ajax ()
-    public function update_ajax(Request $request, $id)
-{
+    public function update_ajax(Request $request, $id) {
     // Check if the request is AJAX
     if ($request->ajax() || $request->wantsJson()) {
         $rules = [
-            'id_level'   => 'required|integer',
-            'username'   => 'required|max:20|unique:m_user,username,' . $id . ',id_user',
-            'nama_user'  => 'required|max:100',
-            'password'   => 'nullable|min:5|max:20',
-            'foto'       => 'nullable|mimes:jpeg,png,jpg|max:2048'
+            'level_id' => 'required|integer',
+            'username' => 'required|max:20|unique:m_user,username,' . $id . ',user_id',
+            'nama' => 'required|max:100',
+            'password' => 'nullable|min:5|max:20',
+            'foto'      => 'nullable|mimes:jpeg,png,jpg|max:2048'
         ];
-
+        
+        // use Illuminate\Support\Facades\Validator;
         $validator = Validator::make($request->all(), $rules);
-
+        
         if ($validator->fails()) {
             return response()->json([
-                'status'   => false,
-                'message'  => 'Validasi gagal.',
-                'msgField' => $validator->errors()
+                'status' => false, // respon json, true: berhasil, false: gagal
+                'message' => 'Validasi gagal.',
+                'msgField' => $validator->errors() // menunjukkan field mana yang error
             ]);
         }
+        
+        $check = UserModel::find($id);
+        
+        if ($check) {
+            if (!$request->filled('password')) { // jika password tidak diisi, maka hapus dari request
+                $request->request->remove('password');
+            }
 
-        // Fetch the user
-        $user = UserModel::find($id);
+            // $fileName = time() . $request->file('foto')->getClientOriginalExtension();
+            // $path = $request->file('foto')->storeAs('images', $fileName);
+            // $request['foto'] = '/storage/' . $path;
 
-        if ($user) {
-            // Handle the password: if not filled, retain the old password
-            $password = $request->filled('password') ? bcrypt($request->password) : $user->password;
-
-            // Handle the photo upload
-            if ($request->hasFile('foto')) {
+            if ($request->has('foto')) {
                 $file = $request->file('foto');
                 $extension = $file->getClientOriginalExtension();
                 $filename = time() . '.' . $extension;
-                $path = 'images/profile/';
+                $path = 'image/profile/';
                 $file->move($path, $filename);
-                $user->foto = $path . $filename; // Save path to user model
             }
 
-            // Update user data
-            $user->update([
-                'username'  => $request->username,
-                'nama_user' => $request->nama_user,
-                'password'  => $password,
-                'id_level'  => $request->id_level,
-            ]);
 
+            if  (!$request->filled('foto')) { // jika password tidak diisi, maka hapus dari request 
+                $request->request->remove('foto');
+            }
+        
+            $check->update([
+                'username'  => $request->username,
+                'nama'      => $request->nama,
+                'password'  => $request->password ? bcrypt($request->password) : UserModel::find($id)->password,
+                'level_id'  => $request->level_id,
+                'foto'      => $path.$filename
+            ]);
+            
             return response()->json([
-                'status'  => true,
-                'message' => 'Data berhasil diupdate.'
+                'status' => true,
+                'message' => 'Data berhasil diupdate'
             ]);
         } else {
             return response()->json([
-                'status'  => false,
-                'message' => 'Data tidak ditemukan.'
+                'status' => false,
+                'message' => 'Data tidak ditemukan'
             ]);
         }
-    }
-
+        }
+    
     return redirect('/');
-}
+    }
 
     // fungsi confirm_ajax()
     public function confirm_ajax(string $id)

@@ -24,7 +24,7 @@ class AuthController extends Controller
                 
                 $user = Auth::user();
                 
-                session(['id_user' => $user->id]);
+                session(['id_user' => $user->id_user]);
                 
                 return response()->json([ 
                     'status' => true, 

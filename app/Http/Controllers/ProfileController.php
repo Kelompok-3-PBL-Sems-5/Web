@@ -13,8 +13,6 @@ class ProfileController extends Controller
     {
         $id = session('id_user');
 
-        print dd($id);
-
         $breadcrumb = (object) [
             'title' => 'Profile',
             'list' => ['Home', 'profile']
@@ -25,11 +23,10 @@ class ProfileController extends Controller
         ];
 
         $activeMenu = 'profile'; // set menu yang sedang aktif
-
+    
         $user = UserModel::with('level')->find($id);
 
         $level = LevelModel::all(); // ambil data level untuk filter level
-        
         return view('profile.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'level' => $level, 'user' => $user,'activeMenu' => $activeMenu]);
     }
     public function show(string $id)
@@ -72,29 +69,26 @@ class ProfileController extends Controller
             
             $check = UserModel::find($id);
             if ($check) {
-                if (!$request->filled('level_id')) { // jika password tidak diisi, maka hapus dari request
-                    $request->request->remove('level_id');
+                if (!$request->filled('id_level')) { // jika password tidak diisi, maka hapus dari request
+                    $request->request->remove('id_level');
                 }
                 if (!$request->filled('username')) { // jika password tidak diisi, maka hapus dari request
                     $request->request->remove('username');
                 }
                 if (!$request->filled('nama')) { // jika password tidak diisi, maka hapus dari request
-                    $request->request->remove('nama');
+                    $request->request->remove('nama_user');
                 }
                 if (!$request->filled('password')) { // jika password tidak diisi, maka hapus dari request
                     $request->request->remove('password');
                 }
-                if (!$request->filled('tanggal_lahir')) { 
-                    $request->request->remove('tanggal_lahir');
+                if (!$request->filled('nidn_user')) {
+                    $request->request->remove('nidn_user');
                 }
-                if (!$request->filled('jenis_kelamin')) { 
-                    $request->request->remove('jenis_kelamin');
+                if (!$request->filled('gelar_akademik')) {
+                    $request->request->remove('gelar-akademik');
                 }
-                if (!$request->filled('alamat')) { 
-                    $request->request->remove('alamat');
-                }
-                if (!$request->filled('telepon')) { 
-                    $request->request->remove('telepon');
+                if (!$request->filled('email_user')) {
+                    $request->request->remove('email_user');
                 }
                 $check->update([
                     'id_level'  => $request->id_level,

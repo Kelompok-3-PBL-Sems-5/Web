@@ -44,13 +44,13 @@ class UserModel extends Authenticatable
         return $this->level->kode_level;
     }
 
-    public function pelatihan():HasMany
-    {
-        return $this->hasMany(PelatihanModel::class, 'id_pelatihan', 'id_pelatihan');
-    }
+    // public function pelatihan():HasMany
+    // {
+    //     return $this->hasMany(PelatihanModel::class, 'id_pelatihan', 'id_pelatihan');
+    // }
 
-    public function sertifikasi():HasMany
-    {
-        return $this->hasMany(SertifikasiModel::class, 'id_sertifikasi', 'id_sertifikasi');
-    }
+    // public function sertifikasi():HasMany
+    // {
+    //     return $this->hasMany(SertifikasiModel::class, 'id_sertifikasi', 'id_sertifikasi');
+    // }
 }
