@@ -15,13 +15,131 @@
     <link rel="stylesheet"
         href="{{ asset('adminlte/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
     <!-- Theme style -->
-    <link rel="stylesheet" href="{{ asset('adminlte/dist/css/adminlte.min.css') }}">
+    {{-- <link rel="stylesheet" href="{{ asset('adminlte/dist/css/adminlte.min.css') }}"> --}}
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Source Sans Pro', sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: url('{{ asset('images/banner.jpg') }}') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        .blur-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            backdrop-filter: blur(8px);
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+
+        .login-box {
+            position: relative;
+            z-index: 10;
+            background: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .logo-container img {
+            height: 60px;
+            width: auto;
+        }
+
+        .login-box .logo-container {
+            margin-bottom: 15px;
+        }
+
+        .login-box h1 {
+            font-size: 1.6rem;
+            margin-bottom: 5px;
+        }
+
+        .login-box p {
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .input-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .input-group input {
+            border: none;
+            padding: 10px;
+            flex: 1;
+            font-size: 0.9rem;
+        }
+
+        .input-group .input-group-text {
+            background-color: #f1f1f1;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        .remember-container {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            margin-bottom: 20px;
+            font-size: 0.85rem;
+        }
+
+        footer {
+            position: absolute;
+            bottom: 10px;
+            text-align: center;
+            width: 100%;
+            color: #fff;
+            font-size: 0.9rem;
+        }
+    </style>
+
 </head>
-<body class="hold-transition login-page">
+<body>
+    <div class="blur-background"></div>
     <div class="login-box">
         <!-- /.login-logo -->
-        <div class="card card-outline card-primary">
-            <div class="card-header text-center"><a href="{{ url('/') }}" class="h1"><b>Admin</b>LTE</a></div>
+        <div class="card-header text-center">
+            <div class="logo-container">
+                <img src="{{ asset('images/jti-logo.png') }}" alt="Logo e-CertiJTI">
+                <a href="{{ url('/') }}" class="h1"><b>e-CertiJTI Dosen</b></a>
+            </div>
+        {{-- </div> --}}
             <div class="card-body">
                 <p class="login-box-msg">Sign in to start your session</p>
                 <form action="{{ url('login') }}" method="POST" id="form-login">
