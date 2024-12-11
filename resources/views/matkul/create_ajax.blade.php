@@ -19,16 +19,14 @@
                     <small id="error-id_user" class="error-text form-text text-danger"></small>
                 </div>
                 <div class="form-group">
-                    <label>Mata Kuliah</label>
-                    <input value="" type="text" name="nama_matkul" id="nama_matkul" class="form-control"
-                        required>
-                    <small id="error-nama_matkul" class="error-text form-text text-danger"></small>
-                </div>
-                <div class="form-group">
-                    <label>Kode Mata Kuliah</label>
-                    <input value="" type="text" name="kode_matkul" id="kode_matkul" class="form-control"
-                        required>
-                    <small id="error-kode_matkul" class="error-text form-text text-danger"></small>
+                    <label>Nama Mata Kuliah</label>
+                    <select class="form-control" id="id_damat" name="id_damat" required>
+                        <option value="">- Pilih  Mata Kuliah -</option>
+                        @foreach ($damat as $c)
+                            <option value="{{ $c->id_damat }}">{{ $c->nama_damat }}</option>
+                        @endforeach
+                    </select>
+                    <small id="error-id_damat" class="error-text form-text text-danger"></small>
                 </div>
             </div>
             <div class="modal-footer">
@@ -46,11 +44,9 @@
                     required: true,
                     number: true
                 },
-                nama_matkul: {
-                    required: true
-                },
-                kode_matkul: {
-                    required: true
+                id_damat: {
+                    required: true,
+                    number: true
                 }
             },
             submitHandler: function(form) {

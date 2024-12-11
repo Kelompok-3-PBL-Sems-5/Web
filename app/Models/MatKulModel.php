@@ -13,18 +13,14 @@ class MatKulModel extends Model
 
     protected $table = 'mata_kuliah'; // Nama tabel
     protected $primaryKey = 'id_matkul'; // Primary key
-    protected $fillable = ['id_user', 'kode_matkul', 'nama_matkul']; // Kolom yang bisa diisi
+    protected $fillable = ['id_user', 'id_damat']; // Kolom yang bisa diisi
 
     public function user():BelongsTo
     {
         return $this->belongsTo(UserModel::class, 'id_user','id_user');
     }
-    public function pelatihan():HasMany
+    public function damat():BelongsTo
     {
-        return $this->hasMany(PelatihanModel::class, 'id_pelatihan', 'id_pelatihan');
-    }
-    public function sertifikasi():HasMany
-    {
-        return $this->hasMany(SertifikasiModel::class, 'id_sertifikasi', 'id_sertifikasi');
+        return $this->belongsTo(DamatModel::class, 'id_damat','id_damat');
     }
 }

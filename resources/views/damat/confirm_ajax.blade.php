@@ -1,30 +1,32 @@
-@empty($matkul)
+@empty($damat)
     <div id="modal-master" class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Kesalahan</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
                 <div class="alert alert-danger">
                     <h5><i class="icon fas fa-ban"></i> Kesalahan!!!</h5>
                     Data yang anda cari tidak ditemukan
                 </div>
-                <a href="{{ url('/matkul') }}" class="btn btn-warning">Kembali</a>
+                <a href="{{ url('/damat') }}" class="btn btn-warning">Kembali</a>
             </div>
         </div>
     </div>
 @else
-    <form action="{{ url('/matkul/' . $matkul->id_matkul . '/delete_ajax') }}" method="POST" id="form-delete">
+    <form action="{{ url('/damat/' . $damat->id_damat . '/delete_ajax') }}" method="POST" id="form-delete-damat">
         @csrf
         @method('DELETE')
         <div id="modal-master" class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Hapus Data Mata Kuliah</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body">
                     <div class="alert alert-warning">
@@ -33,16 +35,12 @@
                     </div>
                     <table class="table table-sm table-bordered table-striped">
                         <tr>
-                            <th class="text-right col-3">Nama User :</th>
-                            <td class="col-9">{{ $matkul->user->nama_user }}</td>
+                            <th class="text-right col-3">Nama Data Mata Kuliah :</th>
+                            <td class="col-9">{{ $damat->nama_damat }}</td>
                         </tr>
                         <tr>
-                            <th class="text-right col-3">Mata Kuliah :</th>
-                            <td class="col-9">{{ $matkul->damat->nama_damat }}</td>
-                        </tr>
-                        <tr>
-                            <th class="text-right col-3">Kode Mata Kuliah :</th>
-                            <td class="col-9">{{ $matkul->damat->kode_damat }}</td>
+                            <th class="text-right col-3">Kode Data Mata Kuliah :</th>
+                            <td class="col-9">{{ $damat->kode_damat }}</td>
                         </tr>
                     </table>
                 </div>
@@ -55,7 +53,7 @@
     </form>
     <script>
         $(document).ready(function() {
-            $("#form-delete").validate({
+            $("#form-delete-damat").validate({
                 rules: {},
                 submitHandler: function(form) {
                     $.ajax({
@@ -70,7 +68,7 @@
                                     title: 'Berhasil',
                                     text: response.message
                                 });
-                                datamatkul.ajax.reload();
+                                datadamat.ajax.reload();
                             } else {
                                 $('.error-text').text('');
                                 $.each(response.msgField, function(prefix, val) {

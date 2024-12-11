@@ -11,18 +11,14 @@ class BidangMinatModel extends Model
     use HasFactory;
     protected $table = 'bidang_minat'; // Mendefinisikan nama tabel yang digunakan oleh model ini
     protected $primaryKey = 'id_bidang_minat'; // Mendefinisikan primary key dari tabel yang digunakan
-    protected $fillable = ['id_user','bidang_minat'];
+    protected $fillable = ['id_user','id_dabim'];
     
     public function user():BelongsTo
     {
         return $this->belongsTo(UserModel::class, 'id_user','id_user');
     }
-    public function pelatihan():HasMany
+    public function dabim():BelongsTo
     {
-        return $this->hasMany(PelatihanModel::class, 'id_pelatihan', 'id_pelatihan');
-    }
-    public function sertifikasi():HasMany
-    {
-        return $this->hasMany(SertifikasiModel::class, 'id_sertifikasi', 'id_sertifikasi');
+        return $this->belongsTo(DabimModel::class, 'id_dabim','id_dabim');
     }
 }

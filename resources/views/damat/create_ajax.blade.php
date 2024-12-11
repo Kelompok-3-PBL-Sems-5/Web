@@ -1,32 +1,25 @@
-<form action="{{ url('/bidang_minat/ajax') }}" method="POST" id="form-tambah">
+<form action="{{ url('/damat/ajax') }}" method="POST" id="form-tambah-damat">
     @csrf
     <div id="modal-master" class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Tambah Data Bidang Minat</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">&times;</span></button>
+                <h5 class="modal-title" id="exampleModalLabel">Tambah Data Mata Kuliah</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label>Nama User</label>
-                    <select class="form-control" id="id_user" name="id_user" required>
-                        <option value="">- Pilih user -</option>
-                        @foreach ($user as $c)
-                            <option value="{{ $c->id_user }}">{{ $c->nama_user }}</option>
-                        @endforeach
-                    </select>
-                    <small id="error-id_user" class="error-text form-text text-danger"></small>
+                    <label>Nama Data Mata Kuliah</label>
+                    <input value="" type="text" name="nama_damat" id="nama_damat" class="form-control" required>
+                    <small id="error-nama_damat" class="error-text form-text text-danger"></small>
                 </div>
+            </div>
+            <div class="modal-body">
                 <div class="form-group">
-                    <label>Nama Bidang Minat</label>
-                    <select class="form-control" id="id_dabim" name="id_dabim" required>
-                        <option value="">- Pilih Bidang Minat -</option>
-                        @foreach ($dabim as $c)
-                            <option value="{{ $c->id_dabim }}">{{ $c->nama_dabim }}</option>
-                        @endforeach
-                    </select>
-                    <small id="error-id_dabim" class="error-text form-text text-danger"></small>
+                    <label>Kode Data Mata Kuliah</label>
+                    <input value="" type="text" name="kode_damat" id="kode_damat" class="form-control" required>
+                    <small id="error-kode_damat" class="error-text form-text text-danger"></small>
                 </div>
             </div>
             <div class="modal-footer">
@@ -36,17 +29,18 @@
         </div>
     </div>
 </form>
+
 <script>
     $(document).ready(function() {
-        $("#form-tambah").validate({
+        $("#form-tambah-damat").validate({
             rules: {
-                id_user: {
+                nama_damat: {
                     required: true,
-                    number: true
+                    maxlength: 100
                 },
-                id_dabim: {
+                kode_damat: {
                     required: true,
-                    number: true
+                    maxlength: 100
                 }
             },
             submitHandler: function(form) {
@@ -62,7 +56,7 @@
                                 title: 'Berhasil',
                                 text: response.message
                             });
-                            databidang_minat.ajax.reload();
+                            datadamat.ajax.reload();
                         } else {
                             $('.error-text').text('');
                             $.each(response.msgField, function(prefix, val) {

@@ -1,4 +1,4 @@
-@empty($matkul)
+@empty($damat)
     <div id="modal-master" class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -11,7 +11,7 @@
                     <h5><i class="icon fas fa-ban"></i> Kesalahan!!!</h5>
                     Data yang anda cari tidak ditemukan
                 </div>
-                <a href="{{ url('/matkul') }}" class="btn btn-warning">Kembali</a>
+                <a href="{{ url('/damat') }}" class="btn btn-warning">Kembali</a>
             </div>
         </div>
     </div>
@@ -26,20 +26,16 @@
             <div class="modal-body">
                 <table class="table table-bordered table-striped table-hover table-sm">
                     <tr>
-                        <th>No</th>
-                        <td>{{ $matkul->id_matkul }}</td>
+                        <th>ID</th>
+                        <td>{{ $damat->id_damat }}</td>
                     </tr>
                     <tr>
-                        <th>Nama User</th>
-                        <td>{{ $matkul->user->nama_user }}</td>
+                        <th>Nama Data Mata Kuliah</th>
+                        <td>{{ $damat->nama_damat }}</td>
                     </tr>
                     <tr>
-                        <th>Mata Kuliah</th>
-                        <td>{{ $matkul->damat->nama_damat }}</td>
-                    </tr>
-                    <tr>
-                        <th>Kode Mata Kuliah</th>
-                        <td>{{ $matkul->damat->kode_damat }}</td>
+                        <th>Kode Data Mata Kuliah</th>
+                        <td>{{ $damat->kode_damat }}</td>
                     </tr>
                 </table>
             </div>

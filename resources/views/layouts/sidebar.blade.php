@@ -118,12 +118,24 @@
 
     <!-- Data Manage -->
     <li class="nav-header blue-header">Data Manage</li>
-    <li class="nav-item has-treeview {{ in_array($activeMenu, ['vendor','jenis_pelatihan','rekomendasi', 'periode']) ? 'menu-open' : '' }}">
+    <li class="nav-item has-treeview {{ in_array($activeMenu, ['dabim','damat','vendor','jenis_pelatihan','rekomendasi', 'periode']) ? 'menu-open' : '' }}">
       <a href="#" class="nav-link">
         <i class="nav-icon fas fa-cogs"></i>
         <p>Data Manage<i class="right fas fa-angle-left"></i></p>
       </a>
       <ul class="nav nav-treeview">
+        <li class="nav-item">
+          <a href="{{ url('/dabim') }}" class="nav-link {{ ($activeMenu == 'dabim') ? 'active' : '' }}">
+            <i class="far fa-circle nav-icon"></i>
+            <p>Daftar Bidang Minat</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ url('/damat') }}" class="nav-link {{ ($activeMenu == 'damat') ? 'active' : '' }}">
+            <i class="far fa-circle nav-icon"></i>
+            <p>Daftar Mata Kuliah</p>
+          </a>
+        </li>
         <li class="nav-item">
           <a href="{{ url('/vendor') }}" class="nav-link {{ ($activeMenu == 'vendor') ? 'active' : '' }}">
             <i class="far fa-circle nav-icon"></i>

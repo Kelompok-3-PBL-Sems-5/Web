@@ -82,18 +82,16 @@
             <thead>
                 <tr>
                     <th class="text-center">No</th>
-                    <th class="text-center">Nama User</th>
-                    <th class="text-center">Mata Kuliah</th>
-                    <th class="text-center">Kode Mata Kuliah</th>
+                    <th>Nama Data Mata Kuliah</th>
+                    <th>Kode Data Mata Kuliah</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($matkul as $b)
+                @foreach ($damat as $b)
                     <tr>
                         <td class="text-center">{{ $loop->iteration }}</td>
-                        <td class="text-center">{{ $b->user->nama_user }}</td>
-                        <td class="text-center">{{ $b->nama_matkul }}</td>
-                        <td class="text-center">{{ $b->kode_matkul }}</td>
+                        <td>{{ $b->nama_damat }}</td>
+                        <td>{{ $b->kode_damat }}</td>
                     </tr>
                 @endforeach
             </tbody>

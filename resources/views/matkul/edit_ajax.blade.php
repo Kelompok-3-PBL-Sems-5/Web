@@ -40,21 +40,19 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-2 control-label col-form-label">Mata Kuliah</label>
+                            <label class="col-2 control-label col-form-label">Nama Mata Kuliah</label>
                             <div class="col-10">
-                                <input type="text" class="form-control" id="nama_matkul" name="nama_matkul"
-                                    value="{{ $matkul->nama_matkul }}" required>
-                                <small id="error-nama_matkul" class="error-text form-text text-danger"></small>
+                                <select class="form-control" id="id_damat" name="id_damat" required>
+                                    <option value="">- Pilih damat -</option>
+                                    @foreach ($damat as $item)
+                                        <option {{ $item->id_damat == $matkul->id_damat ? 'selected' : '' }}
+                                            value="{{ $item->id_damat }}">{{ $item->nama_damat }}</option>
+                                    @endforeach
+                                </select>
+                                <small id="error-id_damat" class="error-text form-text text-danger"></small>
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <label class="col-2 control-label col-form-label">Mata Kuliah</label>
-                            <div class="col-10">
-                                <input type="text" class="form-control" id="kode_matkul" name="kode_matkul"
-                                    value="{{ $matkul->kode_matkul }}" required>
-                                <small id="error-kode_matkul" class="error-text form-text text-danger"></small>
-                            </div>
-                        </div>
+                        
                     </div>
                     
                     <div class="modal-footer">
@@ -72,11 +70,9 @@
                             required: true,
                             number: true
                         },
-                        nama_matkul: {
+                        id_damat: {
                             required: true,
-                        }
-                        kode_matkul: {
-                            required: true,
+                            number: true
                         }
                     },
                     submitHandler: function(form) {

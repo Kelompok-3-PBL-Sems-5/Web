@@ -1,76 +1,75 @@
-@empty($matkul)
+@empty($damat)
     <div id="modal-master" class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Kesalahan</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
                 <div class="alert alert-danger">
                     <h5><i class="icon fas fa-ban"></i> Kesalahan!!!</h5>
-                    Data yang anda cari tidak ditemukan
+                    Data Mata Kuliah yang anda cari tidak ditemukan
                 </div>
-                <a href="{{ url('/matkul') }}" class="btn btn-warning">Kembali</a>
+                <a href="{{ url('/damat') }}" class="btn btn-warning">Kembali</a>
             </div>
         </div>
     </div>
 @else
-    <form action="{{ url('/matkul/' . $matkul->id_matkul . '/delete_ajax') }}" method="POST" id="form-delete">
+    <form action="{{ url('/damat/' . $damat->id_damat . '/update_ajax') }}" method="POST" id="form-edit">
         @csrf
-        @method('DELETE')
+        @method('PUT')
         <div id="modal-master" class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Hapus Data Mata Kuliah</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Data Mata Kuliah</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body">
-                    <div class="alert alert-warning">
-                        <h5><i class="icon fas fa-ban"></i> Konfirmasi !!!</h5>
-                        Apakah Anda ingin menghapus data seperti di bawah ini?
+                    <div class="form-group">
+                        <label>Nama Data Mata Kuliah</label>
+                        <input value="{{ $damat->nama_damat }}" type="text" name="nama_damat" id="nama_damat" class="form-control" required>
+                        <small id="error-nama_damat" class="error-text form-text text-danger"></small>
                     </div>
-                    <table class="table table-sm table-bordered table-striped">
-                        <tr>
-                            <th class="text-right col-3">Nama User :</th>
-                            <td class="col-9">{{ $matkul->user->nama_user }}</td>
-                        </tr>
-                        <tr>
-                            <th class="text-right col-3">Mata Kuliah :</th>
-                            <td class="col-9">{{ $matkul->damat->nama_damat }}</td>
-                        </tr>
-                        <tr>
-                            <th class="text-right col-3">Kode Mata Kuliah :</th>
-                            <td class="col-9">{{ $matkul->damat->kode_damat }}</td>
-                        </tr>
-                    </table>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Kode Data Mata Kuliah</label>
+                        <input value="{{ $damat->kode_damat }}" type="text" name="kode_damat" id="kode_damat" class="form-control" required>
+                        <small id="error-kode_damat" class="error-text form-text text-danger"></small>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" data-dismiss="modal" class="btn btn-warning">Batal</button>
-                    <button type="submit" class="btn btn-primary">Ya, Hapus</button>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
             </div>
         </div>
     </form>
     <script>
         $(document).ready(function() {
-            $("#form-delete").validate({
-                rules: {},
+            $("#form-edit").validate({
+                rules: {
+                    nama_damat: { required: true, minlength: 3 },
+                    kode_damat: { required: true, minlength: 3 }
+                },
                 submitHandler: function(form) {
                     $.ajax({
                         url: form.action,
                         type: form.method,
                         data: $(form).serialize(),
                         success: function(response) {
-                            if (response.status) {
+                            if(response.status) {
                                 $('#myModal').modal('hide');
                                 Swal.fire({
                                     icon: 'success',
                                     title: 'Berhasil',
                                     text: response.message
                                 });
-                                datamatkul.ajax.reload();
+                                datadamat.ajax.reload();
                             } else {
                                 $('.error-text').text('');
                                 $.each(response.msgField, function(prefix, val) {

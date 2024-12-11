@@ -5,13 +5,13 @@
             <h3 class="card-title">Daftar Mata Kuliah</h3>
             <div class="card-tools">
                 <!-- Tombol untuk Import matkul -->
-            <button onclick="modalAction('{{ url('/matkul/import') }}')" class="btn btn-info">Import Mata Kuliah</button>
+            {{-- <button onclick="modalAction('{{ url('/matkul/import') }}')" class="btn btn-info">Import Mata Kuliah</button>
             <!-- Tombol untuk Export Data ke Excel -->
             <a href="{{ url('/matkul/export_excel') }}" class="btn btn-primary"><i class="fa fa-file-excel"></i> Export Mata Kuliah</a>
             <!-- Tombol untuk Export Data ke PDF -->
-            <a href="{{ url('/matkul/export_pdf') }}" class="btn btn-warning"><i class="fa fa-file-pdf"></i> Export Mata Kuliah</a>
+            <a href="{{ url('/matkul/export_pdf') }}" class="btn btn-warning"><i class="fa fa-file-pdf"></i> Export Mata Kuliah</a> --}}
             <!-- Tombol Tambah Data (Ajax) -->
-            <button onclick="modalAction('{{ url('/matkul/create_ajax') }}')" class="btn btn-success">Tambah Data (Ajax)</button>
+            <button onclick="modalAction('{{ url('/matkul/create_ajax') }}')" class="btn btn-success">Tambah Data</button>
             </div>
         </div>
 
@@ -41,6 +41,21 @@
                         </div>                    
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="form-group row align-items-center">
+                            <label class="col-2 control-label col-form-label">Filter Mata Kuliah:</label>
+                            <div class="col-3">
+                                <select class="form-control" id="id_damat" name="id_damat" required style="padding-left: 10px;">
+                                    <option value="" style="padding: 5px 10px;">- Semua -</option>
+                                    @foreach ($damat as $item)
+                                        <option value="{{ $item->id_damat }}">{{ $item->nama_damat}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>                    
+                    </div>
+                </div>
                 
 
             @if (session('success'))
@@ -56,7 +71,6 @@
                         <th>No</th>
                         <th>Nama User</th>
                         <th>Mata Kuliah</th>
-                        <th>Kode Mata Kuliah</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -200,6 +214,7 @@
                     "type": "POST",
                     "data": function (d) {
                         d.id_user = $('#id_user').val();
+                        d.id_damat = $('#id_damat').val();
                     }
                 },
                 columns: [{
@@ -209,18 +224,12 @@
                     orderable: false,
                     searchable: false
                 }, {
-                    // mengambil data level hasil dari ORM berelasi
                     data: "user.nama_user",
                     className: "",
                     orderable: true,
                     searchable: true
                 }, {
-                    data: "nama_matkul",
-                    className: "",
-                    orderable: true,
-                    searchable: true
-                }, {
-                    data: "kode_matkul",
+                    data: "damat.nama_damat",
                     className: "",
                     orderable: true,
                     searchable: true
@@ -232,6 +241,9 @@
                 }]
             });
             $('#id_user').on('change',function(){
+                datamatkul.ajax.reload();
+            });
+            $('#id_damat').on('change',function(){
                 datamatkul.ajax.reload();
             });
         });

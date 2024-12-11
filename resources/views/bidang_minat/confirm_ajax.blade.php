@@ -38,7 +38,7 @@
                         </tr>
                         <tr>
                             <th class="text-right col-3">Bidang Minat :</th>
-                            <td class="col-9">{{ $bidang_minat->bidang_minat }}</td>
+                            <td class="col-9">{{ $bidang_minat->dabim->nama_dabim }}</td>
                         </tr>
                     </table>
                 </div>

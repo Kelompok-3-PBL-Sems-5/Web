@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 use App\Models\BidangMinatModel;
+use App\Models\DabimModel;
 use App\Models\UserModel;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -21,18 +22,23 @@ class BidangMinatController extends Controller
         ];
         $activeMenu = 'bidang_minat'; // set menu yang sedang aktif
         $user = UserModel::all(); // ambil data supplier untuk filter user
-        return view('bidang_minat.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'user' => $user, 'activeMenu' => $activeMenu]);
+        $dabim = DabimModel::all(); // ambil data supplier untuk filter user
+        return view('bidang_minat.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'user' => $user, 'activeMenu' => $activeMenu,'dabim' => $dabim ]);
     }
     
     // Ambil data bidang minat dalam bentuk json untuk datatables
     public function list(Request $request)
     {
-        $bidang_minat = BidangMinatModel::select('id_bidang_minat', 'id_user', 'bidang_minat')
-            ->with('user');
+        $bidang_minat = BidangMinatModel::select('id_bidang_minat', 'id_user', 'id_dabim')
+            ->with('user')
+            ->with('dabim');
 
         // filter
         if ($request->id_user) {
             $bidang_minat->where('id_user', $request->id_user);
+        }
+        if ($request->id_dabim) {
+            $bidang_minat->where('id_dabim', $request->id_dabim);
         }
         
         return DataTables::of($bidang_minat)
@@ -48,96 +54,25 @@ class BidangMinatController extends Controller
             ->make(true);
     }
 
-    // Menampilkan halaman form tambah bidang minat 
-    public function create()
-    {
-        $breadcrumb = (object) [
-            'title' => 'Tambah Bidang Minat',
-            'list' => ['Home', 'Bidang Minat', 'Tambah']
-        ];
-        $page = (object) [
-            'title' => 'Tambah Bidang Minat baru'
-        ];
-        $user = UserModel::all(); // ambil data supplier untuk filter supplier
-        $activeMenu = 'bidang_minat'; // set menu yang sedang aktif
-        return view('bidang_minat.create', ['breadcrumb' => $breadcrumb, 'page' => $page, 'user' => $user, 'activeMenu' => $activeMenu]);
-    }
-
-    // Menampilkan detail bidang minat
-    public function store(Request $request)
-    {
-        $request->validate([
-            'id_user'       => 'required|integer',
-            'bidang_minat'  => 'required|string|max:50'
-        ]);
-        BidangMinatModel::create([
-            'id_user'       => $request-> id_user,
-            'bidang_minat'  => $request-> bidang_minat
-        ]);
-        return redirect('/bidang_minat')->with('success', 'Data bidang minat berhasil disimpan');
-    }
-
     // Menampilkan detail bidang minat
     public function show(string $id)
     {
         $bidang_minat = BidangMinatModel::with('user')->find($id);
+        $bidang_minat = BidangMinatModel::with('dabim')->find($id);
         $breadcrumb = (object) ['title' => 'Detail Bidang Minat', 'list' => ['Home', 'Bidang Minat', 'Detail']];
         $page = (object) ['title' => 'Detail Bidang Minat'];
         $activeMenu = 'bidang_minat'; // set menu yang sedang aktif
         return view('bidang_minat.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'bidang_minat' => $bidang_minat, 'activeMenu' => $activeMenu]);
-    }
-    // Menampilkan halaman fore edit Bidang Minat 
-    public function edit(string $id)
-    {
-        $bidang_minat = BidangMinatModel::find($id);
-        $user = UserModel::all(); // ambil data user untuk filter user
-        $breadcrumb = (object) [
-            'title' => 'Edit Bidang Minat',
-            'list' => ['Home', 'Bidang Minat', 'Edit']
-        ];
-        $page = (object) [
-            "title" => 'Edit Bidang Minat'
-        ];
-        $activeMenu = 'bidang_minat'; // set menu yang sedang aktif
-        return view('bidang_minat.edit', ['breadcrumb' => $breadcrumb, 'page' => $page, 'bidang_minat'=> $bidang_minat, 'user' => $user, 'activeMenu' => $activeMenu]);
-    }
-
-    // Menyimpan perubahan data bidang minat
-    public function update(Request $request, string $id)
-    {
-        $request->validate([
-            'id_user'       => 'required|integer',
-            'bidang_minat'    => 'required|string|max:50' 
-        ]);
-        BidangMinatModel::find($id)->update([
-            'id_user'       => $request-> id_user,
-            'bidang_minat'   => $request-> bidang_minat
-        ]);
-        return redirect('/bidang_minat')->with("success", "Data bidang minat berhasil diubah");
-    }
-
-    // Menghapus data bidang minat 
-    public function destroy(string $id)
-    {
-        $check = BidangMinatModel::find($id);
-        if (!$check) {      // untuk mengecek apakah data bidang minat dengan id yang dimaksud ada atau tidak
-            return redirect('/bidang_minat')->with('error', 'Data bidang minat tidak ditemukan');
-        }
-        try {
-            BidangMinatModel::destroy($id); // Hapus data supplier
-            return redirect('/bidang_minat')->with('success', 'Data bidang minat berhasil dihapus');
-        } catch (\Illuminate\Database\QueryException $e) {
-            // Jika terjadi error ketika menghapus data, redirect kembali ke halaman dengan membawa pesan error
-            return redirect('/bidang_minat')->with('error', 'Data bidang minat gagal dihapus karena masih terdapat tabel lain yang terkait dengan data ini');
-        }
     }
 
     // 1. public function create_ajax()
     public function create_ajax()
     {
         $user = UserModel::select('id_user', 'nama_user')->get();
+        $dabim = DabimModel::select('id_dabim', 'nama_dabim')->get();
         return view('bidang_minat.create_ajax')
-            ->with('user', $user);
+            ->with('user', $user)
+            ->with('dabim', $dabim);
     }
     
 
@@ -148,7 +83,7 @@ class BidangMinatController extends Controller
         if ($request->ajax() || $request->wantsJson()) {
             $rules = [
                 'id_user'       => 'required|integer',
-                'bidang_minat'    => 'required|string|max:50' 
+                'id_dabim'       => 'required|integer' 
             ];
             // use Illuminate\Support\Facades\Validator;
             $validator = Validator::make($request->all(), $rules);
@@ -174,8 +109,9 @@ class BidangMinatController extends Controller
     {
         $bidang_minat = BidangMinatModel::find($id);
         $user = UserModel::select('id_user', 'nama_user')->get();
+        $dabim = dabimModel::select('id_dabim', 'nama_dabim')->get();
 
-        return view('bidang_minat.edit_ajax', ['bidang_minat' => $bidang_minat, 'user' => $user]);
+        return view('bidang_minat.edit_ajax', ['bidang_minat' => $bidang_minat, 'user' => $user, 'dabim' => $dabim]);
     }
 
     // 4. public function update_ajax(Request $request, $id)
@@ -185,7 +121,7 @@ class BidangMinatController extends Controller
         if ($request->ajax() || $request->wantsJson()) {
             $rules = [
                 'id_user'       => 'required|integer',
-                'bidang_minat'    => 'required|string|max:50' 
+                'id_dabim'       => 'required|integer'
             ];
             // use Illuminate\Support\Facades\Validator;
             $validator = Validator::make($request->all(), $rules);
@@ -240,121 +176,5 @@ class BidangMinatController extends Controller
             }
         }
         return redirect('/');
-    }
-
-    // 7. public function show_ajax(string $id)
-    public function show_ajax(string $id)
-    {
-        $bidang_minat = BidangMinatModel::find($id);
-        $user = UserModel::find($bidang_minat->id_user);
-
-        return view('bidang_minat.show_ajax', ['bidang_minat' => $bidang_minat, 'user' => $user]);
-    }
-
-    
-    public function import()
-    {
-        return view('bidang_minat.import');
-    }
-    public function import_ajax(Request $request)
-    {
-        if ($request->ajax() || $request->wantsJson()) {
-            $rules = [
-                // validasi file harus xls atau xlsx, max 1MB
-                'file_bidang_minat' => ['required', 'mimes:xlsx', 'max:1024']
-            ];
-            $validator = Validator::make($request->all(), $rules);
-            if ($validator->fails()) {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Validasi Gagal',
-                    'msgField' => $validator->errors()
-                ]);
-            }
-            $file = $request->file('file_bidang_minat'); // ambil file dari request
-            $reader = IOFactory::createReader('Xlsx'); // load reader file excel
-            $reader->setReadDataOnly(true); // hanya membaca data
-            $spreadsheet = $reader->load($file->getRealPath()); // load file excel
-            $sheet = $spreadsheet->getActiveSheet(); // ambil sheet yang aktif
-            $data = $sheet->toArray(null, false, true, true); // ambil data excel
-            $insert = [];
-            if (count($data) > 1) { // jika data lebih dari 1 baris
-                foreach ($data as $baris => $value) {
-                    if ($baris > 1) { // baris ke 1 adalah header, maka lewati
-                        $insert[] = [
-                            'id_user'       => $value['A'],
-                            'bidang_minat'  => $value['B'],
-                            'created_at' => now(),
-                        ];
-                    }
-                }
-                if (count($insert) > 0) {
-                    // insert data ke database, jika data sudah ada, maka diabaikan
-                    BidangMinatModel::insertOrIgnore($insert);
-                }
-                return response()->json([
-                    'status' => true,
-                    'message' => 'Data berhasil diimport'
-                ]);
-            } else {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Tidak ada data yang diimport'
-                ]);
-            }
-        }
-        return redirect('/');
-    }
-    public function export_excel()
-    {
-        // ambil data barang yang akan di export
-        $bidang_minat = BidangMinatModel::select('id_user', 'bidang_minat')
-            ->orderBy('id_user')
-            ->with('user')
-            ->get();
-        // load library excel
-        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
-        $sheet = $spreadsheet->getActiveSheet(); // ambil sheet yang aktif
-        $sheet->setCellValue('A1', 'No');
-        $sheet->setCellValue('B1', 'Nama User');
-        $sheet->setCellValue('C1', 'Bidang Minat');
-        $sheet->getStyle('A1:C1')->getFont()->setBold(true); // bold header
-        $no = 1; // nomor data dimulai dari 1
-        $baris = 2; // baris data dimulai dari baris ke 2
-        foreach ($bidang_minat as $key => $value) {
-            $sheet->setCellValue('A' . $baris, $no);
-            $sheet->setCellValue('B' . $baris, $value->user->nama_user);
-            $sheet->setCellValue('C' . $baris, $value->bidang_minat);
-            $baris++;
-            $no++;
-        }
-        foreach (range('A', 'C') as $columnID) {
-            $sheet->getColumnDimension($columnID)->setAutoSize(true); // set auto size untuk kolom
-        }
-        $sheet->setTitle('Data Bidang Minat'); // set title sheet
-        $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
-        $filename = 'Data Bidang Minat ' . date('Y-m-d H:i:s') . '.xlsx';
-        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment;filename="' . $filename . '"');
-        header('Cache-Control: max-age=0');
-        header('Cache-Control: max-age=1');
-        header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
-        header('Last-Modified:' . gmdate('D, d M Y H:i:s') . ' GMT');
-        header('Cache-Control: cache, must-revalidate');
-        header('Pragma: public');
-        $writer->save('php://output');
-        exit;
-    } // end function export_excel
-    public function export_pdf()
-    {
-        $bidang_minat = BidangMinatModel::select('id_user', 'bidang_minat')
-            ->orderBy('id_user')
-            ->with('user')
-            ->get();
-        // use Barryvdh\DomPDF\Facade\Pdf;
-        $pdf = Pdf::loadView('bidang_minat.export_pdf', ['bidang_minat' => $bidang_minat]);
-        $pdf->setPaper('a4', 'portrait'); // set ukuran kertas dan orientasi
-        $pdf->setOption("isRemoteEnabled", true); // set true jika ada gambar dari url $pdf->render();
-        return $pdf->stream('Data bidang minat' . date('Y-m-d H:i:s') . '.pdf');
     }
 }

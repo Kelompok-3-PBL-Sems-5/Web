@@ -15,6 +15,8 @@ use App\Http\Controllers\MatKulController;
 use App\Http\Controllers\PengajuanSertifikasiController;
 use App\Http\Controllers\JenisPelatihanController;
 use App\Http\Controllers\RekomendasiController;
+use App\Http\Controllers\DabimController;
+use App\Http\Controllers\DamatController;
 // use App\Http\Controllers\AuthController;
 
 /*
@@ -291,5 +293,47 @@ Route::group(['prefix' => 'rekomendasi'], function () {
     Route::get('/{id}/delete_ajax', [RekomendasiController::class, 'confirm_ajax']); // Untuk tampilkan form confirm delete Rekomendasi Ajax
     Route::delete('/{id}/delete_ajax', [RekomendasiController::class, 'delete_ajax']); // Untuk hapus data Rekomendasi Ajax
     Route::delete('/{id}', [RekomendasiController::class, 'destroy']); // Menghapus data Rekomendasi
+});
+
+Route::group(['prefix' => 'damat'], function () {
+    Route::get('/', [DamatController::class, 'index']); // Menampilkan halaman awal Daftar Mata Kuliah
+    Route::post('/list', [DamatController::class, 'list']); // Menampilkan data Daftar Mata Kuliah dalam bentuk json untuk datatables
+    Route::get('/create', [DamatController::class, 'create']); // Menampilkan halaman form tambah Daftar Mata Kuliah
+    Route::post('/', [DamatController::class, 'store']); // Menyimpan data Daftar Mata Kuliah baru
+    Route::get('/create_ajax', [DamatController::class, 'create_ajax']); // Menampilkan halaman form tambah Daftar Mata Kuliah Ajax
+    Route::post('/ajax', [DamatController::class, 'store_ajax']); // Menyimpan data Daftar Mata Kuliah baru Ajax
+    Route::get('/import', [DamatController::class, 'import']); // Ajax form upload excel untuk Daftar Mata Kuliah
+    Route::post('/import_ajax', [DamatController::class, 'import_ajax']); // Ajax import excel Daftar Mata Kuliah
+    Route::get('/export_excel', [DamatController::class, 'export_excel']); // Export excel Daftar Mata Kuliah
+    Route::get('/export_pdf', [DamatController::class, 'export_pdf']); // Export pdf Daftar Mata Kuliah
+    Route::get('/{id}', [DamatController::class, 'show']); // Menampilkan detail Daftar Mata Kuliah
+    Route::get('/{id}/edit', [DamatController::class, 'edit']); // Menampilkan halaman form edit Daftar Mata Kuliah
+    Route::put('/{id}', [DamatController::class, 'update']); // Menyimpan perubahan data Daftar Mata Kuliah
+    Route::get('/{id}/edit_ajax', [DamatController::class, 'edit_ajax']); // Menampilkan halaman form edit Daftar Mata Kuliah Ajax
+    Route::put('/{id}/update_ajax', [DamatController::class, 'update_ajax']); // Menyimpan perubahan data Daftar Mata Kuliah Ajax
+    Route::get('/{id}/delete_ajax', [DamatController::class, 'confirm_ajax']); // Untuk tampilkan form confirm delete Daftar Mata Kuliah Ajax
+    Route::delete('/{id}/delete_ajax', [DamatController::class, 'delete_ajax']); // Untuk hapus data Daftar Mata Kuliah Ajax
+    Route::delete('/{id}', [DamatController::class, 'destroy']); // Menghapus data Daftar Mata Kuliah
+});
+
+Route::group(['prefix' => 'dabim'], function () {
+    Route::get('/', [DabimController::class, 'index']); // Menampilkan halaman awal Daftar Bidang Minat
+    Route::post('/list', [DabimController::class, 'list']); // Menampilkan data Daftar Bidang Minat dalam bentuk json untuk datatables
+    Route::get('/create', [DabimController::class, 'create']); // Menampilkan halaman form tambah Daftar Bidang Minat
+    Route::post('/', [DabimController::class, 'store']); // Menyimpan data Daftar Bidang Minat baru
+    Route::get('/create_ajax', [DabimController::class, 'create_ajax']); // Menampilkan halaman form tambah Daftar Bidang Minat Ajax
+    Route::post('/ajax', [DabimController::class, 'store_ajax']); // Menyimpan data Daftar Bidang Minat baru Ajax
+    Route::get('/import', [DabimController::class, 'import']); // Ajax form upload excel untuk Daftar Bidang Minat
+    Route::post('/import_ajax', [DabimController::class, 'import_ajax']); // Ajax import excel Daftar Bidang Minat
+    Route::get('/export_excel', [DabimController::class, 'export_excel']); // Export excel Daftar Bidang Minat
+    Route::get('/export_pdf', [DabimController::class, 'export_pdf']); // Export pdf Daftar Bidang Minat
+    Route::get('/{id}', [DabimController::class, 'show']); // Menampilkan detail Daftar Bidang Minat
+    Route::get('/{id}/edit', [DabimController::class, 'edit']); // Menampilkan halaman form edit Daftar Bidang Minat
+    Route::put('/{id}', [DabimController::class, 'update']); // Menyimpan perubahan data Daftar Bidang Minat
+    Route::get('/{id}/edit_ajax', [DabimController::class, 'edit_ajax']); // Menampilkan halaman form edit Daftar Bidang Minat Ajax
+    Route::put('/{id}/update_ajax', [DabimController::class, 'update_ajax']); // Menyimpan perubahan data Daftar Bidang Minat Ajax
+    Route::get('/{id}/delete_ajax', [DabimController::class, 'confirm_ajax']); // Untuk tampilkan form confirm delete Daftar Bidang Minat Ajax
+    Route::delete('/{id}/delete_ajax', [DabimController::class, 'delete_ajax']); // Untuk hapus data Daftar Bidang Minat Ajax
+    Route::delete('/{id}', [DabimController::class, 'destroy']); // Menghapus data Daftar Bidang Minat
 });
 

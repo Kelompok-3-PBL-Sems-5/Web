@@ -5,13 +5,13 @@
             <h3 class="card-title">Daftar Bidang Minat</h3>
             <div class="card-tools">
                 <!-- Tombol untuk Import bidang_minat -->
-            <button onclick="modalAction('{{ url('/bidang_minat/import') }}')" class="btn btn-info">Import Bidang Minat</button>
+            {{-- <button onclick="modalAction('{{ url('/bidang_minat/import') }}')" class="btn btn-info">Import Bidang Minat</button>
             <!-- Tombol untuk Export Data ke Excel -->
             <a href="{{ url('/bidang_minat/export_excel') }}" class="btn btn-primary"><i class="fa fa-file-excel"></i> Export Bidang Minat</a>
             <!-- Tombol untuk Export Data ke PDF -->
-            <a href="{{ url('/bidang_minat/export_pdf') }}" class="btn btn-warning"><i class="fa fa-file-pdf"></i> Export Bidang Minat</a>
+            <a href="{{ url('/bidang_minat/export_pdf') }}" class="btn btn-warning"><i class="fa fa-file-pdf"></i> Export Bidang Minat</a> --}}
             <!-- Tombol Tambah Data (Ajax) -->
-            <button onclick="modalAction('{{ url('/bidang_minat/create_ajax') }}')" class="btn btn-success">Tambah Data (Ajax)</button>
+            <button onclick="modalAction('{{ url('/bidang_minat/create_ajax') }}')" class="btn btn-success">Tambah Data</button>
             </div>
         </div>
 
@@ -35,6 +35,21 @@
                                     <option value="" style="padding: 5px 10px;">- Semua -</option>
                                     @foreach ($user as $item)
                                         <option value="{{ $item->id_user }}">{{ $item->nama_user}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>                    
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="form-group row align-items-center">
+                            <label class="col-2 control-label col-form-label">Filter Bidang Minat:</label>
+                            <div class="col-3">
+                                <select class="form-control" id="id_dabim" name="id_dabim" required style="padding-left: 10px;">
+                                    <option value="" style="padding: 5px 10px;">- Semua -</option>
+                                    @foreach ($dabim as $item)
+                                        <option value="{{ $item->id_dabim }}">{{ $item->nama_dabim}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -199,6 +214,7 @@
                     "type": "POST",
                     "data": function (d) {
                         d.id_user = $('#id_user').val();
+                        d.id_dabim = $('#id_dabim').val();
                     }
                 },
                 columns: [{
@@ -208,13 +224,12 @@
                     orderable: false,
                     searchable: false
                 }, {
-                    // mengambil data level hasil dari ORM berelasi
                     data: "user.nama_user",
                     className: "",
                     orderable: true,
                     searchable: true
                 }, {
-                    data: "bidang_minat",
+                    data: "dabim.nama_dabim",
                     className: "",
                     orderable: true,
                     searchable: true
@@ -226,6 +241,9 @@
                 }]
             });
             $('#id_user').on('change',function(){
+                databidang_minat.ajax.reload();
+            });
+            $('#id_dabim').on('change',function(){
                 databidang_minat.ajax.reload();
             });
         });

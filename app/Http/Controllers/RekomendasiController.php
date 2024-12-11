@@ -1,9 +1,11 @@
 <?php
+
 namespace App\Http\Controllers;
 
-use App\Models\BidangMinatModel;
-use App\Models\MatKulModel;
+use App\Models\DabimModel;
+use App\Models\DamatModel;
 use App\Models\RekomendasiModel;
+use App\Models\UserModel;
 use App\Models\VendorModel;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -29,73 +31,63 @@ class rekomendasiController extends Controller
         $activeMenu = 'rekomendasi'; // set menu yang sedang aktif
         $rekomendasi = RekomendasiModel::all(); // set menu yang sedang aktif
         $vendor = VendorModel::all(); // ambil data vendor untuk filter vendor
-        $matkul = MatKulModel::all();
-        $bidang_minat = BidangMinatModel::all();
-        return view('rekomendasi.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'rekomendasi' => $rekomendasi, 'vendor' => $vendor, 'matkul' => $matkul, 'bidang_minat' => $bidang_minat, 'activeMenu' => $activeMenu]);
+        $damat = DamatModel::all();
+        $dabim = DabimModel::all();
+        $users = UserModel::select('id_user', 'nama_user')->get(); // Pilih hanya kolom 'id_user'
+        return view('rekomendasi.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'rekomendasi' => $rekomendasi, 'vendor' => $vendor, 'damat' => $damat, 'dabim' => $dabim, 'activeMenu' => $activeMenu, 'user' => $users]);
     }
 
-    // Ambil data rekomendasi dalam bentuk json untuk datatables
+    // Fungsi untuk menampilkan rekomendasi dengan filter berdasarkan user_id
     public function list(Request $request)
     {
-        // Ambil data rekomendasi
-        $rekomendasi = RekomendasiModel::select('id_program', 'id_vendor', 'jenis_program', 'nama_program', 'id_matkul', 'id_bidang_minat', 'tanggal_program', 'level_program', 'kuota_program')
-            ->with('vendor')
-            ->with('matkul')
-            ->with('bidang_minat');
+        $rekomendasi = RekomendasiModel::select(
+            't_data_rekomendasi_program.id_program',
+            't_data_rekomendasi_program.id_vendor',
+            't_data_rekomendasi_program.jenis_program',
+            't_data_rekomendasi_program.nama_program',
+            't_data_rekomendasi_program.id_matkul',
+            't_data_rekomendasi_program.id_bidang_minat',
+            't_data_rekomendasi_program.tanggal_program',
+            't_data_rekomendasi_program.level_program',
+            't_data_rekomendasi_program.kuota_program'
+        )
+            ->with(['vendor', 'matkul', 'bidang_minat']) // Eager loading relasi
+            ->leftJoin('mata_kuliah', 't_data_rekomendasi_program.id_matkul', '=', 'mata_kuliah.id_matkul');
 
-            if ($request->id_vendor) {
-                $rekomendasi->where('id_vendor', $request->id_vendor);
-            }
-            if ($request->id_matkul) {
-                $rekomendasi->where('id_matkul', $request->id_matkul);
-            }
-            if ($request->id_bidang_minat) {
-                $rekomendasi->where('id_bidang_minat', $request->id_bidang_minat);
-            }
+        
+        // Jika ada filter berdasarkan user_id
+        if ($request->has('user_id')) {
+            $userId = $request->input('user_id');
+
+            $rekomendasi->whereHas('matkul', function ($query) use ($userId) {
+                $query->where('id_user', $userId);
+            });
+        }
+
+        // Filter tambahan berdasarkan id_vendor, id_damat, atau id_dabim
+        if ($request->id_vendor) {
+            $rekomendasi->where('id_vendor', $request->id_vendor);
+        }
+        if ($request->id_damat) {
+            $rekomendasi->where('id_damat', $request->id_damat);
+        }
+        if ($request->id_dabim) {
+            $rekomendasi->where('id_dabim', $request->id_dabim);
+        }
+
         // Return data untuk DataTables
         return DataTables::of($rekomendasi)
-            ->addIndexColumn() // menambahkan kolom index / nomor urut
+            ->addIndexColumn() // Menambahkan kolom index / nomor urut
             ->addColumn('aksi', function ($rekomendasi) {
-                // Menambahkan kolom aksi untuk edit, detail, dan hapus
-                // $btn = '<a href="' . url('/rekomendasi/' . $rekomendasi->id_program) . '" class="btn btn-info btn-sm">Detail</a> ';
-                // $btn .= '<a href="' . url('/rekomendasi/' . $rekomendasi->id_program . '/edit') . '" class="btn btn-warning btn-sm">Edit</a> ';
-                // $btn .= '<form class="d-inline-block" method="POST" action="' . url('/rekomendasi/' . $rekomendasi->id_program) . '">'
-                //     . csrf_field() . method_field('DELETE') .
-                //     '<button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Apakah Anda yakin menghapus data ini?\');">Hapus</button></form>';
-                // return $btn;
-
-                // $btn = '<a href="' . url('/rekomendasi/' . $rekomendasi->id_program) . '" class="btn btn-info btn-sm">Detail</a> ';
-                $btn = '<button onclick="modalAction(\'' . url('/rekomendasi/' . $rekomendasi->id_program ) . '\')" class="btn btn-info btn-sm">Detail</a>';
+                $btn = '<button onclick="modalAction(\'' . url('/rekomendasi/' . $rekomendasi->id_program) . '\')" class="btn btn-info btn-sm">Detail</button> ';
                 $btn .= '<button onclick="modalAction(\'' . url('/rekomendasi/' . $rekomendasi->id_program . '/edit_ajax') . '\')" class="btn btn-warning btn-sm">Edit</button> ';
-                $btn .= '<button onclick="modalAction(\'' . url('/rekomendasi/' . $rekomendasi->id_program . '/delete_ajax') . '\')" class="btn btn-danger btn-sm">Hapus</button> ';
-
+                $btn .= '<button onclick="modalAction(\'' . url('/rekomendasi/' . $rekomendasi->id_program . '/delete_ajax') . '\')" class="btn btn-danger btn-sm">Hapus</button>';
                 return $btn;
             })
-            ->rawColumns(['aksi']) // memberitahu bahwa kolom aksi berisi HTML
+            ->rawColumns(['aksi']) // Memberitahu bahwa kolom aksi berisi HTML
             ->make(true);
     }
 
-    // Menampilkan halaman form tambah rekomendasi
-    public function create()
-    {
-        $breadcrumb = (object) [
-            'title' => 'Tambah rekomendasi',
-            'list'  => ['Home', 'rekomendasi', 'Tambah']
-        ];
-
-        $page = (object) [
-            'title' => 'Tambah rekomendasi baru'
-        ];
-        // $vendor = VendorModel::all(); // ambil data vendor untuk filter vendor
-        $matkul = MatKulModel::all();
-        // $bidang_minat = BidangMinatModel::all();
-        $activeMenu = 'rekomendasi'; // set menu yang sedang aktif
-        return view('rekomendasi.create', [
-            'breadcrumb' => $breadcrumb, 
-            'page' => $page, 
-            'activeMenu' => $activeMenu
-        ]);
-    }
     private function determineStatus(string $tanggal_program): string
     {
         try {
@@ -113,28 +105,6 @@ class rekomendasiController extends Controller
         } catch (\Exception $e) {
             return 'Tanggal Tidak Valid'; // Tangani kasus tanggal yang tidak valid
         }
-    }
-
-    // Menyimpan data rekomendasi baru
-    public function store(Request $request)
-    {
-        $request->validate([
-            'jenis_program' => 'jenis_program',
-            'nama_program'=> 'nama_program', 
-            'tanggal_program' => 'tanggal_program',
-            'level_program' => 'level_program',
-            'kuota_program' => 'kuota_program'
-        ]);
-
-        RekomendasiModel::create([
-            'jenis_program' => $request->jenis_program,
-            'nama_program'=> $request->nama_program, 
-            'tanggal_program' => $request->tanggal_program,
-            'level_program' => $request->level_program,
-            'kuota_program' => $request->kuota_program
-        ]);
-
-        return redirect('/rekomendasi')->with('success', 'Data rekomendasi berhasil disimpan');
     }
 
     // Menampilkan detail rekomendasi
@@ -155,81 +125,14 @@ class rekomendasiController extends Controller
 
         return view('rekomendasi.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'rekomendasi' => $rekomendasi, 'activeMenu' => $activeMenu]);
     }
-    public function show_ajax(string $id)
-    {
-        $rekomendasi = RekomendasiModel::find($id);
-        $vendor = VendorModel::select('id_vendor', 'nama_vendor')->get();
-        $matkul = MatKulModel::select('id_matkul', 'nama_matkul')->get();
-        $bidang_minat = BidangMinatModel::select('id_bidang_minat', 'bidang_minat')->get();
-
-        return view('rekomendasi.show_ajax', ['rekomendasi' => $rekomendasi, 'matkul' => $matkul, 'bidang_minat' => $bidang_minat, 'vendor' => $vendor]);
-    }
-
-    // Menampilkan halaman form edit rekomendasi
-    public function edit(string $id)
-    {
-        $rekomendasi = RekomendasiModel::find($id);
-
-        $breadcrumb = (object) [
-            'title' => 'Edit rekomendasi',
-            'list'  => ['Home', 'rekomendasi', 'Edit']
-        ];
-
-        $page = (object) [
-            'title' => 'Edit rekomendasi'
-        ];
-
-        $activeMenu = 'rekomendasi'; // set menu yang sedang aktif
-
-        return view('rekomendasi.edit', ['breadcrumb' => $breadcrumb, 'page' => $page, 'rekomendasi' => $rekomendasi, 'activeMenu' => $activeMenu]);
-    }
-
-    // Menyimpan perubahan data rekomendasi
-    public function update(Request $request, string $id)
-    {
-        $request->validate([
-           'jenis_program' => 'jenis_program',
-            'nama_program'=> 'nama_program', 
-            'tanggal_program' => 'tanggal_program',
-            'level_program' => 'level_program',
-            'kuota_program' => 'kuota_program'
-        ]);
-
-        RekomendasiModel::find($id)->update([
-            'jenis_program' => $request->jenis_program,
-            'nama_program'=> $request->nama_program, 
-            'tanggal_program' => $request->tanggal_program,
-            'level_program' => $request->level_program,
-            'kuota_program' => $request->kuota_program
-        ]);
-
-        return redirect('/rekomendasi')->with('success', 'Data rekomendasi berhasil diubah');
-    }
-
-    // Menghapus data rekomendasi
-    public function destroy(string $id)
-    {
-        $check = RekomendasiModel::find($id);
-        if (!$check) {  
-            return redirect('/rekomendasi')->with('error', 'Data rekomendasi tidak ditemukan');
-        }
-
-        try {
-            RekomendasiModel::destroy($id); 
-
-            return redirect('/rekomendasi')->with('success', 'Data rekomendasi berhasil dihapus');
-        } catch (\Illuminate\Database\QueryException $e) {
-            return redirect('/rekomendasi')->with('error', 'Data rekomendasi gagal dihapus karena masih terdapat tabel lain yang terkait dengan data ini');
-        }
-    }
 
     // 1. public function create_ajax()
     public function create_ajax()
     {
         $vendor = VendorModel::select('id_vendor', 'nama_vendor')->get();
-        $matkul = MatKulModel::select('id_matkul', 'nama_matkul')->get();
-        $bidang_minat = BidangMinatModel::select('id_bidang_minat', 'bidang_minat')->get();
-        return view('rekomendasi.create_ajax', ['vendor' => $vendor, 'matkul' => $matkul, 'bidang_minat' => $bidang_minat]);
+        $damat = DamatModel::select('id_damat', 'nama_damat')->get();
+        $dabim = DabimModel::select('id_dabim', 'dabim')->get();
+        return view('rekomendasi.create_ajax', ['vendor' => $vendor, 'damat' => $damat, 'dabim' => $dabim]);
     }
 
     // 2. public function store_ajax(Request $request)
@@ -240,9 +143,9 @@ class rekomendasiController extends Controller
             $rules = [
                 'id_vendor'                => 'required|integer',
                 'jenis_program'            => 'required|string|max:50',
-                'nama_program'             => 'required|string|max:100', 
-                'id_matkul'                => 'required|integer',
-                'id_bidang_minat'          => 'required|integer',
+                'nama_program'             => 'required|string|max:100',
+                'id_damat'                => 'required|integer',
+                'id_dabim'          => 'required|integer',
                 'tanggal_program'          => 'required|date',
                 'level_program'            => 'required|string|max:50',
                 'kuota_program'            => 'required|string|max:100',
@@ -271,9 +174,9 @@ class rekomendasiController extends Controller
     {
         $rekomendasi = RekomendasiModel::find($id);
         $vendor = VendorModel::all(); // ambil data vendor untuk filter vendor
-        $matkul = MatKulModel::all();
-        $bidang_minat = BidangMinatModel::all();
-        return view('rekomendasi.edit_ajax', ['rekomendasi' => $rekomendasi, 'bidang_minat' => $bidang_minat, 'matkul' => $matkul, 'vendor' => $vendor]);
+        $damat = DamatModel::all();
+        $dabim = DabimModel::all();
+        return view('rekomendasi.edit_ajax', ['rekomendasi' => $rekomendasi, 'dabim' => $dabim, 'damat' => $damat, 'vendor' => $vendor]);
     }
 
     // 4. public function update_ajax(Request $request, $id)
@@ -284,9 +187,9 @@ class rekomendasiController extends Controller
             $rules = [
                 'id_vendor'                => 'required|integer',
                 'jenis_program'            => 'required|string|max:50',
-                'nama_program'             => 'required|string|max"100', 
-                'id_matkul'                => 'required|integer',
-                'id_bidang_minat'          => 'required|integer',
+                'nama_program'             => 'required|string|max"100',
+                'id_damat'                => 'required|integer',
+                'id_dabim'          => 'required|integer',
                 'tanggal_program'          => 'required|date',
                 'level_program'            => 'required|string|max:50',
                 'kuota_program'            => 'required|string|max:100',
@@ -346,12 +249,12 @@ class rekomendasiController extends Controller
         return redirect('/');
     }
 
-    //Pertemuan 8
-    public function import()
-    {
-        return view('rekomendasi.import');
-    }
-    
+    // //Pertemuan 8
+    // public function import()
+    // {
+    //     return view('rekomendasi.import');
+    // }
+
     /* public function import_ajax(Request $request)
     {
         if ($request->ajax() || $request->wantsJson()) {
@@ -383,7 +286,7 @@ class rekomendasiController extends Controller
                             'jenis_program'            => $value['B'],
                             'nama_program'             => $value['C'],
                             'id_matkul'                => $value['D'],
-                            'id_bidang_minat'          => $value['E'],
+                            'id_dabim'          => $value['E'],
                             'tanggal_program'          => $value['F'],
                             'level_program'            => $value['G'],
                             'kuota_program'            => $value['H'],
@@ -452,15 +355,15 @@ class rekomendasiController extends Controller
         $writer->save('php://output');
         exit;
     } // end function export_excel */
-    public function export_pdf()
-    {
-        $rekomendasi = RekomendasiModel::select('nama_rekomendasi', 'alamat_rekomendasi', 'telp_rekomendasi', 'jenis_rekomendasi')
-            ->orderBy('nama_rekomendasi')
-            ->get();
-        // use Barryvdh\DomPDF\Facade\Pdf;
-        $pdf = Pdf::loadView('rekomendasi.export_pdf', ['rekomendasi' => $rekomendasi]);
-        $pdf->setPaper('a4', 'portrait'); // set ukuran kertas dan orientasi
-        $pdf->setOption("isRemoteEnabled", true); // set true jika ada gambar dari url $pdf->render();
-        return $pdf->stream('Data rekomendasi' . date('Y-m-d H:i:s') . '.pdf');
-    }
+    // public function export_pdf()
+    // {
+    //     $rekomendasi = RekomendasiModel::select('nama_rekomendasi', 'alamat_rekomendasi', 'telp_rekomendasi', 'jenis_rekomendasi')
+    //         ->orderBy('nama_rekomendasi')
+    //         ->get();
+    //     // use Barryvdh\DomPDF\Facade\Pdf;
+    //     $pdf = Pdf::loadView('rekomendasi.export_pdf', ['rekomendasi' => $rekomendasi]);
+    //     $pdf->setPaper('a4', 'portrait'); // set ukuran kertas dan orientasi
+    //     $pdf->setOption("isRemoteEnabled", true); // set true jika ada gambar dari url $pdf->render();
+    //     return $pdf->stream('Data rekomendasi' . date('Y-m-d H:i:s') . '.pdf');
+    // }
 }

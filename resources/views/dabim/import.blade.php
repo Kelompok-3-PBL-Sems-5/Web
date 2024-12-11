@@ -1,69 +1,59 @@
-<form action="{{ url('/bidang_minat/ajax') }}" method="POST" id="form-tambah">
+<form action="{{ url('/dabim/import_ajax') }}" method="POST" id="form-import" enctype="multipart/form-data">
     @csrf
     <div id="modal-master" class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Tambah Data Bidang Minat</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Import Data Bidang Minat</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label>Nama User</label>
-                    <select class="form-control" id="id_user" name="id_user" required>
-                        <option value="">- Pilih user -</option>
-                        @foreach ($user as $c)
-                            <option value="{{ $c->id_user }}">{{ $c->nama_user }}</option>
-                        @endforeach
-                    </select>
-                    <small id="error-id_user" class="error-text form-text text-danger"></small>
+                    <label>Download Template</label>
+                    <a href="{{ asset('template_dabim.xlsx') }}" class="btn btn-info btn-sm" download><i
+                            class="fa fa-file-excel"></i>Download</a>
+                    <small id="error-kategori_id" class="error-text form-text text-danger"></small>
                 </div>
                 <div class="form-group">
-                    <label>Nama Bidang Minat</label>
-                    <select class="form-control" id="id_dabim" name="id_dabim" required>
-                        <option value="">- Pilih Bidang Minat -</option>
-                        @foreach ($dabim as $c)
-                            <option value="{{ $c->id_dabim }}">{{ $c->nama_dabim }}</option>
-                        @endforeach
-                    </select>
-                    <small id="error-id_dabim" class="error-text form-text text-danger"></small>
+                    <label>Pilih File</label>
+                    <input type="file" name="file_dabim" id="file_dabim" class="form-control" required>
+                    <small id="error-file_dabim" class="error-text form-text text-danger"></small>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" data-dismiss="modal" class="btn btn-warning">Batal</button>
-                <button type="submit" class="btn btn-primary">Simpan</button>
+                <button type="submit" class="btn btn-primary">Upload</button>
             </div>
         </div>
     </div>
 </form>
 <script>
     $(document).ready(function() {
-        $("#form-tambah").validate({
+        $("#form-import").validate({
             rules: {
-                id_user: {
+                file_dabim: {
                     required: true,
-                    number: true
+                    extension: "xlsx"
                 },
-                id_dabim: {
-                    required: true,
-                    number: true
-                }
             },
             submitHandler: function(form) {
+                var formData = new FormData(form); // Jadikan form ke FormData untuk menghandle file
                 $.ajax({
                     url: form.action,
                     type: form.method,
-                    data: $(form).serialize(),
+                    data: formData, // Data yang dikirim berupa FormData
+                    processData: false, // setting processData dan contentType ke false, untuk menghandle file
+                    contentType: false,
                     success: function(response) {
-                        if (response.status) {
+                        if (response.status) { // jika sukses
                             $('#myModal').modal('hide');
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Berhasil',
                                 text: response.message
                             });
-                            databidang_minat.ajax.reload();
-                        } else {
+                            tabledabim.ajax.reload(); // reload datatable
+                        } else { // jika error
                             $('.error-text').text('');
                             $.each(response.msgField, function(prefix, val) {
                                 $('#error-' + prefix).text(val[0]);

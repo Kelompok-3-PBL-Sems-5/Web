@@ -50,7 +50,7 @@
                         </tr>
                         <tr>
                             <th class="text-right col-3">Nama Bidang Minat :</th>
-                            <td class="col-9">{{ $rekomendasi->bidang_minat->bidang_minat }}</td>
+                            <td class="col-9">{{ $rekomendasi->dabim->dabim }}</td>
                         </tr>
                         <tr>
                             <th class="text-right col-3">Level Program :</th>
