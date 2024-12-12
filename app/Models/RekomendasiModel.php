@@ -17,8 +17,8 @@ class RekomendasiModel extends Model
         'id_vendor',
         'jenis_program',
         'nama_program',
-        'id_matkul',
-        'id_bidang_minat',
+        'id_damat',
+        'id_dabim',
         'tanggal_program',
         'level_program',
         'kuota_program',
@@ -28,13 +28,13 @@ class RekomendasiModel extends Model
     {
         return $this->belongsTo(VendorModel::class, 'id_vendor','id_vendor');
     }
-    public function matkul():BelongsTo
+    public function damat():BelongsTo
     {
-        return $this->belongsTo(MatKulModel::class, 'id_matkul','id_matkul');
+        return $this->belongsTo(DamatModel::class, 'id_damat','id_damat');
     }
-    public function bidang_minat():BelongsTo
+    public function dabim():BelongsTo
     {
-        return $this->belongsTo(BidangMinatModel::class, 'id_bidang_minat','id_bidang_minat');
+        return $this->belongsTo(DabimModel::class, 'id_dabim','id_dabim');
     }
     public function getStatusAttribute()
     {

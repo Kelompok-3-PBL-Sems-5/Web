@@ -3,8 +3,8 @@ namespace App\Http\Controllers;
 use App\Models\VendorModel;
 use App\Models\SertifikasiModel;
 use App\Models\UserModel;
-use App\Models\BidangMinatModel;
-use App\Models\MatKulModel;
+use App\Models\dabimmodel;
+use App\Models\damatModel;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
@@ -27,18 +27,18 @@ class SertifikasiController extends Controller
         $sertifikasi = SertifikasiModel::all(); // Ambil semua data sertifikasi dari database
         $vendor = VendorModel::all(); // ambil data vendor untuk filter vendor
         $user = UserModel::all(); // ambil data user untuk filter user
-        $bidang_minat = BidangMinatModel::all();
-        $matkul = MatKulModel::all();
-        return view('sertifikasi.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'vendor' => $vendor, 'user' => $user, 'bidang_minat' => $bidang_minat, 'matkul' => $matkul, 'activeMenu' => $activeMenu, 'sertifikasi' => $sertifikasi]);
+        $dabim = dabimmodel::all();
+        $damat = damatModel::all();
+        return view('sertifikasi.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'vendor' => $vendor, 'user' => $user, 'dabim' => $dabim, 'damat' => $damat, 'activeMenu' => $activeMenu, 'sertifikasi' => $sertifikasi]);
     }
     
     // Ambil data sertifikasi dalam bentuk json untuk datatables
     public function list(Request $request)
     {
-        $sertifikasi = SertifikasiModel::select('id_sertifikasi', 'id_user','id_vendor','id_bidang_minat', 'id_matkul','nama_sertif', 'jenis_sertif', 'tgl_mulai_sertif', 'tgl_akhir_sertif', 'jenis_pendanaan_sertif', 'bukti_sertif', 'status')
+        $sertifikasi = SertifikasiModel::select('id_sertifikasi', 'id_user','id_vendor','id_dabim', 'id_damat','nama_sertif', 'jenis_sertif', 'tgl_mulai_sertif', 'tgl_akhir_sertif', 'jenis_pendanaan_sertif', 'bukti_sertif', 'status')
             ->with('vendor')
-            ->with('bidang_minat')
-            ->with('matkul')
+            ->with('dabim')
+            ->with('damat')
             ->with('user');
         // filter data sertifikasi berdasarkan id_vendor dan id_user
         if ($request->id_vendor) {
@@ -47,11 +47,11 @@ class SertifikasiController extends Controller
         if ($request->id_user) {
             $sertifikasi->where('id_user', $request->id_user);
         }
-        if ($request->id_bidang_minat) {
-            $sertifikasi->where('id_bidang_minat', $request->id_bidang_minat);
+        if ($request->id_dabim) {
+            $sertifikasi->where('id_dabim', $request->id_dabim);
         }
-        if ($request->id_matkul) {
-            $sertifikasi->where('id_matkul', $request->id_matkul);
+        if ($request->id_damat) {
+            $sertifikasi->where('id_damat', $request->id_damat);
         }
         
         return DataTables::of($sertifikasi)
@@ -80,10 +80,10 @@ class SertifikasiController extends Controller
         ];
         $vendor = VendorModel::all(); // ambil data vendor untuk filter vendor
         $user = UserModel::all(); // ambil data user untuk filter user
-        $bidang_minat = BidangMinatModel::all();
-        $matkul = MatKulModel::all();
+        $dabim = dabimmodel::all();
+        $damat = damatModel::all();
         $activeMenu = 'sertifikasi'; // set menu yang sedang aktif
-        return view('sertifikasi.create', ['breadcrumb' => $breadcrumb, 'page' => $page, 'vendor' => $vendor, 'user' => $user,'bidang_minat' => $bidang_minat, 'matkul' => $matkul, 'activeMenu' => $activeMenu]);
+        return view('sertifikasi.create', ['breadcrumb' => $breadcrumb, 'page' => $page, 'vendor' => $vendor, 'user' => $user,'dabim' => $dabim, 'damat' => $damat, 'activeMenu' => $activeMenu]);
     }
 
     // Fungsi untuk menentukan status berdasarkan tanggal mulai dan akhir
@@ -121,8 +121,8 @@ class SertifikasiController extends Controller
         $sertifikasi = SertifikasiModel::find($id);
         $vendor = VendorModel::all(); // Ambil data vendor
         $user = UserModel::all(); // Ambil data user
-        $bidang_minat = BidangMinatModel::all();
-        $matkul = MatKulModel::all();
+        $dabim = dabimmodel::all();
+        $damat = damatModel::all();
         $breadcrumb = (object) [
             'title' => 'Edit Sertifikasi',
             'list' => ['Home', 'Sertifikasi', 'Edit']
@@ -131,7 +131,7 @@ class SertifikasiController extends Controller
             "title" => 'Edit Sertifikasi'
         ];
         $activeMenu = 'sertifikasi'; // set menu yang sedang aktif
-        return view('sertifikasi.edit', ['breadcrumb' => $breadcrumb, 'page' => $page, 'sertifikasi'=> $sertifikasi, 'vendor' => $vendor, 'user' => $user,'bidang_minat' => $bidang_minat, 'matkul' => $matkul, 'activeMenu' => $activeMenu]);
+        return view('sertifikasi.edit', ['breadcrumb' => $breadcrumb, 'page' => $page, 'sertifikasi'=> $sertifikasi, 'vendor' => $vendor, 'user' => $user,'dabim' => $dabim, 'damat' => $damat, 'activeMenu' => $activeMenu]);
     }
 
     // Menghapus data sertifikasi 
@@ -155,13 +155,13 @@ class SertifikasiController extends Controller
     {
         $vendor = VendorModel::select('id_vendor', 'nama_vendor')->get();
         $user = UserModel::select('id_user', 'nama_user')->get();
-        $bidang_minat = BidangMinatModel::select('id_bidang_minat', 'bidang_minat')->get();
-        $matkul = MatKulModel::select('id_matkul', 'nama_matkul')->get();
+        $dabim = dabimmodel::select('id_dabim', 'dabim')->get();
+        $damat = damatModel::select('id_damat', 'nama_damat')->get();
         return view('sertifikasi.create_ajax')
             ->with('vendor', $vendor)
             ->with('user', $user)
-            ->with('bidang_minat', $bidang_minat)
-            ->with('matkul', $matkul);
+            ->with('dabim', $dabim)
+            ->with('damat', $damat);
     }
     
 
@@ -174,8 +174,8 @@ class SertifikasiController extends Controller
             $rules = [
                 'id_user'                  => 'required|integer',
                 'id_vendor'                => 'required|integer',
-                'id_matkul'                => 'required|integer',
-                'id_bidang_minat'          => 'required|integer',
+                'id_damat'                => 'required|integer',
+                'id_dabim'          => 'required|integer',
                 'nama_sertif'              => 'required|string|max:100',
                 'jenis_sertif'             => 'required|string|max:50',
                 'tgl_mulai_sertif'         => 'required|date',
@@ -222,10 +222,10 @@ class SertifikasiController extends Controller
         $sertifikasi = SertifikasiModel::find($id);
         $vendor = VendorModel::select('id_vendor', 'nama_vendor')->get();
         $user = UserModel::select('id_user', 'nama_user')->get();
-        $bidang_minat = BidangMinatModel::select('id_bidang_minat', 'bidang_minat')->get();
-        $matkul = MatKulModel::select('id_matkul', 'nama_matkul')->get();
+        $dabim = dabimmodel::select('id_dabim', 'dabim')->get();
+        $damat = damatModel::select('id_damat', 'nama_damat')->get();
 
-        return view('sertifikasi.edit_ajax', ['sertifikasi' => $sertifikasi, 'vendor' => $vendor, 'user' => $user, 'bidang_minat' => $bidang_minat, 'matkul' => $matkul]);
+        return view('sertifikasi.edit_ajax', ['sertifikasi' => $sertifikasi, 'vendor' => $vendor, 'user' => $user, 'dabim' => $dabim, 'damat' => $damat]);
     }
 
     // 4. public function update_ajax(Request $request, $id)
@@ -237,8 +237,8 @@ class SertifikasiController extends Controller
             $rules = [
                 'id_user'                  => 'required|integer',
                 'id_vendor'                => 'required|integer',
-                'id_matkul'                => 'required|integer',
-                'id_bidang_minat'          => 'required|integer',
+                'id_damat'                => 'required|integer',
+                'id_dabim'          => 'required|integer',
                 'nama_sertif'              => 'required|string|max:100',
                 'jenis_sertif'             => 'required|string|max:50',
                 'tgl_mulai_sertif'         => 'required|date',
@@ -309,10 +309,10 @@ class SertifikasiController extends Controller
 
         $vendor = VendorModel::find($sertifikasi->id_vendor);
         $user = UserModel::find($sertifikasi->id_user);
-        $bidang_minat = BidangMinatModel::find($sertifikasi->id_bidang_minat);
-        $matkul = MatKulModel::find($sertifikasi->id_matkul);
+        $dabim = dabimmodel::find($sertifikasi->id_dabim);
+        $damat = damatModel::find($sertifikasi->id_damat);
 
-        return view('sertifikasi.show_ajax', ['sertifikasi' => $sertifikasi, 'vendor' => $vendor, 'user' => $user, 'bidang_minat' => $bidang_minat, 'matkul' => $matkul]);
+        return view('sertifikasi.show_ajax', ['sertifikasi' => $sertifikasi, 'vendor' => $vendor, 'user' => $user, 'dabim' => $dabim, 'damat' => $damat]);
     }
 
     
@@ -348,8 +348,8 @@ class SertifikasiController extends Controller
                         $insert[] = [
                             'id_user'                  => $value['A'],
                             'id_vendor'                => $value['B'],
-                            'id_matkul'                => $value['C'],
-                            'id_bidang_minat'          => $value['D'],
+                            'id_damat'                => $value['C'],
+                            'id_dabim'          => $value['D'],
                             'nama_sertif'              => $value['E'],
                             'jenis_sertif'             => $value['F'],
                             'tgl_mulai_sertif'         => $value['G'],
@@ -381,12 +381,12 @@ class SertifikasiController extends Controller
     public function export_excel()
     {
         // ambil data barang yang akan di export
-        $sertifikasi = SertifikasiModel::select('id_user','id_vendor','id_matkul','id_bidang_minat','nama_sertif', 'jenis_sertif', 'tgl_mulai_sertif', 'tgl_akhir_sertif', 'jenis_pendanaan_sertif', 'bukti_sertif', 'status')
+        $sertifikasi = SertifikasiModel::select('id_user','id_vendor','id_damat','id_dabim','nama_sertif', 'jenis_sertif', 'tgl_mulai_sertif', 'tgl_akhir_sertif', 'jenis_pendanaan_sertif', 'bukti_sertif', 'status')
             ->orderBy('id_user')
             ->with('user')
             ->with('vendor')
-            ->with('matkul')
-            ->with('bidang_minat')
+            ->with('damat')
+            ->with('dabim')
             ->get();
         // load library excel
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
@@ -411,8 +411,8 @@ class SertifikasiController extends Controller
             $sheet->setCellValue('A' . $baris, $no);
             $sheet->setCellValue('B' . $baris, $value->user->nama_user);
             $sheet->setCellValue('C' . $baris, $value->vendor->nama_vendor);
-            $sheet->setCellValue('D' . $baris, $value->matkul->nama_matkul);
-            $sheet->setCellValue('E' . $baris, $value->bidang_minat->bidang_minat);
+            $sheet->setCellValue('D' . $baris, $value->damat->nama_damat);
+            $sheet->setCellValue('E' . $baris, $value->dabim->dabim);
             $sheet->setCellValue('F' . $baris, $value->nama_sertif);
             $sheet->setCellValue('G' . $baris, $value->jenis_sertif);
             $sheet->setCellValue('H' . $baris, $value->tgl_mulai_sertif);
@@ -442,13 +442,13 @@ class SertifikasiController extends Controller
     } // end function export_excel
     public function export_pdf()
     {
-        $sertifikasi = SertifikasiModel::select('id_user','id_vendor', 'id_matkul','id_bidang_minat','nama_sertif', 'jenis_sertif', 'tgl_mulai_sertif', 'tgl_akhir_sertif', 'jenis_pendanaan_sertif', 'bukti_sertif', 'status')
+        $sertifikasi = SertifikasiModel::select('id_user','id_vendor', 'id_damat','id_dabim','nama_sertif', 'jenis_sertif', 'tgl_mulai_sertif', 'tgl_akhir_sertif', 'jenis_pendanaan_sertif', 'bukti_sertif', 'status')
             ->orderBy('id_user')    
             ->orderBy('id_vendor')
             ->with('user')
             ->with('vendor')
-            ->with('matkul')
-            ->with('bidang_minat')
+            ->with('damat')
+            ->with('dabim')
             ->get();
         // use Barryvdh\DomPDF\Facade\Pdf;
         $pdf = Pdf::loadView('sertifikasi.export_pdf', ['sertifikasi' => $sertifikasi]);

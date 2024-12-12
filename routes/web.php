@@ -17,7 +17,8 @@ use App\Http\Controllers\JenisPelatihanController;
 use App\Http\Controllers\RekomendasiController;
 use App\Http\Controllers\DabimController;
 use App\Http\Controllers\DamatController;
-// use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +33,14 @@ use App\Http\Controllers\DamatController;
 
 //url lalu function
 // Route::get('d_pelatihan', [LandingController::class, 'd_pelatihan'])->name('landing.d_pelatihan');
+
+Route::pattern('id', '[0-9]+'); // artinya ketika ada parameter {id}, maka harus berupa angka
+
+Route::get('login', [AuthController::class, 'login'])->name('login');
+Route::post('login', [AuthController::class, 'postlogin']);
+Route::get('logout', [AuthController::class, 'logout'])->middleware('auth');
+
+Route::middleware(['auth'])->group(function(){
 
 Route::resource('/', LandingController::class);
 
@@ -63,6 +72,14 @@ Route::group(['prefix' => 'vendor'], function () {
     Route::get('/{id}/delete_ajax', [VendorController::class, 'confirm_ajax']); // Untuk tampilkan form confirm delete vendor Ajax
     Route::delete('/{id}/delete_ajax', [VendorController::class, 'delete_ajax']); // Untuk hapus data vendor Ajax
     Route::delete('/{id}', [VendorController::class, 'destroy']); // Menghapus data vendor
+});
+
+Route::group(['prefix' => 'profile'], function () {
+    Route::get('/', [ProfileController::class, 'index']);
+    Route::get('/{id}/edit_ajax', [ProfileController::class, 'edit_ajax']);
+    Route::put('/{id}/update_ajax', [ProfileController::class, 'update_ajax']);
+    Route::get('/{id}/edit_foto', [ProfileController::class, 'edit_foto']);
+    Route::put('/{id}/update_foto', [ProfileController::class, 'update_foto']);
 });
 
 Route::group(['prefix' => 'data_sertifikasi'], function () {
@@ -289,6 +306,7 @@ Route::group(['prefix' => 'rekomendasi'], function () {
     Route::get('/{id}/edit', [RekomendasiController::class, 'edit']); // Menampilkan halaman form edit Rekomendasi
     Route::put('/{id}', [RekomendasiController::class, 'update']); // Menyimpan perubahan data Rekomendasi
     Route::get('/{id}/edit_ajax', [RekomendasiController::class, 'edit_ajax']); // Menampilkan halaman form edit Rekomendasi Ajax
+    Route::get('/{id}/pilih_anggota', [RekomendasiController::class, 'pilih_anggota']);
     Route::put('/{id}/update_ajax', [RekomendasiController::class, 'update_ajax']); // Menyimpan perubahan data Rekomendasi Ajax
     Route::get('/{id}/delete_ajax', [RekomendasiController::class, 'confirm_ajax']); // Untuk tampilkan form confirm delete Rekomendasi Ajax
     Route::delete('/{id}/delete_ajax', [RekomendasiController::class, 'delete_ajax']); // Untuk hapus data Rekomendasi Ajax
@@ -337,3 +355,4 @@ Route::group(['prefix' => 'dabim'], function () {
     Route::delete('/{id}', [DabimController::class, 'destroy']); // Menghapus data Daftar Bidang Minat
 });
 
+});

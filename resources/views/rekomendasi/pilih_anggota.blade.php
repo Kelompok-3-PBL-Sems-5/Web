@@ -17,14 +17,14 @@
         </div>
     </div>
 @else
-    <form action="{{ url('/rekomendasi/' . $rekomendasi->id_program . '/update_ajax') }}" method="POST" id="form-edit">
+    <form action="{{ url('/rekomendasi/' . $rekomendasi->id_program . '/pilih_anggota') }}" method="POST" id="form-edit">
         @csrf
         @method('PUT')
         <div id="modal-master" class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="form-group">
-                        <h5 class="modal-title" id="exampleModalLabel">Edit Data Rekomendasi</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Pilih Anggota</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>

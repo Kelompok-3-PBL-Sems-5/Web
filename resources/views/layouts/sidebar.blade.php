@@ -63,12 +63,12 @@
         </p>
       </a>
       <ul class="nav nav-treeview">
-        <li class="nav-item">
+        {{-- <li class="nav-item">
           <a href="{{ url('/dosen') }}" class="nav-link {{ $activeMenu == 'dosen' ? 'active' : '' }}">
             <i class="far fa-circle nav-icon"></i>
             <p>Data Dosen</p>
           </a>
-        </li>
+        </li> --}}
         <li class="nav-item">
           <a href="{{ url('/bidang_minat') }}" class="nav-link {{ $activeMenu == 'bidang_minat' ? 'active' : '' }}">
             <i class="far fa-circle nav-icon"></i>

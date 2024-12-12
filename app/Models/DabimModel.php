@@ -27,5 +27,8 @@ class DabimModel extends Model
     {
         return $this->hasMany(SertifikasiModel::class, 'id_sertifikasi', 'id_sertifikasi');
     }
-    
+    public function rekomendasi():HasMany
+    {
+        return $this->hasMany(SertifikasiModel::class, 'id_program', 'id_program');
+    }
 }

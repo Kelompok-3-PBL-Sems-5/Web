@@ -45,12 +45,12 @@
                             <td class="col-9">{{ $rekomendasi->nama_program  }}</td>
                         </tr>
                         <tr>
-                            <th class="text-right col-3">Nama Matkul :</th>
-                            <td class="col-9">{{ $rekomendasi->matkul->nama_matkul }}</td>
+                            <th class="text-right col-3">Nama Mata Kuliah :</th>
+                            <td class="col-9">{{ $rekomendasi->damat->nama_damat }}</td>
                         </tr>
                         <tr>
                             <th class="text-right col-3">Nama Bidang Minat :</th>
-                            <td class="col-9">{{ $rekomendasi->dabim->dabim }}</td>
+                            <td class="col-9">{{ $rekomendasi->dabim->nama_dabim }}</td>
                         </tr>
                         <tr>
                             <th class="text-right col-3">Level Program :</th>

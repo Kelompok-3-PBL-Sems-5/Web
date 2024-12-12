@@ -43,11 +43,11 @@
                     </tr>
                     <tr>
                         <th>Nama Mata Kuliah</th>
-                        <td>{{ $rekomendasi->matkul->nama_matkul }}</td>
+                        <td>{{ $rekomendasi->damat->nama_damat }}</td>
                     </tr>
                     <tr>
                         <th>Nama Bidang Minat</th>
-                        <td>{{ $rekomendasi->bidang_minat->bidang_minat }}</td>
+                        <td>{{ $rekomendasi->dabim->nama_dabim }}</td>
                     </tr>
                     <tr>
                         <th>Tanggal Program</th>
