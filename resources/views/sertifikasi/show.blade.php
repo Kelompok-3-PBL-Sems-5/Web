@@ -39,11 +39,11 @@
                     </tr>
                     <tr>
                         <th>Nama Mata Kuliah</th>
-                        <td>{{ $sertifikasi->matkul->nama_matkul }}</td>
+                        <td>{{ $sertifikasi->damat->nama_damat }}</td>
                     </tr>
                     <tr>
                         <th>Nama Bidang Minat</th>
-                        <td>{{ $sertifikasi->bidang_minat->bidang_minat }}</td>
+                        <td>{{ $sertifikasi->dabim->nama_dabim }}</td>
                     </tr>
                     <tr>
                         <th>Nama Sertifikasi</th>

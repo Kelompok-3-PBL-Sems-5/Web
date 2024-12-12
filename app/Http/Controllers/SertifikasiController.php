@@ -3,8 +3,8 @@ namespace App\Http\Controllers;
 use App\Models\VendorModel;
 use App\Models\SertifikasiModel;
 use App\Models\UserModel;
-use App\Models\dabimmodel;
-use App\Models\damatModel;
+use App\Models\DabimModel;
+use App\Models\DamatModel;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
@@ -27,8 +27,8 @@ class SertifikasiController extends Controller
         $sertifikasi = SertifikasiModel::all(); // Ambil semua data sertifikasi dari database
         $vendor = VendorModel::all(); // ambil data vendor untuk filter vendor
         $user = UserModel::all(); // ambil data user untuk filter user
-        $dabim = dabimmodel::all();
-        $damat = damatModel::all();
+        $dabim = DabimModel::all();
+        $damat = DamatModel::all();
         return view('sertifikasi.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'vendor' => $vendor, 'user' => $user, 'dabim' => $dabim, 'damat' => $damat, 'activeMenu' => $activeMenu, 'sertifikasi' => $sertifikasi]);
     }
     
@@ -59,31 +59,13 @@ class SertifikasiController extends Controller
             ->addIndexColumn()
             ->addColumn('aksi', function ($sertifikasi) { // menambahkan kolom aksi
                 // $btn = '<a href="' . url('/data_sertifikasi/' . $sertifikasi->id_sertifikasi) . '" class="btn btn-info btn-sm">Detail</a> ';
-                $btn = '<button onclick="modalAction(\'' . url('/data_sertifikasi/' . $sertifikasi->id_sertifikasi ) . '\')" class="btn btn-info btn-sm">Detail</a>';
+                $btn = '<button onclick="modalAction(\'' . url('/data_sertifikasi/' . $sertifikasi->id_sertifikasi ) . '\')" class="btn btn-info btn-sm">Detail</button>';
                 $btn .= '<button onclick="modalAction(\'' . url('/data_sertifikasi/' . $sertifikasi->id_sertifikasi . '/edit_ajax') . '\')" class="btn btn-warning btn-sm">Edit</button> ';
                 $btn .= '<button onclick="modalAction(\'' . url('/data_sertifikasi/' . $sertifikasi->id_sertifikasi . '/delete_ajax') . '\')" class="btn btn-danger btn-sm">Hapus</button> ';
                 return $btn;
             })
             ->rawColumns(['aksi']) // memberitahu bahwa kolom aksi adalah html
             ->make(true);
-    }
-
-    // Menampilkan halaman form tambah sertifikasi 
-    public function create()
-    {
-        $breadcrumb = (object) [
-            'title' => 'Tambah Sertifikasi',
-            'list' => ['Home', 'Sertifikasi', 'Tambah']
-        ];
-        $page = (object) [
-            'title' => 'Tambah Sertifikasi baru'
-        ];
-        $vendor = VendorModel::all(); // ambil data vendor untuk filter vendor
-        $user = UserModel::all(); // ambil data user untuk filter user
-        $dabim = dabimmodel::all();
-        $damat = damatModel::all();
-        $activeMenu = 'sertifikasi'; // set menu yang sedang aktif
-        return view('sertifikasi.create', ['breadcrumb' => $breadcrumb, 'page' => $page, 'vendor' => $vendor, 'user' => $user,'dabim' => $dabim, 'damat' => $damat, 'activeMenu' => $activeMenu]);
     }
 
     // Fungsi untuk menentukan status berdasarkan tanggal mulai dan akhir
@@ -115,24 +97,6 @@ class SertifikasiController extends Controller
         $activeMenu = 'sertifikasi'; // set menu yang sedang aktif
         return view('sertifikasi.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'sertifikasi' => $sertifikasi, 'activeMenu' => $activeMenu]);
     }
-    // Menampilkan halaman fore edit sertifikasi 
-    public function edit(string $id)
-    {
-        $sertifikasi = SertifikasiModel::find($id);
-        $vendor = VendorModel::all(); // Ambil data vendor
-        $user = UserModel::all(); // Ambil data user
-        $dabim = dabimmodel::all();
-        $damat = damatModel::all();
-        $breadcrumb = (object) [
-            'title' => 'Edit Sertifikasi',
-            'list' => ['Home', 'Sertifikasi', 'Edit']
-        ];
-        $page = (object) [
-            "title" => 'Edit Sertifikasi'
-        ];
-        $activeMenu = 'sertifikasi'; // set menu yang sedang aktif
-        return view('sertifikasi.edit', ['breadcrumb' => $breadcrumb, 'page' => $page, 'sertifikasi'=> $sertifikasi, 'vendor' => $vendor, 'user' => $user,'dabim' => $dabim, 'damat' => $damat, 'activeMenu' => $activeMenu]);
-    }
 
     // Menghapus data sertifikasi 
     public function destroy(string $id)
@@ -155,8 +119,8 @@ class SertifikasiController extends Controller
     {
         $vendor = VendorModel::select('id_vendor', 'nama_vendor')->get();
         $user = UserModel::select('id_user', 'nama_user')->get();
-        $dabim = dabimmodel::select('id_dabim', 'dabim')->get();
-        $damat = damatModel::select('id_damat', 'nama_damat')->get();
+        $dabim = DabimModel::select('id_dabim', 'nama_dabim')->get();
+        $damat = DamatModel::select('id_damat', 'nama_damat')->get();
         return view('sertifikasi.create_ajax')
             ->with('vendor', $vendor)
             ->with('user', $user)
@@ -222,8 +186,8 @@ class SertifikasiController extends Controller
         $sertifikasi = SertifikasiModel::find($id);
         $vendor = VendorModel::select('id_vendor', 'nama_vendor')->get();
         $user = UserModel::select('id_user', 'nama_user')->get();
-        $dabim = dabimmodel::select('id_dabim', 'dabim')->get();
-        $damat = damatModel::select('id_damat', 'nama_damat')->get();
+        $dabim = DabimModel::select('id_dabim', 'nama_dabim')->get();
+        $damat = DamatModel::select('id_damat', 'nama_damat')->get();
 
         return view('sertifikasi.edit_ajax', ['sertifikasi' => $sertifikasi, 'vendor' => $vendor, 'user' => $user, 'dabim' => $dabim, 'damat' => $damat]);
     }
@@ -238,7 +202,7 @@ class SertifikasiController extends Controller
                 'id_user'                  => 'required|integer',
                 'id_vendor'                => 'required|integer',
                 'id_damat'                => 'required|integer',
-                'id_dabim'          => 'required|integer',
+                'id_dabim'                 => 'required|integer',
                 'nama_sertif'              => 'required|string|max:100',
                 'jenis_sertif'             => 'required|string|max:50',
                 'tgl_mulai_sertif'         => 'required|date',
@@ -309,8 +273,8 @@ class SertifikasiController extends Controller
 
         $vendor = VendorModel::find($sertifikasi->id_vendor);
         $user = UserModel::find($sertifikasi->id_user);
-        $dabim = dabimmodel::find($sertifikasi->id_dabim);
-        $damat = damatModel::find($sertifikasi->id_damat);
+        $dabim = DabimModel::find($sertifikasi->id_dabim);
+        $damat = DamatModel::find($sertifikasi->id_damat);
 
         return view('sertifikasi.show_ajax', ['sertifikasi' => $sertifikasi, 'vendor' => $vendor, 'user' => $user, 'dabim' => $dabim, 'damat' => $damat]);
     }

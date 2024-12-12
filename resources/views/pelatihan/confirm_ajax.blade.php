@@ -42,11 +42,11 @@
                         </tr>
                         <tr>
                             <th class="text-right col-3">Nama Mata Kuliah :</th>
-                            <td class="col-9">{{ $pelatihan->matkul->nama_matkul }}</td>
+                            <td class="col-9">{{ $pelatihan->damat->nama_damat }}</td>
                         </tr>
                         <tr>
                             <th class="text-right col-3">Nama Bidang Minat :</th>
-                            <td class="col-9">{{ $pelatihan->bidang_minat->bidang_minat }}</td>
+                            <td class="col-9">{{ $pelatihan->dabim->nama_dabim }}</td>
                         </tr>
                         <tr>
                             <th class="text-right col-3">Nama Pelatihan :</th>

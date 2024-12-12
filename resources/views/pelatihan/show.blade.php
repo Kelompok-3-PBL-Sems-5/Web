@@ -39,11 +39,11 @@
                     </tr>
                     <tr>
                         <th>Nama Mata Kuliah</th>
-                        <td>{{ $pelatihan->matkul->nama_matkul }}</td>
+                        <td>{{ $pelatihan->damat->nama_damat }}</td>
                     </tr>
                     <tr>
                         <th>Nama Bidang Minat</th>
-                        <td>{{ $pelatihan->bidang_minat->bidang_minat }}</td>
+                        <td>{{ $pelatihan->dabim->nama_dabim }}</td>
                     </tr>
                     <tr>
                         <th>Nama Pelatihan</th>

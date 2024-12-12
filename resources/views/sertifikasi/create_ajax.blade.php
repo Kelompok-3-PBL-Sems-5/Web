@@ -33,24 +33,24 @@
 
                 <div class="form-group">
                     <label>Nama Mata Kuliah</label>
-                    <select class="form-control" id="id_matkul" name="id_matkul" required>
+                    <select class="form-control" id="id_damat" name="id_damat" required>
                         <option value="">- Pilih Mata Kuliah -</option>
-                        @foreach ($matkul as $a)
-                            <option value="{{ $a->id_matkul }}">{{ $a->nama_matkul }}</option>
+                        @foreach ($damat as $a)
+                            <option value="{{ $a->id_damat }}">{{ $a->nama_damat }}</option>
                         @endforeach
                     </select>
-                    <small id="error-id_matkul" class="error-text form-text text-danger"></small>
+                    <small id="error-id_damat" class="error-text form-text text-danger"></small>
                 </div>
                 
                 <div class="form-group">
                     <label>Nama Bidang Minat</label>
-                    <select class="form-control" id="id_bidang_minat" name="id_bidang_minat" required>
+                    <select class="form-control" id="id_dabim" name="id_dabim" required>
                         <option value="">- Pilih Bidang Minat -</option>
-                        @foreach ($bidang_minat as $a)
-                            <option value="{{ $a->id_bidang_minat }}">{{ $a->bidang_minat }}</option>
+                        @foreach ($dabim as $a)
+                            <option value="{{ $a->id_dabim }}">{{ $a->nama_dabim }}</option>
                         @endforeach
                     </select>
-                    <small id="error-id_bidang_minat" class="error-text form-text text-danger"></small>
+                    <small id="error-id_dabim" class="error-text form-text text-danger"></small>
                 </div>
 
                 <div class="form-group">
@@ -127,11 +127,11 @@
                     required: true,
                     number: true
                 },
-                id_matkul: {
+                id_damat: {
                     required: true,
                     number: true
                 },
-                id_bidang_minat: {
+                id_dabim: {
                     required: true,
                     number: true
                 },

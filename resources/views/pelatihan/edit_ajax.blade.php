@@ -58,28 +58,28 @@
                             <div class="form-group row">
                                 <label class="col-2 control-label col-form-label">Nama Mata Kuliah</label>
                                 <div class="col-10">
-                                    <select class="form-control" id="id_matkul" name="id_matkul" required>
+                                    <select class="form-control" id="id_damat" name="id_damat" required>
                                         <option value="">- Pilih Mata Kuliah -</option>
-                                        @foreach ($matkul as $item)
-                                            <option {{ $item->id_matkul == $pelatihan->id_matkul ? 'selected' : '' }}
-                                                value="{{ $item->id_matkul }}">{{ $item->nama_matkul }}</option>
+                                        @foreach ($damat as $item)
+                                            <option {{ $item->id_damat == $pelatihan->id_damat ? 'selected' : '' }}
+                                                value="{{ $item->id_damat }}">{{ $item->nama_damat }}</option>
                                         @endforeach
                                     </select>
-                                    <small id="error-id_matkul" class="error-text form-text text-danger"></small>
+                                    <small id="error-id_damat" class="error-text form-text text-danger"></small>
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <label class="col-2 control-label col-form-label">Nama Bidang Minat</label>
                                 <div class="col-10">
-                                    <select class="form-control" id="id_bidang_minat" name="id_bidang_minat" required>
+                                    <select class="form-control" id="id_dabim" name="id_dabim" required>
                                         <option value="">- Pilih Bidang Minat -</option>
-                                        @foreach ($bidang_minat as $item)
-                                            <option {{ $item->id_bidang_minat == $pelatihan->id_bidang_minat ? 'selected' : '' }}
-                                                value="{{ $item->id_bidang_minat }}">{{ $item->bidang_minat }}</option>
+                                        @foreach ($dabim as $item)
+                                            <option {{ $item->id_dabim == $pelatihan->id_dabim ? 'selected' : '' }}
+                                                value="{{ $item->id_dabim }}">{{ $item->nama_dabim }}</option>
                                         @endforeach
                                     </select>
-                                    <small id="error-id_bidang_minat" class="error-text form-text text-danger"></small>
+                                    <small id="error-id_dabim" class="error-text form-text text-danger"></small>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -182,11 +182,11 @@
                             required: true,
                             number: true
                         },
-                        id_matkul: {
+                        id_damat: {
                             required: true,
                             number: true
                         },
-                        id_bidang_minat: {
+                        id_dabim: {
                             required: true,
                             number: true
                         },

@@ -283,7 +283,7 @@
                     orderable: true,
                     searchable: true
                 }, {
-                    data: "dabim.dabim",
+                    data: "dabim.nama_dabim",
                     className: "",
                     orderable: true,
                     searchable: true

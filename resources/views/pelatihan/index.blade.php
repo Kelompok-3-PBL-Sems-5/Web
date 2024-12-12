@@ -62,10 +62,10 @@
                         <div class="form-group row align-items-center">
                             <label class="col-2 control-label col-form-label">Filter mata kuliah:</label>
                             <div class="col-3">
-                                <select class="form-control" id="id_matkul" name="id_matkul" required>
+                                <select class="form-control" id="id_damat" name="id_damat" required>
                                     <option value="" style="padding: 5px 10px;">- Semua -</option>
-                                    @foreach ($matkul as $item)
-                                        <option value="{{ $item->id_matkul }}">{{ $item->nama_matkul }}</option>
+                                    @foreach ($damat as $item)
+                                        <option value="{{ $item->id_damat }}">{{ $item->nama_damat }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -78,10 +78,10 @@
                         <div class="form-group row align-items-center">
                             <label class="col-2 control-label col-form-label">Filter bidang minat:</label>
                             <div class="col-3">
-                                <select class="form-control" id="id_bidang_minat" name="id_bidang_minat" required>
+                                <select class="form-control" id="id_dabim" name="id_dabim" required>
                                     <option value="" style="padding: 5px 10px;">- Semua -</option>
-                                    @foreach ($bidang_minat as $item)
-                                        <option value="{{ $item->id_bidang_minat }}">{{ $item->bidang_minat }}</option>
+                                    @foreach ($dabim as $item)
+                                        <option value="{{ $item->id_dabim }}">{{ $item->dabim }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -273,8 +273,8 @@
                     "data": function (d) {
                         d.id_vendor = $('#id_vendor').val();
                         d.id_user = $('#id_user').val();
-                        d.id_matkul = $('#id_matkul').val();
-                        d.id_bidang_minat = $('#id_bidang_minat').val();
+                        d.id_damat = $('#id_damat').val();
+                        d.id_dabim = $('#id_dabim').val();
                         d.id_jenpel = $('#id_jenpel').val();
                     }
                 },
@@ -297,12 +297,12 @@
                     orderable: true,
                     searchable: true
                 }, {
-                    data: "matkul.nama_matkul",
+                    data: "damat.nama_damat",
                     className: "",
                     orderable: true,
                     searchable: true
                 }, {
-                    data: "bidang_minat.bidang_minat",
+                    data: "dabim.nama_dabim",
                     className: "",
                     orderable: true,
                     searchable: true
@@ -377,10 +377,10 @@
             $('#id_user').on('change',function(){
                 datapelatihan.ajax.reload();
             });
-            $('#id_matkul').on('change',function(){
+            $('#id_damat').on('change',function(){
                 datapelatihan.ajax.reload();
             });
-            $('#id_bidang_minat').on('change',function(){
+            $('#id_dabim').on('change',function(){
                 datapelatihan.ajax.reload();
             });
             $('#id_jenpel').on('change',function(){
