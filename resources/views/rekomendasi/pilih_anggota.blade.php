@@ -17,7 +17,7 @@
         </div>
     </div>
 @else
-    <form action="{{ url('/rekomendasi/' . $rekomendasi->id_program . '/pilih_anggota') }}" method="POST" id="form-edit">
+    <form action="{{ url('/rekomendasi/' . $rekomendasi->id_program . '/update_rekomendasi') }}" method="POST" id="form-edit">
         @csrf
         @method('PUT')
         <div id="modal-master" class="modal-dialog modal-lg" role="document">
@@ -30,78 +30,17 @@
                         </button>
                     </div>
                     <div class="form-group">
-                        <label>Nama Vendor</label>
-                        <select class="form-control" id="id_vendor" name="id_vendor" required>
-                            <option value="">- Pilih Vendor -</option>
-                            @foreach ($vendor as $a)
-                                <option value="{{ $a->id_vendor }}" {{ $rekomendasi->id_vendor == $a->id_vendor ? 'selected' : '' }}>
-                                    {{ $a->nama_vendor }}   
+                        <label>Nama Anggota</label>
+                        <select class="form-control" id="id_user" name="id_user" required>
+                            <option value="">- Pilih user -</option>
+                            @foreach ($user as $a)
+                                <option value="{{ $a->id_user }}" {{ $rekomendasi->id_user == $a->id_user ? 'selected' : '' }}>
+                                    {{ $a->nama_user }}   
                                 </option>
                             @endforeach
                         </select>
-                        <small id="error-id_vendor" class="error-text form-text text-danger"></small>
+                        <small id="error-id_user" class="error-text form-text text-danger"></small>
                     </div>
-                    <div class="form-group">
-                        <label>Jenis Program</label>
-                        <select class="form-control" id="jenis_program" name="jenis_program" required>
-                            <option value="">-- Pilih Jenis Program --</option>
-                            <option value="Sertifikasi" {{ $rekomendasi->jenis_program == 'Sertifikasi' ? 'selected' : '' }}>Sertifikasi</option>
-                            <option value="Pelatihan" {{ $rekomendasi->jenis_program == 'Pelatihan' ? 'selected' : '' }}>Pelatihan</option>
-                        </select>
-                        <small id="error-jenis_program" class="error-text form-text text-danger"></small>
-                    </div>
-                    <div class="form-group">
-                        <label>Nama Program</label>
-                        <input type="text" name="nama_program" id="nama_program" class="form-control" 
-                               value="{{ $rekomendasi->nama_program }}" required>
-                        <small id="error-nama_program" class="error-text form-text text-danger"></small>
-                    </div>
-                    <div class="form-group">
-                        <label>Nama Mata Kuliah</label>
-                        <select class="form-control" id="id_damat" name="id_damat" required>
-                            <option value="">- Pilih Mata Kuliah -</option>
-                            @foreach ($damat as $a)
-                                <option value="{{ $a->id_damat }}" {{ $rekomendasi->id_damat == $a->id_damat ? 'selected' : '' }}>
-                                    {{ $a->nama_damat }}
-                                </option>
-                            @endforeach
-                        </select>
-                        <small id="error-id_damat" class="error-text form-text text-danger"></small>
-                    </div>
-                    <div class="form-group">
-                        <label>Nama Bidang Minat</label>
-                        <select class="form-control" id="id_dabim" name="id_dabim" required>
-                            <option value="">- Pilih Bidang Minat -</option>
-                            @foreach ($dabim as $a)
-                                <option value="{{ $a->id_dabim }}" {{ $rekomendasi->id_dabim == $a->id_dabim ? 'selected' : '' }}>
-                                    {{ $a->nama_dabim }}
-                                </option>
-                            @endforeach
-                        </select>
-                        <small id="error-id_dabim" class="error-text form-text text-danger"></small>
-                    </div>
-                    <div class="form-group">
-                        <label>Tanggal Program</label>
-                        <input type="date" name="tanggal_program" id="tanggal_program" class="form-control" 
-                               value="{{ $rekomendasi->tanggal_program }}" required>
-                        <small id="error-tanggal_program" class="error-text form-text text-danger"></small>
-                    </div>
-                    <div class="form-group">
-                        <label>Level Program</label>
-                        <select class="form-control" id="level_program" name="level_program" required>
-                            <option value="">-- Pilih Level Program --</option>
-                            <option value="Nasional" {{ $rekomendasi->level_program == 'Nasional' ? 'selected' : '' }}>Nasional</option>
-                            <option value="Internasional" {{ $rekomendasi->level_program == 'Internasional' ? 'selected' : '' }}>Internasional</option>
-                        </select>
-                        <small id="error-level_program" class="error-text form-text text-danger"></small>
-                    </div>
-                    <div class="form-group">
-                        <label>Kuota Program</label>
-                        <input type="number" name="kuota_program" id="kuota_program" class="form-control" 
-                               value="{{ $rekomendasi->kuota_program }}" required>
-                        <small id="error-kuota_program" class="error-text form-text text-danger"></small>
-                    </div>
-                </div>
                 <div class="modal-footer">
                     <button type="button" data-dismiss="modal" class="btn btn-warning">Batal</button>
                     <button type="submit" class="btn btn-primary">Simpan</button>
@@ -114,14 +53,7 @@
         $(document).ready(function() {
             $("#form-edit").validate({
                 rules: {
-                    id_vendor: { required: true },
-                    jenis_program: { required: true },
-                    nama_program: { required: true },
-                    id_damat: { required: true },
-                    id_dabim: { required: true },
-                    tanggal_program: { required: true, date: true },
-                    level_program: { required: true },
-                    kuota_program: { required: true, number: true }
+                    id_user: { required: true }
                 },
                 submitHandler: function(form) {
                     $.ajax({

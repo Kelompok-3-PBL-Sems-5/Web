@@ -60,6 +60,7 @@
                             <div class="col-10">
                                 <select class="form-control" name="jenjang" id="jenjang" required>
                                     <option value="">- Pilih Jenjang -</option>
+                                    <option value="D2" {{ old('jenjang', $prodi->jenjang) == 'D2' ? 'selected' : '' }}>D2</option>
                                     <option value="D4" {{ old('jenjang', $prodi->jenjang) == 'D4' ? 'selected' : '' }}>D4</option>
                                     <option value="S2" {{ old('jenjang', $prodi->jenjang) == 'S2' ? 'selected' : '' }}>S2</option>
                                 </select>

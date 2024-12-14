@@ -104,14 +104,6 @@ class rekomendasiController extends Controller
         $activeMenu = 'rekomendasi'; // set menu yang sedang aktif
         return view('rekomendasi.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'rekomendasi' => $rekomendasi, 'activeMenu' => $activeMenu]);
     }
-    public function show_ajax(string $id)
-    {
-        $rekomendasi = RekomendasiModel::find($id);
-        $vendor = VendorModel::select('id_vendor', 'nama_vendor')->get();
-        $damat = DamatModel::select('id_damat', 'nama_damat')->get();
-        $dabim = DabimModel::select('id_dabim', 'nama_dabim')->get();
-        return view('rekomendasi.show_ajax', ['rekomendasi' => $rekomendasi, 'damat' => $damat, 'dabim' => $dabim, 'vendor' => $vendor]);
-    }
     
     // 1. public function create_ajax()
     public function create_ajax()
@@ -236,16 +228,56 @@ class rekomendasiController extends Controller
     }
     // 9. public function create_ajax()
     // 3. public function edit_ajax(string $id)
+
+
     public function pilih_anggota(string $id)
     {
         $rekomendasi = RekomendasiModel::find($id);
-        $vendor = VendorModel::all(); // ambil data vendor untuk filter vendor
+        $user = UserModel::where('id_dabim', $rekomendasi->id_dabim)
+        ->where('id_damat',$rekomendasi->id_damat)
+        ->get();
+        $vendor = VendorModel::all(); 
         $damat = DamatModel::all();
         $dabim = DabimModel::all();
         $matkul = MatKulModel::all();
         $bidang_minat = BidangMinatModel::all();
-        return view('rekomendasi.pilih_anggota', ['rekomendasi' => $rekomendasi, 'dabim' => $dabim, 'damat' => $damat, 'vendor' => $vendor, 'matkul' => $matkul, 'bidang_minat' => $bidang_minat]);
+        return view('rekomendasi.pilih_anggota', ['rekomendasi' => $rekomendasi, 'dabim' => $dabim, 'damat' => $damat, 'vendor' => $user, 'matkul' => $matkul, 'bidang_minat' => $bidang_minat, 'user' => $user]);
     }
+
+    public function update_rekomendasi(Request $request, $id)
+    {
+        // cek apakah request dari ajax
+        if ($request->ajax() || $request->wantsJson()) {
+            $rules = [
+                'id_user'                => 'required|integer'
+            ];
+            // use Illuminate\Support\Facades\Validator;
+            $validator = Validator::make($request->all(), $rules);
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => false, // respon json, true: berhasil, false: gagal
+                    'message' => 'Validasi gagal.',
+                    'msgField' => $validator->errors() // menunjukkan field mana yang error
+                ]);
+            }
+            $check = RekomendasiModel::find($id);
+            if ($check) {
+                $check->update($request->all());
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Data berhasil diupdate'
+                ]);
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Data tidak ditemukan'
+                ]);
+            }
+        }
+        return redirect('/');
+    }
+    
+
     /* public function import_ajax(Request $request)
     {
         if ($request->ajax() || $request->wantsJson()) {

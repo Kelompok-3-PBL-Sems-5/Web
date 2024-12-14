@@ -307,6 +307,7 @@ Route::group(['prefix' => 'rekomendasi'], function () {
     Route::put('/{id}', [RekomendasiController::class, 'update']); // Menyimpan perubahan data Rekomendasi
     Route::get('/{id}/edit_ajax', [RekomendasiController::class, 'edit_ajax']); // Menampilkan halaman form edit Rekomendasi Ajax
     Route::get('/{id}/pilih_anggota', [RekomendasiController::class, 'pilih_anggota']);
+    Route::put('/{id}/update_rekomendasi', [RekomendasiController::class, 'update_rekomendasi']);
     Route::put('/{id}/update_ajax', [RekomendasiController::class, 'update_ajax']); // Menyimpan perubahan data Rekomendasi Ajax
     Route::get('/{id}/delete_ajax', [RekomendasiController::class, 'confirm_ajax']); // Untuk tampilkan form confirm delete Rekomendasi Ajax
     Route::delete('/{id}/delete_ajax', [RekomendasiController::class, 'delete_ajax']); // Untuk hapus data Rekomendasi Ajax

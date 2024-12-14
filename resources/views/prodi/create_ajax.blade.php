@@ -33,6 +33,7 @@
                     <label>Jenjang</label>
                     <select class="form-control" id="jenjang" name="jenjang" required>
                         <option value="">-- Pilih Jenjang --</option>
+                        <option value="D2">D2</option>
                         <option value="D4">D4</option>
                         <option value="S2">S2</option>
                     </select>
