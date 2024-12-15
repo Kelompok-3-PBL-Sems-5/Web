@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Carbon\Carbon;
 
 class RekomendasiModel extends Model
@@ -45,5 +46,9 @@ class RekomendasiModel extends Model
         } else {
             return 'Selesai';
         }
+    }
+    public function rekdosen():HasMany
+    {
+        return $this->hasMany(RekDosenModel::class, 'id_rekdosen', 'id_rekdosen');
     }
 }

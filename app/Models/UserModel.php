@@ -83,4 +83,8 @@ class UserModel extends Authenticatable
     {
         return $this->hasMany(PengajuanPelatihanModel::class, 'id_pengpelatihan', 'id_pengpelatihan');
     }
+    public function rekdosen():HasMany
+    {
+        return $this->hasMany(RekDosenModel::class, 'id_rekdosen', 'id_rekdosen');
+    }
 }

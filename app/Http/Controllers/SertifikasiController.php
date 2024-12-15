@@ -88,32 +88,6 @@ class SertifikasiController extends Controller
         }
     }
 
-    // Menampilkan detail sertifikasi
-    public function show(string $id)
-    {
-        $sertifikasi = SertifikasiModel::with('vendor')->find($id);
-        $breadcrumb = (object) ['title' => 'Detail sertifikasi', 'list' => ['Home', 'Sertifikasi', 'Detail']];
-        $page = (object) ['title' => 'Detail sertifikasi'];
-        $activeMenu = 'sertifikasi'; // set menu yang sedang aktif
-        return view('sertifikasi.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'sertifikasi' => $sertifikasi, 'activeMenu' => $activeMenu]);
-    }
-
-    // Menghapus data sertifikasi 
-    public function destroy(string $id)
-    {
-        $check = SertifikasiModel::find($id);
-        if (!$check) {      // untuk mengecek apakah data sertifikasi dengan id yang dimaksud ada atau tidak
-            return redirect('/data_sertifikasi')->with('error', 'Data sertifikasi tidak ditemukan');
-        }
-        try {
-            SertifikasiModel::destroy($id); // Hapus data supplier
-            return redirect('/data_sertifikasi')->with('success', 'Data sertifikasi berhasil dihapus');
-        } catch (\Illuminate\Database\QueryException $e) {
-            // Jika terjadi error ketika menghapus data, redirect kembali ke halaman dengan membawa pesan error
-            return redirect('/data_sertifikasi')->with('error', 'Data sertifikasi gagal dihapus karena masih terdapat tabel lain yang terkait dengan data ini');
-        }
-    }
-
     // 1. public function create_ajax()
     public function create_ajax()
     {

@@ -279,6 +279,14 @@
         <p>Surat Tugas</p>
       </a>
     </li>
+
+    <li class="nav-header blue-header">Notifikasi</li>
+    <li class="nav-item">
+      <a href="{{ url('/notifikasi') }}" class="nav-link {{ ($activeMenu == 'notifikasi') ? 'active' : '' }}">
+        <i class="nav-icon far fa-envelope"></i>
+        <p>Notifikasi</p>
+      </a>
+    </li>
       
     <!-- Menambahkan Menu Logout -->
     <li class="nav-item">

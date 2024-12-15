@@ -19,6 +19,7 @@ use App\Http\Controllers\DabimController;
 use App\Http\Controllers\DamatController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RekDosenController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,11 +37,11 @@ use App\Http\Controllers\ProfileController;
 
 Route::pattern('id', '[0-9]+'); // artinya ketika ada parameter {id}, maka harus berupa angka
 
-Route::get('login', [AuthController::class, 'login'])->name('login');
-Route::post('login', [AuthController::class, 'postlogin']);
-Route::get('logout', [AuthController::class, 'logout'])->middleware('auth');
+// Route::get('login', [AuthController::class, 'login'])->name('login');
+// Route::post('login', [AuthController::class, 'postlogin']);
+// Route::get('logout', [AuthController::class, 'logout'])->middleware('auth');
 
-Route::middleware(['auth'])->group(function(){
+// Route::middleware(['auth'])->group(function(){
 
 Route::resource('/', LandingController::class);
 
@@ -356,4 +357,26 @@ Route::group(['prefix' => 'dabim'], function () {
     Route::delete('/{id}', [DabimController::class, 'destroy']); // Menghapus data Daftar Bidang Minat
 });
 
+Route::group(['prefix' => 'notifikasi'], function () {
+    Route::get('/', [RekDosenController::class, 'index']); 
+    Route::post('/list', [RekDosenController::class, 'list']); 
+    Route::get('/create', [RekDosenController::class, 'create']); 
+    Route::post('/', [RekDosenController::class, 'store']); 
+    Route::get('/create_ajax', [RekDosenController::class, 'create_ajax']); 
+    Route::post('/ajax', [RekDosenController::class, 'store_ajax']);
+    Route::get('/import', [RekDosenController::class, 'import']); 
+    Route::post('/import_ajax', [RekDosenController::class, 'import_ajax']); 
+    Route::get('/export_excel', [RekDosenController::class, 'export_excel']); 
+    Route::get('/export_pdf', [RekDosenController::class, 'export_pdf']); 
+    Route::get('/{id}', [RekDosenController::class, 'show']);
+    Route::get('/{id}/edit', [RekDosenController::class, 'edit']); 
+    Route::put('/{id}', [RekDosenController::class, 'update']); 
+    Route::get('/{id}/edit_ajax', [RekDosenController::class, 'edit_ajax']); 
+    Route::put('/{id}/update_ajax', [RekDosenController::class, 'update_ajax']); 
+    Route::get('/{id}/delete_ajax', [RekDosenController::class, 'confirm_ajax']); 
+    Route::delete('/{id}/delete_ajax', [RekDosenController::class, 'delete_ajax']); 
+    Route::delete('/{id}', [RekDosenController::class, 'destroy']); 
 });
+
+
+// });

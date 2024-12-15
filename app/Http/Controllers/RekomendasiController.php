@@ -8,6 +8,7 @@ use App\Models\MatKulModel;
 use App\Models\RekomendasiModel;
 use App\Models\UserModel;
 use App\Models\VendorModel;
+use App\Models\RekDosenModel;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
@@ -246,37 +247,47 @@ class rekomendasiController extends Controller
 
     public function update_rekomendasi(Request $request, $id)
     {
-        // cek apakah request dari ajax
+        // Cek apakah request berasal dari AJAX
         if ($request->ajax() || $request->wantsJson()) {
+            // Validasi data yang diterima
             $rules = [
-                'id_user'                => 'required|integer'
+                'id_user' => 'required|integer'
             ];
-            // use Illuminate\Support\Facades\Validator;
+
             $validator = Validator::make($request->all(), $rules);
+
             if ($validator->fails()) {
                 return response()->json([
-                    'status' => false, // respon json, true: berhasil, false: gagal
+                    'status' => false,
                     'message' => 'Validasi gagal.',
-                    'msgField' => $validator->errors() // menunjukkan field mana yang error
+                    'msgField' => $validator->errors()
                 ]);
             }
-            $check = RekomendasiModel::find($id);
-            if ($check) {
-                $check->update($request->all());
+
+            // Cari data di tabel rekomendasi
+            $rekomendasi = RekomendasiModel::find($id);
+
+            if ($rekomendasi) {
+                // Simpan data ke tabel lain (BidangMinatModel, contoh)
+                $rekdosen = new RekDosenModel();
+                $rekdosen->id_user = $request->id_user;
+                $rekdosen->id_program = $rekomendasi->id_program;
+                $rekdosen->save();
+
                 return response()->json([
                     'status' => true,
-                    'message' => 'Data berhasil diupdate'
+                    'message' => 'Data berhasil disimpan ke tabel Bidang Minat'
                 ]);
             } else {
                 return response()->json([
                     'status' => false,
-                    'message' => 'Data tidak ditemukan'
+                    'message' => 'Data rekomendasi tidak ditemukan'
                 ]);
             }
         }
+
         return redirect('/');
-    }
-    
+    }    
 
     /* public function import_ajax(Request $request)
     {
