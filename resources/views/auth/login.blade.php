@@ -25,7 +25,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: url('{{ asset('images/banner.jpg') }}') no-repeat center center fixed;
+            background: url('{{ asset('images/banner.png') }}') no-repeat center center fixed;
             background-size: cover;
         }
 

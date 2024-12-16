@@ -1,13 +1,14 @@
 @extends('layouts.template')
+
 @section('content')
 <div class="card card-outline card-primary">
     <div class="card-header">
         <h3 class="card-title">Daftar User</h3>
         <div class="card-tools">
             <button onclick="modalAction('{{ url('/user/import') }}')" class="btn btn-info">Import user</button>
-                <a href="{{ url('/user/export_excel') }}" class="btn btn-primary"><i class="fa fa-file-excel"></i> Export user</a>
-                <a href="{{ url('/user/export_pdf') }}" class="btn btn-warning"><i class="fa fa-file-pdf"></i> Export user</a>
-                <button onclick="modalAction('{{ url('/user/create_ajax') }}')" class="btn btn-success">Tambah Data (Ajax)</button>
+                {{-- <a href="{{ url('/user/export_excel') }}" class="btn btn-primary"><i class="fa fa-file-excel"></i> Export user</a>
+                <a href="{{ url('/user/export_pdf') }}" class="btn btn-warning"><i class="fa fa-file-pdf"></i> Export user</a> --}}
+                <button onclick="modalAction('{{ url('/user/create_ajax') }}')" class="btn btn-success">Tambah Data</button>
         </div>
     </div>
     <div class="card-body">
@@ -20,7 +21,7 @@
         <div id="filter" class="form-horizontal filter-date p-2 border-bottom mb-2">
             <div class="col-md-12">
                 <div class="form-group row">
-                    <div class="col-1 control-label col-form-label">Filter:</div>
+                    <label class="col-1 control-label col-form-label">Filter:</label>
                     <div class="col-3">
                         <select class="form-control" id="id_level" name="id_level" required>
                             <option value="">- Semua -</option>
@@ -33,6 +34,7 @@
                 </div>
             </div>
         </div>
+        
         <table class="table table-bordered table-striped table-hover table-sm" id="table_user">
             <thead>
                 <tr>
@@ -115,25 +117,25 @@ data-keyboard="false" data-width="75%" aria-hidden="true"></div>
     }
 
     /* Table Styling */
-    #table_level {
+    #table_user {
         border-collapse: separate; 
         border-spacing: 0 10px; 
     }
 
-    #table_level thead {
+    #table_user thead {
         background: #007bff; 
         color: white; 
         border-radius: 10px; 
     }
 
-    #table_level tbody tr {
+    #table_user tbody tr {
         background: #f8f9fa; 
         border-radius: 10px; 
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
         transition: background 0.3s, transform 0.3s; 
     }
 
-    #table_level tbody tr:hover {
+    #table_user tbody tr:hover {
         background: #e2e6ea; 
         transform: scale(1.02); 
     }
@@ -153,7 +155,7 @@ data-keyboard="false" data-width="75%" aria-hidden="true"></div>
     }
 
     /* Input Search Custom */
-    #table-level_filter input {
+    #table-user_filter input {
         border-radius: 20px; 
         padding: 8px 15px; 
         border: 1px solid #ddd; 
@@ -161,7 +163,7 @@ data-keyboard="false" data-width="75%" aria-hidden="true"></div>
         transition: border-color 0.3s, box-shadow 0.3s; 
     }
 
-    #table-level_filter input:focus {
+    #table-user_filter input:focus {
         border-color: #007bff; 
         box-shadow: 0 0 8px rgba(0, 123, 255, 0.5); 
     }
@@ -178,80 +180,77 @@ data-keyboard="false" data-width="75%" aria-hidden="true"></div>
         });
     }
 
-    var dataUser;
+    var tableUser;
     $(document).ready(function() {
-        dataUser = $('#table_user').DataTable({
-            // serverSide: true, jika ingin menggunakan server side processing 
-            serverSide: true,
+        tableUser = $('#table_user').DataTable({
+            processing: true,
+            serverSide: true, 
             ajax: {
                 "url": "{{ url('user/list') }}",
                 "dataType": "json",
                 "type": "POST",
-                "data": function(d) {
+                "data": function (d) {
                     d.id_level = $('#id_level').val();
                 }
             },
-        columns: [
-            {
-                // nomor urut dari laravel datatable addIndexColumn()
-                data: "DT_RowIndex", 
-                className: "text-center",
-                width: "5%",
-                orderable: false,
-                searchable: false
-            },
-            {
-                data: "username", 
-                className: "",
-                // orderable: true, jika ingin kolom ini bisa diurutkan
-                width: "10%",
-                orderable: true, 
-                // searchable: true, jika ingin kolom ini bisa dicari
-                searchable: true
-            },
-            {
-                data: "nama_user", 
-                className: "",
-                width: "25%",
-                orderable: true, 
-                searchable: true
-            },
-            {
-                // mengambil data level hasil dari ORM berelasi
-                data: "level.nama_level", 
-                className: "",
-                width: "14%",
-                orderable: false, 
-                searchable: false
-            },
-            {
-                data: "foto",
-                className: "",
-                width: "14%",
-                orderable: false,
-                searchable: false,
-                "render": function(data) {
-                    // Check if data exists
-                    if (data) {
-                        // Construct the image URL using Blade syntax
-                        return '<img src=" {{ asset('data') }} " width="50px"/>';
+            columns: [
+                {
+                    data: "DT_RowIndex", 
+                    className: "text-center",
+                    width: "5%",
+                    orderable: false,
+                    searchable: false
+                },
+                {
+                    data: "username", 
+                    className: "",
+                    width: "10%",
+                    orderable: true, 
+                    searchable: true
+                },
+                {
+                    data: "nama_user", 
+                    className: "",
+                    width: "25%",
+                    orderable: true, 
+                    searchable: true
+                },
+                {
+                    data: "level.nama_level", 
+                    className: "",
+                    width: "14%",
+                    orderable: false, 
+                    searchable: false
+                },
+                {
+                    data: "foto",
+                    className: "",
+                    width: "14%",
+                    orderable: false,
+                    searchable: false,
+                    render: function(data) {
+                        // Periksa apakah data foto ada
+                        if (data) {
+                            // Bangun URL gambar dengan sintaks Blade
+                            return '<img src="{{ asset("data") }}/' + data + '" width="50px"/>';
+                        }
+                        return 'Image Unavailable'; // Tampilkan pesan jika tidak ada gambar
                     }
-                    return 'Image Unavailable'; // Return empty if no data
+                },
+                {
+                    data: "aksi", 
+                    className: "text-center",
+                    width: "14%",
+                    orderable: false, 
+                    searchable: false
                 }
-            },
-            {
-                data: "aksi", 
-                className: "text-center",
-                width: "14%",
-                orderable: false, 
-                searchable: false
-                    
-            }
-        ]
-    });
-    $('#id_level').change(function() {
-            dataUser.ajax.reload(); // Reload DataTable when filter is applied
+            ]
         });
-});
+
+        // Event change filter level
+        $('#id_level').change(function() {
+            tableUser.draw(); // Memperbarui DataTable berdasarkan filter
+        });
+    });
 </script>
 @endpush

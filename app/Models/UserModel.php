@@ -29,8 +29,8 @@ class UserModel extends Authenticatable
         return $this->belongsTo(LevelModel::class, 'id_level', 'id_level');
     }
 
-    protected $hidden = ['password'];
-    protected $casts = ['password' => 'hashed'];
+    protected $hidden = ['password_user'];
+    protected $casts = ['password_user' => 'hashed'];
 
     public function getRoleName(): string{
         return $this->level->nama_level;
@@ -44,13 +44,37 @@ class UserModel extends Authenticatable
         return $this->level->kode_level;
     }
 
-    // public function pelatihan():HasMany
-    // {
-    //     return $this->hasMany(PelatihanModel::class, 'id_pelatihan', 'id_pelatihan');
-    // }
+    public function pelatihan():HasMany
+    {
+        return $this->hasMany(PelatihanModel::class, 'id_pelatihan', 'id_pelatihan');
+    }
 
-    // public function sertifikasi():HasMany
-    // {
-    //     return $this->hasMany(SertifikasiModel::class, 'id_sertifikasi', 'id_sertifikasi');
-    // }
+    public function sertifikasi():HasMany
+    {
+        return $this->hasMany(SertifikasiModel::class, 'id_sertifikasi', 'id_sertifikasi');
+    }
+
+    public function prodi():HasMany
+    {
+        return $this->hasMany(ProdiModel::class, 'id_prodi', 'id_prodi');
+    }
+
+    public function kompetensi():HasMany
+    {
+        return $this->hasMany(KompetensiModel::class, 'id_kompetensi', 'id_kompetensi');
+    }
+
+    public function bidang_minat():HasMany
+    {
+        return $this->hasMany(BidangMinatModel::class, 'id_bidang_minat', 'id_bidang_minat');
+    }
+
+    public function matkul():HasMany
+    {
+        return $this->hasMany(MatKulModel::class, 'id_matkul', 'id_matkul');
+    }
+    public function rekdosen():HasMany
+    {
+        return $this->hasMany(RekDosenModel::class, 'id_rekdosen', 'id_rekdosen');
+    }
 }
