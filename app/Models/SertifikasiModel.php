@@ -25,7 +25,7 @@ class SertifikasiModel extends Model
     }
     public function dabim():BelongsTo
     {
-        return $this->belongsTo(BidangMinatModel::class, 'id_dabim','id_dabim');
+        return $this->belongsTo(DabimModel::class, 'id_dabim','id_dabim');
     }
     public function getStatusAttribute()
     {

@@ -130,7 +130,7 @@
                                 <label class="col-2 control-label col-form-label">Tautan Bukti Sertifikasi</label>
                                 <div class="col-10">
                                     <input value="{{ $sertifikasi->bukti_sertif}}" type="text" name="bukti_sertif" id="bukti_sertif"
-                                    class="form-control" required>
+                                    class="form-control">
                                     <small id="error-bukti_sertif" class="error-text form-text text-danger"></small>
                                 </div>
                             </div>
@@ -209,7 +209,7 @@
                         required: true,
                     },
                     bukti_sertif: {
-                        required: true
+                        required: false
                     },
                     status: {
                         required: true

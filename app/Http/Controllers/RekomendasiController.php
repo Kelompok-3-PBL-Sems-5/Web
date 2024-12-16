@@ -245,49 +245,49 @@ class rekomendasiController extends Controller
         return view('rekomendasi.pilih_anggota', ['rekomendasi' => $rekomendasi, 'dabim' => $dabim, 'damat' => $damat, 'vendor' => $user, 'matkul' => $matkul, 'bidang_minat' => $bidang_minat, 'user' => $user]);
     }
 
-    public function update_rekomendasi(Request $request, $id)
-    {
-        // Cek apakah request berasal dari AJAX
-        if ($request->ajax() || $request->wantsJson()) {
-            // Validasi data yang diterima
-            $rules = [
-                'id_user' => 'required|integer'
-            ];
+    // public function update_rekomendasi(Request $request, $id)
+    // {
+    //     // Cek apakah request berasal dari AJAX
+    //     if ($request->ajax() || $request->wantsJson()) {
+    //         // Validasi data yang diterima
+    //         $rules = [
+    //             'id_user' => 'required|integer'
+    //         ];
 
-            $validator = Validator::make($request->all(), $rules);
+    //         $validator = Validator::make($request->all(), $rules);
 
-            if ($validator->fails()) {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Validasi gagal.',
-                    'msgField' => $validator->errors()
-                ]);
-            }
+    //         if ($validator->fails()) {
+    //             return response()->json([
+    //                 'status' => false,
+    //                 'message' => 'Validasi gagal.',
+    //                 'msgField' => $validator->errors()
+    //             ]);
+    //         }
 
-            // Cari data di tabel rekomendasi
-            $rekomendasi = RekomendasiModel::find($id);
+    //         // Cari data di tabel rekomendasi
+    //         $rekomendasi = RekomendasiModel::find($id);
 
-            if ($rekomendasi) {
-                // Simpan data ke tabel lain (BidangMinatModel, contoh)
-                $rekdosen = new RekDosenModel();
-                $rekdosen->id_user = $request->id_user;
-                $rekdosen->id_program = $rekomendasi->id_program;
-                $rekdosen->save();
+    //         if ($rekomendasi) {
+    //             // Simpan data ke tabel lain (BidangMinatModel, contoh)
+    //             $rekdosen = new RekDosenModel();
+    //             $rekdosen->id_user = $request->id_user;
+    //             $rekdosen->id_program = $rekomendasi->id_program;
+    //             $rekdosen->save();
 
-                return response()->json([
-                    'status' => true,
-                    'message' => 'Data berhasil disimpan ke tabel Bidang Minat'
-                ]);
-            } else {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Data rekomendasi tidak ditemukan'
-                ]);
-            }
-        }
+    //             return response()->json([
+    //                 'status' => true,
+    //                 'message' => 'Data berhasil disimpan ke tabel Bidang Minat'
+    //             ]);
+    //         } else {
+    //             return response()->json([
+    //                 'status' => false,
+    //                 'message' => 'Data rekomendasi tidak ditemukan'
+    //             ]);
+    //         }
+    //     }
 
-        return redirect('/');
-    }    
+    //     return redirect('/');
+    // }    
 
     /* public function import_ajax(Request $request)
     {

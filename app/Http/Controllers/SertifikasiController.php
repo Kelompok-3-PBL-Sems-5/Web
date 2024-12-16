@@ -31,6 +31,7 @@ class SertifikasiController extends Controller
         $damat = DamatModel::all();
         return view('sertifikasi.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'vendor' => $vendor, 'user' => $user, 'dabim' => $dabim, 'damat' => $damat, 'activeMenu' => $activeMenu, 'sertifikasi' => $sertifikasi]);
     }
+
     
     // Ambil data sertifikasi dalam bentuk json untuk datatables
     public function list(Request $request)
@@ -112,14 +113,14 @@ class SertifikasiController extends Controller
             $rules = [
                 'id_user'                  => 'required|integer',
                 'id_vendor'                => 'required|integer',
-                'id_damat'                => 'required|integer',
-                'id_dabim'          => 'required|integer',
+                'id_damat'                 => 'required|integer',
+                'id_dabim'                 => 'required|integer',
                 'nama_sertif'              => 'required|string|max:100',
                 'jenis_sertif'             => 'required|string|max:50',
                 'tgl_mulai_sertif'         => 'required|date',
                 'tgl_akhir_sertif'         => 'required|date',
                 'jenis_pendanaan_sertif'   => 'required|string|max:50',
-                'bukti_sertif'             => 'required|string',
+                'bukti_sertif'             => 'nullable|string',
             ];
 
             $validator = Validator::make($request->all(), $rules);
@@ -182,7 +183,7 @@ class SertifikasiController extends Controller
                 'tgl_mulai_sertif'         => 'required|date',
                 'tgl_akhir_sertif'         => 'required|date',
                 'jenis_pendanaan_sertif'   => 'required|string|max:50',
-                'bukti_sertif'             => 'required|string',
+                'bukti_sertif'             => 'nullable|string',
             ];
 
             $validator = Validator::make($request->all(), $rules);
@@ -240,17 +241,32 @@ class SertifikasiController extends Controller
         return redirect('/');
     }
 
-    // 7. public function show_ajax(string $id)
-    public function show_ajax(string $id)
+    // Menampilkan detail sertifikasi
+    public function show(string $id)
+    {
+        $sertifikasi = SertifikasiModel::with('vendor')->find($id);
+        $breadcrumb = (object) ['title' => 'Detail sertifikasi', 'list' => ['Home', 'Sertifikasi', 'Detail']];
+        $page = (object) ['title' => 'Detail sertifikasi'];
+        $activeMenu = 'data_sertifikasi'; // set menu yang sedang aktif
+        return view('sertifikasi.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'sertifikasi' => $sertifikasi, 'activeMenu' => $activeMenu]);
+    }
+    // Menampilkan halaman fore edit sertifikasi 
+    public function edit(string $id)
     {
         $sertifikasi = SertifikasiModel::find($id);
-
-        $vendor = VendorModel::find($sertifikasi->id_vendor);
-        $user = UserModel::find($sertifikasi->id_user);
-        $dabim = DabimModel::find($sertifikasi->id_dabim);
-        $damat = DamatModel::find($sertifikasi->id_damat);
-
-        return view('sertifikasi.show_ajax', ['sertifikasi' => $sertifikasi, 'vendor' => $vendor, 'user' => $user, 'dabim' => $dabim, 'damat' => $damat]);
+        $vendor = VendorModel::all(); // Ambil data vendor
+        $user = UserModel::all(); // Ambil data user
+        $dabim = DabimModel::all();
+        $damat = DamatModel::all();
+        $breadcrumb = (object) [
+            'title' => 'Edit Sertifikasi',
+            'list' => ['Home', 'Sertifikasi', 'Edit']
+        ];
+        $page = (object) [
+            "title" => 'Edit Sertifikasi'
+        ];
+        $activeMenu = 'data_sertifikasi'; // set menu yang sedang aktif
+        return view('sertifikasi.edit', ['breadcrumb' => $breadcrumb, 'page' => $page, 'sertifikasi'=> $sertifikasi, 'vendor' => $vendor, 'user' => $user,'dabim' => $dabim, 'damat' => $damat,'activeMenu' => $activeMenu]);
     }
 
     
@@ -350,7 +366,7 @@ class SertifikasiController extends Controller
             $sheet->setCellValue('B' . $baris, $value->user->nama_user);
             $sheet->setCellValue('C' . $baris, $value->vendor->nama_vendor);
             $sheet->setCellValue('D' . $baris, $value->damat->nama_damat);
-            $sheet->setCellValue('E' . $baris, $value->dabim->dabim);
+            $sheet->setCellValue('E' . $baris, $value->dabim->nama_dabim);
             $sheet->setCellValue('F' . $baris, $value->nama_sertif);
             $sheet->setCellValue('G' . $baris, $value->jenis_sertif);
             $sheet->setCellValue('H' . $baris, $value->tgl_mulai_sertif);

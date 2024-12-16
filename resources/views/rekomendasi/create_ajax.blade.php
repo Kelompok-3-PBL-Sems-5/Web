@@ -25,6 +25,7 @@
                         <option value="Sertifikasi">Sertifikasi</option>
                         <option value="Pelatihan">Pelatihan</option>
                     </select>
+                </div> 
                 <div class="form-group">
                     <label>Nama program</label>
                     <input value="" type="text" name="nama_program" id="nama_program" class="form-control" required>

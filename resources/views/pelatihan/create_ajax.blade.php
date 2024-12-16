@@ -97,7 +97,7 @@
                 </div>                
                 <div class="form-group">
                     <label>Tautan Bukti Pelatihan</label>
-                    <input value="" type="text" name="bukti_pelatihan" id="bukti_pelatihan" class="form-control" required>
+                    <input value="" type="text" name="bukti_pelatihan" id="bukti_pelatihan" class="form-control">
                     <small id="error-bukti_pelatihan" class="error-text form-text text-danger"></small>
                 </div>
                 {{-- <div class="form-group">
@@ -160,7 +160,7 @@
                     required: true,
                 },
                 bukti_pelatihan: {
-                    required: true
+                    required: false
                 },
                 status: {
                     required: true

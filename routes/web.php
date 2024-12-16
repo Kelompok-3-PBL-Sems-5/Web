@@ -12,7 +12,6 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\LevelController;
 use App\Http\Controllers\BidangMinatController;
 use App\Http\Controllers\MatKulController;
-use App\Http\Controllers\PengajuanSertifikasiController;
 use App\Http\Controllers\JenisPelatihanController;
 use App\Http\Controllers\RekomendasiController;
 use App\Http\Controllers\DabimController;
@@ -20,6 +19,7 @@ use App\Http\Controllers\DamatController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RekDosenController;
+use App\Http\Controllers\PeriodeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,11 +37,11 @@ use App\Http\Controllers\RekDosenController;
 
 Route::pattern('id', '[0-9]+'); // artinya ketika ada parameter {id}, maka harus berupa angka
 
-// Route::get('login', [AuthController::class, 'login'])->name('login');
-// Route::post('login', [AuthController::class, 'postlogin']);
-// Route::get('logout', [AuthController::class, 'logout'])->middleware('auth');
+Route::get('login', [AuthController::class, 'login'])->name('login');
+Route::post('login', [AuthController::class, 'postlogin']);
+Route::get('logout', [AuthController::class, 'logout'])->middleware('auth');
 
-// Route::middleware(['auth'])->group(function(){
+Route::middleware(['auth'])->group(function(){
 
 Route::resource('/', LandingController::class);
 
@@ -251,27 +251,6 @@ Route::group(['prefix' => 'matkul'], function () {
     Route::delete('/{id}', [MatKulController::class, 'destroy']); // Menghapus data vendor
 });
 
-Route::group(['prefix' => 'ajukan_sertifikasi'], function () {
-    Route::get('/', [PengajuanSertifikasiController::class, 'index']); // Menampilkan halaman awal Pengajuan Sertifikasi
-    Route::post('/list', [PengajuanSertifikasiController::class, 'list']); // Menampilkan data Pengajuan Sertifikasi dalam bentuk json untuk datatables
-    Route::get('/create', [PengajuanSertifikasiController::class, 'create']); // Menampilkan halaman form tambah Pengajuan Sertifikasi
-    Route::post('/', [PengajuanSertifikasiController::class, 'store']); // Menyimpan data Pengajuan Sertifikasi baru
-    Route::get('/create_ajax', [PengajuanSertifikasiController::class, 'create_ajax']); // Menampilkan halaman form tambah Pengajuan Sertifikasi Ajax
-    Route::post('/ajax', [PengajuanSertifikasiController::class, 'store_ajax']); // Menyimpan data Pengajuan Sertifikasi baru Ajax
-    Route::get('/import', [PengajuanSertifikasiController::class, 'import']); // Ajax form upload excel untuk Pengajuan Sertifikasi
-    Route::post('/import_ajax', [PengajuanSertifikasiController::class, 'import_ajax']); // Ajax import excel Pengajuan Sertifikasi
-    Route::get('/export_excel', [PengajuanSertifikasiController::class, 'export_excel']); // Export excel Pengajuan Sertifikasi
-    Route::get('/export_pdf', [PengajuanSertifikasiController::class, 'export_pdf']); // Export pdf Pengajuan Sertifikasi
-    Route::get('/{id}', [PengajuanSertifikasiController::class, 'show']); // Menampilkan detail Pengajuan Sertifikasi
-    Route::get('/{id}/edit', [PengajuanSertifikasiController::class, 'edit']); // Menampilkan halaman form edit Pengajuan Sertifikasi
-    Route::put('/{id}', [PengajuanSertifikasiController::class, 'update']); // Menyimpan perubahan data Pengajuan Sertifikasi
-    Route::get('/{id}/edit_ajax', [PengajuanSertifikasiController::class, 'edit_ajax']); // Menampilkan halaman form edit Pengajuan Sertifikasi Ajax
-    Route::put('/{id}/update_ajax', [PengajuanSertifikasiController::class, 'update_ajax']); // Menyimpan perubahan data Pengajuan Sertifikasi Ajax
-    Route::get('/{id}/delete_ajax', [PengajuanSertifikasiController::class, 'confirm_ajax']); // Untuk tampilkan form confirm delete Pengajuan Sertifikasi Ajax
-    Route::delete('/{id}/delete_ajax', [PengajuanSertifikasiController::class, 'delete_ajax']); // Untuk hapus data Pengajuan Sertifikasi Ajax
-    Route::delete('/{id}', [PengajuanSertifikasiController::class, 'destroy']); // Menghapus data Pengajuan Sertifikasi
-});
-
 Route::group(['prefix' => 'jenis_pelatihan'], function () {
     Route::get('/', [JenisPelatihanController::class, 'index']); // Menampilkan halaman awal jenis pelatihan
     Route::post('/list', [JenisPelatihanController::class, 'list']); // Menampilkan data jenis pelatihan dalam bentuk JSON untuk datatables
@@ -378,5 +357,25 @@ Route::group(['prefix' => 'notifikasi'], function () {
     Route::delete('/{id}', [RekDosenController::class, 'destroy']); 
 });
 
+Route::group(['prefix' => 'periode'], function () {
+    Route::get('/', [PeriodeController::class, 'index']); // Menampilkan halaman awal periode
+    Route::post('/list', [PeriodeController::class, 'list']); // Menampilkan data periode dalam bentuk json untuk datatables
+    Route::get('/create', [PeriodeController::class, 'create']); // Menampilkan halaman form tambah periode
+    Route::post('/', [PeriodeController::class, 'store']); // Menyimpan data periode baru
+    Route::get('/create_ajax', [PeriodeController::class, 'create_ajax']); // Menampilkan halaman form tambah periode Ajax
+    Route::post('/ajax', [PeriodeController::class, 'store_ajax']); // Menyimpan data periode baru Ajax
+    Route::get('/import', [PeriodeController::class, 'import']); // Ajax form upload excel untuk periode
+    Route::post('/import_ajax', [PeriodeController::class, 'import_ajax']); // Ajax import excel periode
+    Route::get('/export_excel', [PeriodeController::class, 'export_excel']); // Export excel periode
+    Route::get('/export_pdf', [PeriodeController::class, 'export_pdf']); // Export pdf periode
+    Route::get('/{id}', [PeriodeController::class, 'show']); // Menampilkan detail periode
+    Route::get('/{id}/edit', [PeriodeController::class, 'edit']); // Menampilkan halaman form edit periode
+    Route::put('/{id}', [PeriodeController::class, 'update']); // Menyimpan perubahan data periode
+    Route::get('/{id}/edit_ajax', [PeriodeController::class, 'edit_ajax']); // Menampilkan halaman form edit periode Ajax
+    Route::put('/{id}/update_ajax', [PeriodeController::class, 'update_ajax']); // Menyimpan perubahan data periode Ajax
+    Route::get('/{id}/delete_ajax', [PeriodeController::class, 'confirm_ajax']); // Untuk tampilkan form confirm delete periode Ajax
+    Route::delete('/{id}/delete_ajax', [PeriodeController::class, 'delete_ajax']); // Untuk hapus data periode Ajax
+    Route::delete('/{id}', [PeriodeController::class, 'destroy']); // Menghapus data periode
+});
 
-// });
+});

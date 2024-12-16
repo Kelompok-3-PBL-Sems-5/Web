@@ -145,7 +145,7 @@
                                 <label class="col-2 control-label col-form-label"> Tautan Bukti Pelatihan</label>
                                 <div class="col-10">
                                     <input value="{{ $pelatihan->bukti_pelatihan}}" type="text" name="bukti_pelatihan" id="bukti_pelatihan"
-                                    class="form-control" required>
+                                    class="form-control">
                                     <small id="error-bukti_pelatihan" class="error-text form-text text-danger"></small>
                                 </div>
                             </div>
@@ -212,7 +212,7 @@
                             required: true,
                         },
                         bukti_pelatihan: {
-                            required: true
+                            required: false
                         },
                         status: {
                             required: true

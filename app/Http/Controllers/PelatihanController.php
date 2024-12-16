@@ -191,7 +191,7 @@ class PelatihanController extends Controller
                 'tgl_akhir'          => 'required|date',
                 'level_pelatihan'    => 'required|string|max:50',
                 'jenis_pendanaan'    => 'required|string|max:50',
-                'bukti_pelatihan'    => 'required|string',
+                'bukti_pelatihan'    => 'nullable|string',
             ];
 
             // use Illuminate\Support\Facades\Validator;
@@ -242,7 +242,7 @@ class PelatihanController extends Controller
                 'tgl_akhir'          => 'required|date',
                 'level_pelatihan'    => 'required|string|max:50',
                 'jenis_pendanaan'    => 'required|string|max:50',
-                'bukti_pelatihan'    => 'required|string',
+                'bukti_pelatihan'    => 'nullable|string',
             ];
 
             $status = $this->determineStatus($request->tgl_mulai, $request->tgl_akhir);

@@ -81,7 +81,7 @@
                                 <select class="form-control" id="id_dabim" name="id_dabim" required>
                                     <option value="" style="padding: 5px 10px;">- Semua -</option>
                                     @foreach ($dabim as $item)
-                                        <option value="{{ $item->id_dabim }}">{{ $item->dabim }}</option>
+                                        <option value="{{ $item->id_dabim }}">{{ $item->nama_dabim }}</option>
                                     @endforeach
                                 </select>
                             </div>
