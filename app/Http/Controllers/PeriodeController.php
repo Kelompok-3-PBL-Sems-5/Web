@@ -19,9 +19,17 @@ class PeriodeController extends Controller
 {
     public function index()
     {
+        $breadcrumb = (object) [
+            'title' => 'Daftar Periode',
+            'list' => ['Home', 'Pelatihan']
+        ];
+        $page = (object) [
+            'title' => 'Daftar Pelatihan yang terdaftar dalam sistem'
+        ];
+        $activeMenu = 'periode';
         $sertifikasi = SertifikasiModel::all();
         $user = User::all();
-        return view('periode.index', compact('sertifikasi', 'user'));
+        return view('periode.index', compact('sertifikasi', 'user', 'activeMenu', 'breadcrumb'));
     }
 
     public function list(Request $request)
@@ -35,7 +43,6 @@ class PeriodeController extends Controller
                 $btn .= '<button onclick="modalAction(\'' . url("periode/$row->id_periode") . '\')" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i></button>';
                 $btn .= '<button onclick="modalAction(\'' . url("periode/$row->id_periode/edit_ajax") . '\')" class="btn btn-success btn-sm"><i class="fa fa-edit"></i></button>';
                 $btn .= '<button onclick="modalAction(\'' . url("periode/$row->id_periode/delete_ajax") . '\')" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>';
-                $btn .= '</div>';
                 return $btn;
             })
             ->editColumn('id_user', function ($row) {

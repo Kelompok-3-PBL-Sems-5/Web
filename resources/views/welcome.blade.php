@@ -18,7 +18,7 @@
             <span class="info-box-icon bg-info elevation-1"><i class="fas fa-users"></i></span>
             <div class="info-box-content">
                 <span class="info-box-text">Jumlah Dosen Terdaftar</span>
-                <span class="info-box-number" id="jumlahDosen" data-toggle="modal" data-target="#dosenModal" style="cursor: pointer;">20 Dosen</span>
+                <span class="info-box-number" id="jumlahDosen" data-toggle="modal" data-target="#dosenModal" style="cursor: pointer;">10 Dosen</span>
                 {{-- <small class="text-muted">Dosen yang terdaftar aktif.</small> --}}
                 <small class="text-muted">Klik untuk detail</small>
             </div>

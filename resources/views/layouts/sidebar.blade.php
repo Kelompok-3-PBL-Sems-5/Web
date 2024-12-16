@@ -52,6 +52,15 @@
       </ul>
     </li>
 
+    <!-- Data Historis Pribadi Dosen -->
+    <li class="nav-header blue-header">Data Historis Pribadi Dosen</li>
+    <li class="nav-item">
+      <a href="{{ url('/data_historis') }}" class="nav-link {{ ($activeMenu == 'data_historis') ? 'active' : '' }}">
+        <i class="nav-icon far fa-envelope"></i>
+        <p>Data Historis</p>
+      </a>
+    </li>
+
     <!-- Data Dosen -->
     <li class="nav-header blue-header">Data Dosen</li>
     <li class="nav-item has-treeview {{ in_array($activeMenu, ['dosen', 'bidang_minat', 'matkul', 'data_sertifikasi', 'data_pelatihan']) ? 'menu-open' : '' }}">
