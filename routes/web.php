@@ -17,9 +17,11 @@ use App\Http\Controllers\RekomendasiController;
 use App\Http\Controllers\DabimController;
 use App\Http\Controllers\DamatController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DataHistorisController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RekDosenController;
 use App\Http\Controllers\PeriodeController;
+use App\Http\Controllers\MatkulByUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -409,5 +411,17 @@ Route::middleware(['authorize:ADM,PIMJUR'])->group(function () {
         Route::delete('/{id}/delete_ajax', [PeriodeController::class, 'delete_ajax']); // Untuk hapus data periode Ajax
         Route::delete('/{id}', [PeriodeController::class, 'destroy']); // Menghapus data periode
     });
+});
+
+Route::middleware(['authorize:DSN,ADM,PIMJUR'])->group(function () {
+    Route::group(['prefix' => 'data_historis'], function () {
+        Route::get('/', [DataHistorisController::class, 'index']);
+        Route::get('/{id}/edit_ajax', [DataHistorisController::class, 'edit_ajax']);
+        Route::put('/{id}/update_ajax', [DataHistorisController::class, 'update_ajax']);
+    });
+
+    // Route::group(['prefix' => 'matkul'], function() {
+    //     Route::get('/', [MatkulByUserController::class, 'index']);
+    // });
 });
 });

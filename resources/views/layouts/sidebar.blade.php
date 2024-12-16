@@ -27,6 +27,7 @@
     </li>
 
     <!-- Data Pengguna -->
+    @if(Auth::user()->id_level == 1)
     <li class="nav-header blue-header">Data Pengguna</li>
     <li class="nav-item has-treeview {{ in_array($activeMenu, ['level', 'user']) ? 'menu-open' : '' }}">
       <a href="#" class="nav-link">
@@ -51,8 +52,10 @@
         </li>
       </ul>
     </li>
+      @endif
 
     <!-- Data Historis Pribadi Dosen -->
+    @if(Auth::user()->id_level != 1)
     <li class="nav-header blue-header">Data Historis Pribadi Dosen</li>
     <li class="nav-item">
       <a href="{{ url('/data_historis') }}" class="nav-link {{ ($activeMenu == 'data_historis') ? 'active' : '' }}">
@@ -60,8 +63,10 @@
         <p>Data Historis</p>
       </a>
     </li>
+    @endif
 
     <!-- Data Dosen -->
+    @if(Auth::user()->id_level == 1)
     <li class="nav-header blue-header">Data Dosen</li>
     <li class="nav-item has-treeview {{ in_array($activeMenu, ['dosen', 'bidang_minat', 'matkul', 'data_sertifikasi', 'data_pelatihan']) ? 'menu-open' : '' }}">
       <a href="#" class="nav-link">
@@ -171,7 +176,7 @@
         </li>
       </ul>
     </li>
-
+    @endif
     <!-- Data Kompetensi Prodi -->
     <li class="nav-header blue-header">Data Kompetensi Prodi</li>
     <li class="nav-item has-treeview {{ in_array($activeMenu, ['data_prodi', 'kompetensi', 'kompetensi_prodi']) ? 'menu-open' : '' }}">

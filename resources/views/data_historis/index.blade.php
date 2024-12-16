@@ -5,128 +5,93 @@
     data-keyboard="false" data-width="75%" aria-hidden="true"></div>
 
 <div class="container rounded bg-white profile-container"> <!-- Ganti class border dengan profile-container -->
-    <div class="row" id="profile">
-        <div class="col-md-4 border-right">
-            <div class="p-3 py-5">
-                <div class="d-flex flex-column align-items-center text-center p-3">
-                    <img class="rounded-circle mt-3 mb-2" width="250px" src="{{ asset($user->foto) }}">
-                    <p class="photo-date">Foto diganti pada: {{ $user->updated_at->format('d-m-Y') }}</p>
-                </div>
-                <div onclick="modalAction('{{ url('/profile/' . session('id_user') . '/edit_foto') }}')"
-                    class="mt-4 text-center">
-                    <button class="btn btn-primary profile-button" type="button">Edit Foto</button>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-8 border-right">
-            <div class="p-3 py-4">
-                <div class="d-flex align-items-center">
-                    <h4 class="profile-header">Pengaturan Profile</h4>
-                </div>
-                <div class="row mt-3">
-                    <table class="table table-bordered table-striped table-hover table-sm">
-                        <tr>
-                            <th>ID</th>
-                            <td>{{ $user->id_user }}</td>
-                        </tr>
-                        <tr>
-                            <th>Level</th>
-                            <td>{{ $user->level->nama_level }}</td>
-                        </tr>
-                        <tr>
-                            <th>Username</th>
-                            <td>{{ $user->username }}</td>
-                        </tr>
-                        <tr>
-                            <th>Nama</th>
-                            <td>{{ $user->nama_user }}</td>
-                        </tr>
-                        <tr>
-                            <th>Password</th>
-                            <td>********</td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="mt-3 text-center">
-                    <button onclick="modalAction('{{ url('/profile/' . session('id_user') . '/edit_ajax') }}')"
-                        class="btn btn-primary profile-button">Ubah Profil dan Password</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Data Tambahan (Biodata) -->
-    <div class="row mt-4">
-        <div class="col-md-12">
-            <div class="p-3 py-4">
-                <h4 class="profile-header">Data Tambahan</h4>
-                <table class="table table-bordered table-striped table-hover table-sm">
-                    <tr>
-                        <th>NIDN</th>
-                        <td>{{ $user->nidn_user ?? 'Tidak Diketahui' }}</td>
-                    </tr>
-                    <tr>
-                        <th>Gelar Akademik</th>
-                        <td>{{ $user->gelar_akademik ?? 'Tidak Diketahui' }}</td>
-                    </tr>
-                    <tr>
-                        <th>Email</th>
-                        <td>{{ $user->email_user ?? 'Tidak Diketahui' }}</td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-    </div>
 
-    <!-- Klasifikasi Data Berdasarkan ID -->
+    <!-- Data Historis (Sertifikasi dan Pelatihan) -->
     <div class="row mt-4">
         <div class="col-md-12">
-            <h4 class="profile-header">Sertifikasi Berdasarkan ID</h4>
+            <h4 class="profile-header">Data Historis Sertifikasi dan Pelatihan</h4>
             <table class="table table-bordered table-striped table-hover table-sm">
                 <thead>
                     <tr>
-                        <th>ID Sertifikasi</th>
-                        <th>Nama Sertifikasi</th>
-                        <th>Jenis Sertifikasi</th>
+                        <th>Tipe</th>
+                        <th>Nama</th>
+                        <th>Jenis</th>
                         <th>Tanggal Mulai</th>
                         <th>Tanggal Akhir</th>
-                        <th>Vendor</th>
+                        <th>Status</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @isset($sertifikasi)
-                        @foreach ($sertifikasi as $data)
-                            @if ($data->id_user == $user->id_user) <!-- Klasifikasi Berdasarkan ID User -->
-                                <tr>
-                                    <td>{{ $data->id_sertifikasi }}</td>
-                                    <td>{{ $data->nama_sertif }}</td>
-                                    <td>{{ $data->jenis_sertif }}</td>
-                                    <td>{{ $data->tgl_mulai_sertif }}</td>
-                                    <td>{{ $data->tgl_akhir_sertif }}</td>
-                                    <td>{{ $data->id_vendor }}</td>
-                                    <td>
-                                        <button onclick="modalAction('{{ url('/sertifikasi/' . $data->id_sertifikasi . '/edit') }}')" class="btn btn-sm btn-warning">Edit</button>
-                                        <button onclick="deleteData('{{ url('/sertifikasi/' . $data->id_sertifikasi) }}')" class="btn btn-sm btn-danger">Hapus</button>
-                                    </td>
-                                </tr>
-                            @endif
-                        @endforeach
-                    @else
+                    @php
+                        // Gabungkan data pelatihan dan sertifikasi
+                        $dataHistoris = $pelatihan->merge($sertifikasi)->sortByDesc(function ($item) {
+                            return $item->tgl_mulai ?? $item->tgl_mulai_sertif; // Menyortir berdasarkan tanggal
+                       c });
+                    @endphp
+
+                    @foreach ($dataHistoris as $data)
                         <tr>
-                            <td colspan="7" class="text-center">Tidak ada data sertifikasi tersedia</td>
+                            <td>
+                                @if ($data instanceof App\Models\PelatihanModel)
+                                    Pelatihan
+                                @elseif ($data instanceof App\Models\SertifikasiModel)
+                                    Sertifikasi
+                                @endif
+                            </td>
+                            <td>
+                                @if ($data instanceof App\Models\PelatihanModel)
+                                    {{ $data->nama_pelatihan }}
+                                @elseif ($data instanceof App\Models\SertifikasiModel)
+                                    {{ $data->nama_sertif }}
+                                @endif
+                            </td>
+                            <td>
+                                @if ($data instanceof App\Models\PelatihanModel)
+                                    {{ $data->level_pelatihan }}
+                                @elseif ($data instanceof App\Models\SertifikasiModel)
+                                    {{ $data->jenis_sertif }}
+                                @endif
+                            </td>
+                            <td>
+                                @if ($data instanceof App\Models\PelatihanModel)
+                                    {{ $data->tgl_mulai }}
+                                @elseif ($data instanceof App\Models\SertifikasiModel)
+                                    {{ $data->tgl_mulai_sertif }}
+                                @endif
+                            </td>
+                            <td>
+                                @if ($data instanceof App\Models\PelatihanModel)
+                                    {{ $data->tgl_akhir }}
+                                @elseif ($data instanceof App\Models\SertifikasiModel)
+                                    {{ $data->tgl_akhir_sertif }}
+                                @endif
+                            </td>
+                            <td>{{ $data->status }}</td>
+                            <td>
+                                <button onclick="modalAction('{{ url('/' . ($data instanceof App\Models\PelatihanModel ? 'pelatihan' : 'sertifikasi') . '/' . $data->id) }}')" class="btn btn-sm btn-warning">Edit</button>
+                                <button onclick="deleteData('{{ url('/' . ($data instanceof App\Models\PelatihanModel ? 'pelatihan' : 'sertifikasi') . '/' . $data->id) }}')" class="btn btn-sm btn-danger">Hapus</button>
+                            </td>
                         </tr>
-                    @endisset
+                    @endforeach
+
+                    @if ($dataHistoris->isEmpty())
+                        <tr>
+                            <td colspan="7" class="text-center">Tidak ada data historis tersedia</td>
+                        </tr>
+                    @endif
                 </tbody>
             </table>
         </div>
     </div>
+
 </div>
+
 @endsection
 
 @push('css')
 <style>
-    /* Tambahkan CSS di sini */
+    /* Tambahkan CSS untuk styling */
 </style>
 @endpush
 
