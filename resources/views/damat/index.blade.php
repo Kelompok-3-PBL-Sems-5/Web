@@ -4,10 +4,10 @@
     <div class="card-header">
         <h3 class="card-title">Daftar Data Mata Kuliah</h3>
         <div class="card-tools">
-            <button onclick="modalAction('{{ url('/damat/import') }}')" class="btn btn-info">Import Data Mata Kuliah</button>
+            {{-- <button onclick="modalAction('{{ url('/damat/import') }}')" class="btn btn-info">Import Data Mata Kuliah</button>
                 <a href="{{ url('/damat/export_excel') }}" class="btn btn-primary"><i class="fa fa-file-excel"></i> Export Data Mata Kuliah</a>
-                <a href="{{ url('/damat/export_pdf') }}" class="btn btn-warning"><i class="fa fa-file-pdf"></i> Export Data Mata Kuliah</a>
-            <button onclick="modalAction('{{ url('/damat/create_ajax') }}')" class="btn btn-success">Tambah Data (Ajax)</button>
+                <a href="{{ url('/damat/export_pdf') }}" class="btn btn-warning"><i class="fa fa-file-pdf"></i> Export Data Mata Kuliah</a> --}}
+            <button onclick="modalAction('{{ url('/damat/create_ajax') }}')" class="btn btn-success">Tambah Data</button>
         </div>
     </div>
     <div class="card-body">

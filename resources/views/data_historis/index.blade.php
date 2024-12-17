@@ -27,7 +27,7 @@
                         // Gabungkan data pelatihan dan sertifikasi
                         $dataHistoris = $pelatihan->merge($sertifikasi)->sortByDesc(function ($item) {
                             return $item->tgl_mulai ?? $item->tgl_mulai_sertif; // Menyortir berdasarkan tanggal
-                       c });
+                        });
                     @endphp
 
                     @foreach ($dataHistoris as $data)

@@ -5,13 +5,13 @@
             <h3 class="card-title">Daftar Prodi</h3>
             <div class="card-tools">
                 <!-- Tombol untuk Import Prodi -->
-            <button onclick="modalAction('{{ url('/prodi/import') }}')" class="btn btn-info">Import prodi</button>
+            {{-- <button onclick="modalAction('{{ url('/prodi/import') }}')" class="btn btn-info">Import prodi</button>
             <!-- Tombol untuk Export Data ke Excel -->
             <a href="{{ url('/prodi/export_excel') }}" class="btn btn-primary"><i class="fa fa-file-excel"></i> Export prodi</a>
             <!-- Tombol untuk Export Data ke PDF -->
-            <a href="{{ url('/prodi/export_pdf') }}" class="btn btn-warning"><i class="fa fa-file-pdf"></i> Export prodi</a>
+            <a href="{{ url('/prodi/export_pdf') }}" class="btn btn-warning"><i class="fa fa-file-pdf"></i> Export prodi</a> --}}
             <!-- Tombol Tambah Data (Ajax) -->
-            <button onclick="modalAction('{{ url('/prodi/create_ajax') }}')" class="btn btn-success">Tambah Data (Ajax)</button>
+            <button onclick="modalAction('{{ url('/prodi/create_ajax') }}')" class="btn btn-success">Tambah Data</button>
             </div>
         </div>
 

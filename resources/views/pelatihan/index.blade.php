@@ -4,14 +4,14 @@
         <div class="card-header">
             <h3 class="card-title">Daftar Pelatihan</h3>
             <div class="card-tools">
-                <!-- Tombol untuk Import Pelatihan -->
+                {{-- <!-- Tombol untuk Import Pelatihan -->
             <button onclick="modalAction('{{ url('/data_pelatihan/import') }}')" class="btn btn-info">Import pelatihan</button>
             <!-- Tombol untuk Export Data ke Excel -->
             <a href="{{ url('/data_pelatihan/export_excel') }}" class="btn btn-primary"><i class="fa fa-file-excel"></i> Export pelatihan</a>
             <!-- Tombol untuk Export Data ke PDF -->
-            <a href="{{ url('/data_pelatihan/export_pdf') }}" class="btn btn-warning"><i class="fa fa-file-pdf"></i> Export pelatihan</a>
+            <a href="{{ url('/data_pelatihan/export_pdf') }}" class="btn btn-warning"><i class="fa fa-file-pdf"></i> Export pelatihan</a> --}}
             <!-- Tombol Tambah Data (Ajax) -->
-            <button onclick="modalAction('{{ url('/data_pelatihan/create_ajax') }}')" class="btn btn-success">Tambah Data (Ajax)</button>
+            <button onclick="modalAction('{{ url('/data_pelatihan/create_ajax') }}')" class="btn btn-success">Tambah Data</button>
             </div>
         </div>
 

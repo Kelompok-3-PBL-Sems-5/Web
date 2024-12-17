@@ -177,6 +177,8 @@
       </ul>
     </li>
     @endif
+
+    @if(Auth::user()->id_level == 1)
     <!-- Data Kompetensi Prodi -->
     <li class="nav-header blue-header">Data Kompetensi Prodi</li>
     <li class="nav-item has-treeview {{ in_array($activeMenu, ['data_prodi', 'kompetensi', 'kompetensi_prodi']) ? 'menu-open' : '' }}">
@@ -202,6 +204,7 @@
         </li>
       </ul>
     </li>
+    @endif
 
     <!-- Surat Tugas -->
     <li class="nav-header blue-header">Surat Tugas</li>

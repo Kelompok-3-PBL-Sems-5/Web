@@ -4,14 +4,14 @@
         <div class="card-header">
             <h3 class="card-title">Daftar Sertifikasi</h3>
             <div class="card-tools">
-                <!-- Tombol untuk Import Sertifikasi -->
+                {{-- <!-- Tombol untuk Import Sertifikasi -->
             <button onclick="modalAction('{{ url('/data_sertifikasi/import') }}')" class="btn btn-info">Import sertifikasi</button>
             <!-- Tombol untuk Export Data ke Excel -->
             <a href="{{ url('/data_sertifikasi/export_excel') }}" class="btn btn-primary"><i class="fa fa-file-excel"></i> Export sertifikasi</a>
             <!-- Tombol untuk Export Data ke PDF -->
-            <a href="{{ url('/data_sertifikasi/export_pdf') }}" class="btn btn-warning"><i class="fa fa-file-pdf"></i> Export sertifikasi</a>
+            <a href="{{ url('/data_sertifikasi/export_pdf') }}" class="btn btn-warning"><i class="fa fa-file-pdf"></i> Export sertifikasi</a> --}}
             <!-- Tombol Tambah Data (Ajax) -->
-            <button onclick="modalAction('{{ url('/data_sertifikasi/create_ajax') }}')" class="btn btn-success">Tambah Data (Ajax)</button>
+            <button onclick="modalAction('{{ url('/data_sertifikasi/create_ajax') }}')" class="btn btn-success">Tambah Data</button>
             </div>
         </div>
 

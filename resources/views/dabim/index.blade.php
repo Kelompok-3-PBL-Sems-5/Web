@@ -4,10 +4,10 @@
     <div class="card-header">
         <h3 class="card-title">Daftar Data Bidang Minat</h3>
         <div class="card-tools">
-            <button onclick="modalAction('{{ url('/dabim/import') }}')" class="btn btn-info">Import Data Bidang Minat</button>
+            {{-- <button onclick="modalAction('{{ url('/dabim/import') }}')" class="btn btn-info">Import Data Bidang Minat</button>
                 <a href="{{ url('/dabim/export_excel') }}" class="btn btn-primary"><i class="fa fa-file-excel"></i> Export Data Bidang Minat</a>
-                <a href="{{ url('/dabim/export_pdf') }}" class="btn btn-warning"><i class="fa fa-file-pdf"></i> Export Data Bidang Minat</a>
-            <button onclick="modalAction('{{ url('/dabim/create_ajax') }}')" class="btn btn-success">Tambah Data (Ajax)</button>
+                <a href="{{ url('/dabim/export_pdf') }}" class="btn btn-warning"><i class="fa fa-file-pdf"></i> Export Data Bidang Minat</a> --}}
+            <button onclick="modalAction('{{ url('/dabim/create_ajax') }}')" class="btn btn-success">Tambah Data</button>
         </div>
     </div>
     <div class="card-body">

@@ -236,7 +236,8 @@ class UserController extends Controller
             $file->move($path, $filename);
         }
 
-
+        $path = '';
+        $filename = '';
         // Simpan data user ke dalam database
         UserModel::create([
             'username'  => $request->username,

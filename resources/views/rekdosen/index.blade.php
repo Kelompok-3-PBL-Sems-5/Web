@@ -5,11 +5,11 @@
             <h3 class="card-title">Daftar Rekomendasi Dosen</h3>
             <div class="card-tools">
                 <!-- Tombol untuk Import rekdosen -->
-            <button onclick="modalAction('{{ url('/notifikasi/import') }}')" class="btn btn-info">Import rekdosen</button>
+            {{-- <button onclick="modalAction('{{ url('/notifikasi/import') }}')" class="btn btn-info">Import rekdosen</button>
             <!-- Tombol untuk Export Data ke Excel -->
             <a href="{{ url('/notifikasi/export_excel') }}" class="btn btn-primary"><i class="fa fa-file-excel"></i> Export rekdosen</a>
             <!-- Tombol untuk Export Data ke PDF -->
-            <a href="{{ url('/notifikasi/export_pdf') }}" class="btn btn-warning"><i class="fa fa-file-pdf"></i> Export rekdosen</a>
+            <a href="{{ url('/notifikasi/export_pdf') }}" class="btn btn-warning"><i class="fa fa-file-pdf"></i> Export rekdosen</a> --}}
             <!-- Tombol Tambah Data (Ajax) -->
             <button onclick="modalAction('{{ url('/notifikasi/create_ajax') }}')" class="btn btn-success">Tambah Data</button>
             </div>
@@ -143,25 +143,25 @@
     }
 
     /* Table Styling */
-    #table_level {
+    #table_rekdosen {
         border-collapse: separate; 
         border-spacing: 0 10px; 
     }
 
-    #table_level thead {
+    #table_rekdosen thead {
         background: #007bff; 
         color: white; 
         border-radius: 10px; 
     }
 
-    #table_level tbody tr {
+    #table_rekdosen tbody tr {
         background: #f8f9fa; 
         border-radius: 10px; 
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
         transition: background 0.3s, transform 0.3s; 
     }
 
-    #table_level tbody tr:hover {
+    #table_rekdosen tbody tr:hover {
         background: #e2e6ea; 
         transform: scale(1.02); 
     }
@@ -181,7 +181,7 @@
     }
 
     /* Input Search Custom */
-    #table-level_filter input {
+    #table-rekdosen_filter input {
         border-radius: 20px; 
         padding: 8px 15px; 
         border: 1px solid #ddd; 
@@ -189,7 +189,7 @@
         transition: border-color 0.3s, box-shadow 0.3s; 
     }
 
-    #table-level_filter input:focus {
+    #table-rekdosen_filter input:focus {
         border-color: #007bff; 
         box-shadow: 0 0 8px rgba(0, 123, 255, 0.5); 
     }

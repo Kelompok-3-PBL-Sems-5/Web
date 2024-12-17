@@ -5,10 +5,10 @@
         <h3 class="card-title">Daftar Vendor</h3>
         <div class="card-tools">
             {{-- <a class="btn btn-sm btn-primary mt-1" href="{{ url('vendor/create') }}">Tambah</a> --}}
-            <button onclick="modalAction('{{ url('/vendor/import') }}')" class="btn btn-info">Import vendor</button>
+            {{-- <button onclick="modalAction('{{ url('/vendor/import') }}')" class="btn btn-info">Import vendor</button>
                 <a href="{{ url('/vendor/export_excel') }}" class="btn btn-primary"><i class="fa fa-file-excel"></i> Export vendor</a>
-                <a href="{{ url('/vendor/export_pdf') }}" class="btn btn-warning"><i class="fa fa-file-pdf"></i> Export vendor</a>
-            <button onclick="modalAction('{{ url('/vendor/create_ajax') }}')" class="btn btn-success">Tambah Data (Ajax)</button>
+                <a href="{{ url('/vendor/export_pdf') }}" class="btn btn-warning"><i class="fa fa-file-pdf"></i> Export vendor</a> --}}
+            <button onclick="modalAction('{{ url('/vendor/create_ajax') }}')" class="btn btn-success">Tambah Data</button>
         </div>
     </div>
     <div class="card-body">

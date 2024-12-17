@@ -4,9 +4,9 @@
     <div class="card-header">
         <h3 class="card-title">Daftar Jenis Pelatihan</h3>
         <div class="card-tools">
-            <button onclick="modalAction('{{ url('/jenis_pelatihan/import') }}')" class="btn btn-info">Import Jenis Pelatihan</button>
+            {{-- <button onclick="modalAction('{{ url('/jenis_pelatihan/import') }}')" class="btn btn-info">Import Jenis Pelatihan</button>
                 <a href="{{ url('/jenis_pelatihan/export_excel') }}" class="btn btn-primary"><i class="fa fa-file-excel"></i> Export Jenis Pelatihan</a>
-                <a href="{{ url('/jenis_pelatihan/export_pdf') }}" class="btn btn-warning"><i class="fa fa-file-pdf"></i> Export Jenis Pelatihan</a>
+                <a href="{{ url('/jenis_pelatihan/export_pdf') }}" class="btn btn-warning"><i class="fa fa-file-pdf"></i> Export Jenis Pelatihan</a> --}}
             <button onclick="modalAction('{{ url('/jenis_pelatihan/create_ajax') }}')" class="btn btn-success">Tambah Data (Ajax)</button>
         </div>
     </div>

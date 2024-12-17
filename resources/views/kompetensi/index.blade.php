@@ -5,10 +5,10 @@
         <h3 class="card-title">Daftar Kompetensi</h3>
         <div class="card-tools">
             {{-- <a class="btn btn-sm btn-primary mt-1" href="{{ url('kompetensi/create') }}">Tambah</a> --}}
-            <button onclick="modalAction('{{ url('/kompetensi/import') }}')" class="btn btn-info">Import kompetensi</button>
+            {{-- <button onclick="modalAction('{{ url('/kompetensi/import') }}')" class="btn btn-info">Import kompetensi</button>
                 <a href="{{ url('/kompetensi/export_excel') }}" class="btn btn-primary"><i class="fa fa-file-excel"></i> Export kompetensi</a>
-                <a href="{{ url('/kompetensi/export_pdf') }}" class="btn btn-warning"><i class="fa fa-file-pdf"></i> Export kompetensi</a>
-            <button onclick="modalAction('{{ url('/kompetensi/create_ajax') }}')" class="btn btn-success">Tambah Data (Ajax)</button>
+                <a href="{{ url('/kompetensi/export_pdf') }}" class="btn btn-warning"><i class="fa fa-file-pdf"></i> Export kompetensi</a> --}}
+            <button onclick="modalAction('{{ url('/kompetensi/create_ajax') }}')" class="btn btn-success">Tambah Data</button>
         </div>
     </div>
     <div class="card-body">
